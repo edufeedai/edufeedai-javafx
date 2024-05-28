@@ -44,20 +44,20 @@ public class CheckResults {
 
             HttpClient client = HttpClient.newHttpClient();
 
-            client.send(request, HttpResponse.BodyHandlers.ofString());
+            //client.sendAsync(request, HttpResponse.BodyHandlers.ofString())
+            //        .thenApply(HttpResponse::body)
+            //        .thenAccept(System.out::println)
+            //        .join();
 
-            client.sendAsync(request, HttpResponse.BodyHandlers.ofString())
-                    .thenApply(HttpResponse::body)
-                    .thenAccept(System.out::println)
-                    .join();
+            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+            AssessmentBase assessmentBaseResponse = gson.fromJson(response.body(), AssessmentBase.class);
+
+            return new Assessment(assessmentBaseResponse);
 
         } catch (Exception e) {
             throw new AssessmentErrorException(e);
         }
-
-
-
-       return new Assessment(String.valueOf(++CheckResults.AssesmentId),gradingCriteria,taskSubmitted);
 
     }
 

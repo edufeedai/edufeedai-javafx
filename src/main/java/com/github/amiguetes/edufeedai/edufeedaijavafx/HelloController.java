@@ -35,8 +35,9 @@ public class HelloController {
                     evaluationCriteria,assessmentSend
             );
 
+            txtGradingResult.setText(assessment.getAssesmentFeedback());
 
-            CheckResults.getInstance().gradeAssessment(assessment);
+
         } catch (Exception e) {
             handleError(e);
         }

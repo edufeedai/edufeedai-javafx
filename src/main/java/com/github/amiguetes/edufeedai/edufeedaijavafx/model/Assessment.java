@@ -10,6 +10,13 @@ public class Assessment {
 
     private String assesmentFeedback;
 
+    protected Assessment(AssessmentBase assessmentBase) {
+
+        this(assessmentBase.getId(), assessmentBase.getGradingCriteria(), assessmentBase.getTaskSubmitted());
+        setAssesmentFeedback(assessmentBase.getAssessmentFeedback());
+
+    }
+
     protected Assessment(String id, String gradingCriteria, String taskSubmitted) {
         this.id = id;
         this.gradingCriteria = gradingCriteria;
