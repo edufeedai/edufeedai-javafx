@@ -28,11 +28,14 @@ public class HelloController {
         String evaluationCriteria = txtEvaluationCriteria.getText();
         String assessmentSend = txtAssessmentSend.getText();
 
-        Assessment assessment = CheckResults.getInstance().createNewAssessment(
-                evaluationCriteria,assessmentSend
-        );
+
 
         try {
+            Assessment assessment = CheckResults.getInstance().createNewAssessment(
+                    evaluationCriteria,assessmentSend
+            );
+
+
             CheckResults.getInstance().gradeAssessment(assessment);
         } catch (Exception e) {
             handleError(e);

@@ -6,4 +6,7 @@ public class AssessmentErrorException extends Exception {
         super();
     }
 
+    public AssessmentErrorException(Exception e) {
+        super(e);
+    }
 }
