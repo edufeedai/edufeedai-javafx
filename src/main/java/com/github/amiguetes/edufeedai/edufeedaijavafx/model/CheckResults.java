@@ -11,7 +11,7 @@ import java.net.http.HttpResponse;
 
 public class CheckResults {
 
-    private static final String API_URL = "http://localhost:3000/start-grading/";
+    private static final String API_URL = "http://localhost:3000/grade";
 
     private static CheckResults _instance;
     private static int AssesmentId = 0;

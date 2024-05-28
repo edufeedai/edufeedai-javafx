@@ -15,7 +15,7 @@ class CheckResultsTest {
 
         try {
              assessment = checkResults.createNewAssessment(
-                    "bla","bla"
+                    "Sumale 1 a lo que te pase como argumento","1"
             );
         } catch (Exception e) {
             fail(e);
