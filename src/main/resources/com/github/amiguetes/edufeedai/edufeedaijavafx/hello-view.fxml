@@ -7,22 +7,22 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox alignment="CENTER" spacing="20.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.github.amiguetes.edufeedai.edufeedaijavafx.HelloController">
+<VBox alignment="CENTER" prefHeight="600.0" prefWidth="600.0" spacing="20.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.github.amiguetes.edufeedai.edufeedaijavafx.HelloController">
    <padding>
       <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
    </padding>
    <HBox prefHeight="100.0" prefWidth="200.0">
       <children>
          <Label prefHeight="32.0" prefWidth="119.0" text="Criterios" />
-         <TextArea fx:id="txtEvaluationCriteria" prefHeight="200.0" prefWidth="200.0" />
+         <TextArea fx:id="txtEvaluationCriteria" prefHeight="100.0" prefWidth="445.0" wrapText="true" />
       </children>
    </HBox>
    <HBox prefHeight="100.0" prefWidth="200.0">
       <children>
          <Label prefHeight="16.0" prefWidth="81.0" text="Tarea" />
-         <TextArea fx:id="txtAssessmentSend" prefHeight="200.0" prefWidth="200.0" />
+         <TextArea fx:id="txtAssessmentSend" prefHeight="100.0" prefWidth="486.0" wrapText="true" />
       </children>
    </HBox>
-   <TextArea fx:id="txtGradingResult" prefHeight="200.0" prefWidth="200.0" />
+   <TextArea fx:id="txtGradingResult" prefHeight="200.0" prefWidth="200.0" wrapText="true" />
    <Button fx:id="btGrade" mnemonicParsing="false" onAction="#btGrade" text="Grade" />
 </VBox>
