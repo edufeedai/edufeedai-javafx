@@ -1,5 +1,10 @@
 package com.github.amiguetes.edufeedai.edufeedaijavafx;
 
+import com.github.amiguetes.edufeedai.edufeedaijavafx.model.openai.platform.Body;
+import com.github.amiguetes.edufeedai.edufeedaijavafx.model.openai.platform.JSONLine;
+import com.github.amiguetes.edufeedai.edufeedaijavafx.model.openai.platform.Message;
+import com.google.gson.Gson;
+
 import java.io.File;
 import java.io.FileFilter;
 import java.io.IOException;
@@ -17,6 +22,8 @@ public class FileConcatenation {
 
     private final String outputFileName;
 
+    private final String sha1;
+
     private FileFilter filter;
 
     public FileConcatenation(String inputDirectory){
@@ -24,7 +31,9 @@ public class FileConcatenation {
         this.inputDirectory = inputDirectory;
 
         Path path = Paths.get(inputDirectory);
-         this.outputFileName = inputDirectory + File.separator + sha1(path.getFileName().toString()) + ".txt";
+        sha1 = sha1(path.getFileName().toString());
+
+         this.outputFileName = inputDirectory + File.separator + sha1 + ".txt";
     }
 
     private List<File> listAllFiles() throws IOException {
@@ -87,6 +96,35 @@ public class FileConcatenation {
     public void serialize() throws IOException {
         List<File> files = listAllFiles();
         String content = concatenateFiles(files);
+
+        JSONLine jsonLine = new JSONLine();
+        jsonLine.setCustom_id(sha1);
+        jsonLine.setMethod("POST");
+        jsonLine.setUrl("v1/chat/completions");
+
+        Body body = new Body();
+
+        body.setModel("gpt-3.5-turbo");
+
+        Message[] messages = new Message[2];
+        messages[0] = new Message();
+        messages[0].setRole("system");
+        messages[0].setContent("Eres el profesor de lenguaje de marcas y has de hacer comentarios acerca de las entregas" +
+                "de los alumnos de las siguientes tareas");
+        messages[1] = new Message();
+        messages[1].setRole("user");
+        messages[1].setContent(content);
+
+        body.setMessages(messages);
+
+        jsonLine.setBody(body);
+        jsonLine.setMax_tokens(1000);
+
+        Gson gson = new Gson();
+        String s = gson.toJson(jsonLine);
+
+        Files.write(Paths.get(outputFileName + ".json"), s.getBytes());
+
         writeTxT(content, outputFileName);
     }
 
