@@ -19,7 +19,11 @@ class TextSerializerTest {
             fail(e);
         }
 
-
+        try {
+            serializer.generateJSONL();
+        } catch (Exception e) {
+            fail(e);
+        }
 
     }
 }

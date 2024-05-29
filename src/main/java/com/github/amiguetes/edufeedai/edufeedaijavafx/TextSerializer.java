@@ -32,45 +32,43 @@ public class TextSerializer {
                 .collect(Collectors.toList());
     }
 
+    private List<File> findAllJsons() throws IOException {
+        return Files.walk(Paths.get(inputDirectory),2)
+                .filter(Files::isRegularFile)
+                .filter((f)->{
+                    String ext = f.getFileName().toString().substring(f.getFileName().toString().toLowerCase().lastIndexOf(".")+1);
+
+                    return switch (ext) {
+                        case "json" -> true;
+                        default -> false;
+                    };
+
+                })
+                .map(Path::toFile)
+                .collect(Collectors.toList());
+    }
+
     private String concatenateFiles(List<File> files) throws IOException {
         StringBuilder sb = new StringBuilder();
 
         for (File file : files) {
-            sb.append(">>>{")
-                    .append(file.getName())
-                    .append("} ");
             sb.append(new String(Files.readAllBytes(file.toPath())))
-                    .append(" <<<{")
-                    .append(file.getName())
-                    .append("}\n");
+                    .append(System.lineSeparator());
         }
 
         return sb.toString();
     }
 
     private static void writeJsonl(String content, String outputFilePath) throws IOException {
-        List<String> jsonlLines = Arrays.asList(content.split("\n")).stream()
-                .map(line -> "{\"user_message\": \"" + escapeJson(line) + "\"}")
-                .collect(Collectors.toList());
 
-        Files.write(Paths.get(outputFilePath), jsonlLines);
+        Files.write(Paths.get(outputFilePath), content.getBytes());
     }
 
-    private static String escapeJson(String text) {
-        return text.replace("\"", "\\\"")
-                .replace("\\", "\\\\")
-                .replace("\b", "\\b")
-                .replace("\f", "\\f")
-                .replace("\n", "\\n")
-                .replace("\r", "\\r")
-                .replace("\t", "\\t");
-    }
-/*
-    public void serialize() throws IOException {
-        List<File> files = listAllFiles();
+    public void generateJSONL() throws IOException {
+        List<File> files = findAllJsons();
         String content = concatenateFiles(files);
         writeJsonl(content, outputFilePath);
-    }*/
+    }
 
     public void packageFiles() throws IOException {
         List<File> files = listAllLevel1Dirs();
