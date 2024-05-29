@@ -1,21 +1,23 @@
 package com.github.amiguetes.edufeedai.edufeedaijavafx;
 
+import io.github.cdimascio.dotenv.Dotenv;
 import org.junit.jupiter.api.Test;
-
-import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class TextSerializerTest {
 
-    String inputDirectory = "";
-    String outputFilePath = "";
+    String assessmentDirectory = Dotenv.load().get("ASSESSMENT_TEST_DIR");
 
     @Test
-    void searchAndSerializeRecursive() throws IOException {
+    void packageFiles() {
 
-        TextSerializer textSerializer = new TextSerializer(inputDirectory, outputFilePath);
-        textSerializer.serialize();
+        TextSerializer serializer = new TextSerializer(assessmentDirectory);
+        try {
+            serializer.packageFiles();
+        } catch (Exception e) {
+            fail(e);
+        }
 
     }
 }

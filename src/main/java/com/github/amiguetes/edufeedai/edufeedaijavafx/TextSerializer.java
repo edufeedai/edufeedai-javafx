@@ -12,28 +12,22 @@ import java.util.stream.Collectors;
 
 public class TextSerializer {
 
-    private String inputDirectory;
+    private final String inputDirectory;
 
-    private String outputFilePath;
+    private final String outputFilePath;
 
     private FileFilter filter;
 
-    public TextSerializer(String inputDirectory, String outputFilePath){
-        this.inputDirectory = inputDirectory        ;
-        this.outputFilePath = outputFilePath;
+    public TextSerializer(String taskDirectory){
+        this.inputDirectory = taskDirectory;
+
+        Path path = Paths.get(taskDirectory);
+        this.outputFilePath = inputDirectory + File.separator + path.getFileName().toString() + ".jsonl";
     }
 
-    private List<File> listAllFiles() throws IOException {
-        return Files.walk(Paths.get(inputDirectory))
-                .filter(Files::isRegularFile).filter((f)->{
-                    String ext = f.getFileName().toString().substring(f.getFileName().toString().lastIndexOf(".")+1);
-
-                    return switch (ext) {
-                        case "zip", "rar", "7z", "tar", "gz", "bz2", "xz" -> false;
-                        default -> true;
-                    };
-
-                })
+    private List<File> listAllLevel1Dirs() throws IOException {
+        return Files.walk(Paths.get(inputDirectory),1)
+                .filter(Files::isDirectory)
                 .map(Path::toFile)
                 .collect(Collectors.toList());
     }
@@ -71,10 +65,20 @@ public class TextSerializer {
                 .replace("\r", "\\r")
                 .replace("\t", "\\t");
     }
-
+/*
     public void serialize() throws IOException {
         List<File> files = listAllFiles();
         String content = concatenateFiles(files);
         writeJsonl(content, outputFilePath);
+    }*/
+
+    public void packageFiles() throws IOException {
+        List<File> files = listAllLevel1Dirs();
+
+        for (File file : files) {
+            FileConcatenation fileConcatenation = new FileConcatenation(file.getAbsolutePath());
+            fileConcatenation.serialize();
+        }
+
     }
 }
