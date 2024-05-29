@@ -6,20 +6,25 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class FileConcatenation {
 
-    private String inputDirectory;
+    private final String inputDirectory;
 
-    private String outputFilePath;
+    private final String outputFileName;
 
     private FileFilter filter;
 
     public FileConcatenation(String inputDirectory){
-        this.inputDirectory = inputDirectory        ;
-        this.outputFilePath = inputDirectory + "/output.txt";
+
+        this.inputDirectory = inputDirectory;
+
+        Path path = Paths.get(inputDirectory);
+         this.outputFileName = inputDirectory + File.separator + sha1(path.getFileName().toString()) + ".txt";
     }
 
     private List<File> listAllFiles() throws IOException {
@@ -64,10 +69,25 @@ public class FileConcatenation {
         Files.write(Paths.get(outputFilePath), content.getBytes());
     }
 
+    private String sha1(String input)  {
+        try {
+            MessageDigest messageDigest = MessageDigest.getInstance("SHA-1");
+            byte[] hashBytes = messageDigest.digest(input.getBytes());
+            StringBuilder sb = new StringBuilder();
+            for (byte b : hashBytes) {
+                sb.append(String.format("%02x", b));
+            }
+            return sb.toString();
+        } catch (NoSuchAlgorithmException e) {
+            return "No SHA1 found";
+        }
+
+    }
+
     public void serialize() throws IOException {
         List<File> files = listAllFiles();
         String content = concatenateFiles(files);
-        writeTxT(content, outputFilePath);
+        writeTxT(content, outputFileName);
     }
 
 }
