@@ -25,11 +25,15 @@ public class TextSerializer {
         this.outputFilePath = inputDirectory + File.separator + path.getFileName().toString() + ".jsonl";
     }
 
-    private List<File> listAllLevel1Dirs() throws IOException {
-        return Files.walk(Paths.get(inputDirectory),1)
-                .filter(Files::isDirectory)
-                .map(Path::toFile)
+    private List<File> listAllLevel1Dirs() throws IOException{
+
+        File input = new File(inputDirectory);
+
+        return Arrays.stream(input.listFiles())
+                .filter(File::isDirectory)
                 .collect(Collectors.toList());
+
+
     }
 
     private List<File> findAllJsons() throws IOException {

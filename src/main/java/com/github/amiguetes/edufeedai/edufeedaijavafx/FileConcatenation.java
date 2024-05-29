@@ -13,6 +13,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -33,23 +34,27 @@ public class FileConcatenation {
         Path path = Paths.get(inputDirectory);
         sha1 = sha1(path.getFileName().toString());
 
-         this.outputFileName = inputDirectory + File.separator + sha1 + ".txt";
+         this.outputFileName = inputDirectory + File.separator + sha1 + ".json";
     }
 
     private List<File> listAllFiles() throws IOException {
-        return Files.walk(Paths.get(inputDirectory))
-                .filter(Files::isRegularFile).filter((f)->{
-                    String ext = f.getFileName().toString().substring(f.getFileName().toString().lastIndexOf(".")+1);
+        File input = new File(inputDirectory);
 
-                    return switch (ext) {
-                        case "zip", "rar", "7z", "tar", "gz", "bz2", "xz" -> false;
-                        default -> true;
-                    };
+        ArrayList<File> files = new ArrayList<>();
 
-                })
-                .map(Path::toFile)
-                .sorted()
-                .collect(Collectors.toList());
+        for (File file : input.listFiles((f)->f.isDirectory())) {
+            for (File file1 : file.listFiles()) {
+
+                if (file1.isFile()) {
+                    files.add(file1);
+                }
+
+            }
+        }
+
+
+        return files;
+
     }
 
     private String concatenateFiles(List<File> files) throws IOException {
@@ -71,11 +76,6 @@ public class FileConcatenation {
         }
 
         return sb.toString();
-    }
-
-    private static void writeTxT(String content, String outputFilePath) throws IOException {
-
-        Files.write(Paths.get(outputFilePath), content.getBytes());
     }
 
     private String sha1(String input)  {
@@ -100,7 +100,7 @@ public class FileConcatenation {
         JSONLine jsonLine = new JSONLine();
         jsonLine.setCustom_id(sha1);
         jsonLine.setMethod("POST");
-        jsonLine.setUrl("v1/chat/completions");
+        jsonLine.setUrl("/v1/chat/completions");
 
         Body body = new Body();
 
@@ -111,21 +111,21 @@ public class FileConcatenation {
         messages[0].setRole("system");
         messages[0].setContent("Eres el profesor de lenguaje de marcas y has de hacer comentarios acerca de las entregas" +
                 "de los alumnos de las siguientes tareas");
+        messages[0].setMax_tokens(1000);
         messages[1] = new Message();
         messages[1].setRole("user");
         messages[1].setContent(content);
+        messages[1].setMax_tokens(1000);
 
         body.setMessages(messages);
 
         jsonLine.setBody(body);
-        jsonLine.setMax_tokens(1000);
+
 
         Gson gson = new Gson();
         String s = gson.toJson(jsonLine);
 
-        Files.write(Paths.get(outputFileName + ".json"), s.getBytes());
-
-        writeTxT(content, outputFileName);
+        Files.write(Paths.get(outputFileName ), s.getBytes());
     }
 
 }

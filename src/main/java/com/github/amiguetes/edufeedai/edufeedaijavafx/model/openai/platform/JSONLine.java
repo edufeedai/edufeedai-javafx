@@ -6,7 +6,7 @@ public class JSONLine {
     String method;
     String url;
     Body body;
-    int max_tokens;
+
 
     public String getCustom_id() {
         return custom_id;
@@ -40,11 +40,5 @@ public class JSONLine {
         this.body = body;
     }
 
-    public int getMax_tokens() {
-        return max_tokens;
-    }
 
-    public void setMax_tokens(int max_tokens) {
-        this.max_tokens = max_tokens;
-    }
 }
