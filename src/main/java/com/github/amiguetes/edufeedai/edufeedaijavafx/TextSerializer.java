@@ -74,12 +74,12 @@ public class TextSerializer {
         writeJsonl(content, outputFilePath);
     }
 
-    public void packageFiles() throws IOException {
+    public void packageFiles(String instructions) throws IOException {
         List<File> files = listAllLevel1Dirs();
 
         for (File file : files) {
             FileConcatenation fileConcatenation = new FileConcatenation(file.getAbsolutePath());
-            fileConcatenation.serialize();
+            fileConcatenation.serialize(instructions);
         }
 
     }

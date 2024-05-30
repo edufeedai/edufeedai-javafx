@@ -1,0 +1,42 @@
+package com.github.amiguetes.edufeedai.edufeedaijavafx;
+
+
+import com.github.amiguetes.edufeedai.edufeedaijavafx.model.AssessmentGradingConfig;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import org.junit.jupiter.api.extension.ExtensionContext;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.ArgumentsProvider;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.lang.reflect.Type;
+import java.util.stream.Stream;
+
+public class AssessmentGradingArgumentsProvider  implements ArgumentsProvider {
+
+    private static final Gson gson = new Gson();
+
+    @Override
+    public Stream<? extends Arguments> provideArguments(ExtensionContext extensionContext) throws Exception {
+        return Stream.of("UD05A01.json")
+                .map(this::loadJson)
+                .map(Arguments::of);
+    }
+    private AssessmentGradingConfig loadJson(String filename){
+            try (InputStream input = getClass().getClassLoader().getResourceAsStream(filename);
+                 InputStreamReader reader = new InputStreamReader(input)) {
+
+                if (input == null){
+                    throw new IllegalArgumentException("File not found: " + filename);
+                }
+                Type type = new TypeToken<AssessmentGradingConfig>(){}.getType();
+                return gson.fromJson(reader,type);
+
+            } catch (IOException e){
+                throw new RuntimeException("Unable to Load JSON File: " + filename,e);
+            }
+    }
+}
+

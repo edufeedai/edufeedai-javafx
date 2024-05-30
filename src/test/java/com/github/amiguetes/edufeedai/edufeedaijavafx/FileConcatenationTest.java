@@ -16,7 +16,7 @@ class FileConcatenationTest {
 
         FileConcatenation concatenation = new FileConcatenation(inputDirectory);
         try {
-            concatenation.serialize();
+            concatenation.serialize("Ahora eres un evaluador");
         } catch (IOException e) {
             fail(e);
         }

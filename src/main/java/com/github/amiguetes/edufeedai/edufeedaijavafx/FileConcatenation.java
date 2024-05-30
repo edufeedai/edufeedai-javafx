@@ -93,7 +93,7 @@ public class FileConcatenation {
 
     }
 
-    public void serialize() throws IOException {
+    protected void serialize(String instructions) throws IOException {
         List<File> files = listAllFiles();
         String content = concatenateFiles(files);
 
@@ -104,13 +104,12 @@ public class FileConcatenation {
 
         Body body = new Body();
 
-        body.setModel("gpt-3.5-turbo");
+        body.setModel("gpt-4o");
 
         Message[] messages = new Message[2];
         messages[0] = new Message();
         messages[0].setRole("system");
-        messages[0].setContent("Eres el profesor de lenguaje de marcas y has de hacer comentarios acerca de las entregas" +
-                "de los alumnos de las siguientes tareas");
+        messages[0].setContent(instructions);
         messages[0].setMax_tokens(1000);
         messages[1] = new Message();
         messages[1].setRole("user");
