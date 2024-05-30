@@ -1,5 +1,7 @@
 package com.github.amiguetes.edufeedai.edufeedaijavafx;
 
+import com.github.amiguetes.edufeedai.edufeedaijavafx.model.DigestImplementation;
+
 import java.io.File;
 import java.io.FileFilter;
 import java.io.IOException;
@@ -78,7 +80,7 @@ public class TextSerializer {
         List<File> files = listAllLevel1Dirs();
 
         for (File file : files) {
-            FileConcatenation fileConcatenation = new FileConcatenation(file.getAbsolutePath());
+            FileConcatenation fileConcatenation = new FileConcatenation(file.getAbsolutePath(), new DigestImplementation());
             fileConcatenation.serialize(instructions);
         }
 

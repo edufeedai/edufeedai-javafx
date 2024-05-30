@@ -1,5 +1,6 @@
 package com.github.amiguetes.edufeedai.edufeedaijavafx;
 
+import com.github.amiguetes.edufeedai.edufeedaijavafx.model.Digest;
 import com.github.amiguetes.edufeedai.edufeedaijavafx.model.openai.platform.Body;
 import com.github.amiguetes.edufeedai.edufeedaijavafx.model.openai.platform.JSONLine;
 import com.github.amiguetes.edufeedai.edufeedaijavafx.model.openai.platform.Message;
@@ -27,14 +28,23 @@ public class FileConcatenation {
 
     private FileFilter filter;
 
-    public FileConcatenation(String inputDirectory){
+    public FileConcatenation(String inputDirectory, Digest digest){
+        String sha11;
 
         this.inputDirectory = inputDirectory;
 
         Path path = Paths.get(inputDirectory);
-        sha1 = sha1(path.getFileName().toString());
 
-         this.outputFileName = inputDirectory + File.separator + sha1 + ".json";
+
+        try {
+            sha11 = digest.digest(path.getFileName().toString());
+        } catch (NoSuchAlgorithmException e) {
+            sha11 = "errorgerneratingname";
+        }
+
+        sha1 = sha11;
+
+        this.outputFileName = inputDirectory + File.separator + sha1 + ".json";
     }
 
     private List<File> listAllFiles() throws IOException {
@@ -76,21 +86,6 @@ public class FileConcatenation {
         }
 
         return sb.toString();
-    }
-
-    private String sha1(String input)  {
-        try {
-            MessageDigest messageDigest = MessageDigest.getInstance("SHA-1");
-            byte[] hashBytes = messageDigest.digest(input.getBytes());
-            StringBuilder sb = new StringBuilder();
-            for (byte b : hashBytes) {
-                sb.append(String.format("%02x", b));
-            }
-            return sb.toString();
-        } catch (NoSuchAlgorithmException e) {
-            return "No SHA1 found";
-        }
-
     }
 
     protected void serialize(String instructions) throws IOException {
