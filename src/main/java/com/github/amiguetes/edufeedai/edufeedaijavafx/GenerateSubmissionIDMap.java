@@ -47,12 +47,12 @@ public class GenerateSubmissionIDMap {
         return lista.toArray(submissionIdMaps);
     }
 
-    public String saveSubmissionIDMaps(SubmissionIdMap[] submissionIdMaps){
+    public String saveSubmissionIDMaps(SubmissionIdMap[] submissionIdMaps, String assessmentIdMapFile){
         Gson gson = new Gson();
 
         String json = gson.toJson(submissionIdMaps);
 
-        File file = new File(assessmentFolder + File.separator + "id_map.json");
+        File file = new File(assessmentFolder + File.separator + assessmentIdMapFile);
 
         try {
             java.nio.file.Files.writeString(file.toPath(), json);

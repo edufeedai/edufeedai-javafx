@@ -10,6 +10,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class GenerateSubmissionIDMapTest {
 
     String assessmentFolder = Dotenv.load().get("ASSESSMENT_TEST_DIR");
+    String assessmmentIDMapFile = Dotenv.load().get("ASSESSMENT_ID_MAP_FILE");
 
     @org.junit.jupiter.api.Test
     void generateSubmissionIDMap() {
@@ -33,7 +34,7 @@ class GenerateSubmissionIDMapTest {
 
         assertNotNull(submissionIdMaps);
         assertTrue(submissionIdMaps.length > 0);
-        String filename = generateSubmissionIDMap.saveSubmissionIDMaps(submissionIdMaps);
+        String filename = generateSubmissionIDMap.saveSubmissionIDMaps(submissionIdMaps,assessmmentIDMapFile);
         assertNotNull(filename);
     }
 }
