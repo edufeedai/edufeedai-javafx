@@ -6,7 +6,6 @@ module com.github.amiguetes.edufeedai.edufeedaijavafx {
     requires java.desktop;
     requires com.google.gson;
     requires java.net.http;
-    requires org.commonmark;
 
     opens com.github.amiguetes.edufeedai.edufeedaijavafx to javafx.fxml;
     exports com.github.amiguetes.edufeedai.edufeedaijavafx;
