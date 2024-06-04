@@ -36,9 +36,10 @@ public class GenerateFeedbackFileForStudents {
             String customId = submissionIdMap.getCustom_id();
 
             String relFeedbackForStudent = customId + File.separator + customId + "." + assessmentExtension;
+            String moodleFile = customId + "." + assessmentExtension;
 
             File assessmentFeedBackForStudent = new File(assessmentDirectoryFile,relFeedbackForStudent);
-            File moodleFeedbackForStudent = new File(moodleFeedback,relFeedbackForStudent);
+            File moodleFeedbackForStudent = new File(moodleFeedback,moodleFile);
 
             try {
                 if (assessmentFeedBackForStudent.exists()) {
