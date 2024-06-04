@@ -26,7 +26,7 @@ public class GenerateSubmissionIDMap {
 
         File folder = new File(assessmentFolder);
 
-        File[] files = folder.listFiles(File::isDirectory);
+        File[] files = folder.listFiles((f)->f.isDirectory() && !f.isHidden());
         SubmissionIdMap[] submissionIdMaps = new SubmissionIdMap[files.length];
 
         for (int i = 0; i < files.length; i++) {
@@ -61,8 +61,6 @@ public class GenerateSubmissionIDMap {
             e.printStackTrace();
             return null;
         }
-
-
 
     }
 

@@ -13,7 +13,6 @@ public class Assessment {
     protected Assessment(AssessmentBase assessmentBase) {
 
         this(assessmentBase.getId(), assessmentBase.getGradingCriteria(), assessmentBase.getTaskSubmitted());
-        setAssesmentFeedback(assessmentBase.getAssessmentFeedback());
 
     }
 

@@ -52,7 +52,7 @@ public class FileConcatenation {
 
         ArrayList<File> files = new ArrayList<>();
 
-        for (File file : input.listFiles((f)->f.isDirectory())) {
+        for (File file : input.listFiles((f)->f.isDirectory() && !f.isHidden())) {
             for (File file1 : file.listFiles()) {
 
                 if (file1.isFile()) {

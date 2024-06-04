@@ -51,11 +51,6 @@ public class PutAssessmentInPlace {
             String folder = submissionIdMap.get(batchRequestCustomId);
             String filename = folder + ".md";
 
-
-
-
-
-
             try {
                 java.nio.file.Files.writeString(java.nio.file.Paths.get(assessmentPath + java.io.File.separator +
                         folder + java.io.File.separator
@@ -66,14 +61,7 @@ public class PutAssessmentInPlace {
                 e.printStackTrace();
             }
 
-
-
         }
-
-
-
-
-
 
     }
 }
