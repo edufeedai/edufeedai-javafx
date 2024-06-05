@@ -1,11 +1,14 @@
 package com.github.amiguetes.edufeedai.edufeedaijavafx;
 
-import com.github.amiguetes.edufeedai.edufeedaijavafx.model.DigestImplementation;
-import com.github.amiguetes.edufeedai.edufeedaijavafx.model.SubmissionIdMap;
-import io.github.cdimascio.dotenv.Dotenv;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import com.github.amiguetes.edufeedai.edufeedaijavafx.model.DigestImplementation;
+import com.github.amiguetes.edufeedai.edufeedaijavafx.model.SubmissionIdMap;
+
+import io.github.cdimascio.dotenv.Dotenv;
+
 
 class GenerateSubmissionIDMapTest {
 
