@@ -5,6 +5,7 @@ module com.github.amiguetes.edufeedai.edufeedaijavafx {
     requires org.kordamp.ikonli.javafx;
     requires java.desktop;
     requires com.google.gson;
+    requires java.logging;
     requires java.net.http;
 
     opens com.github.amiguetes.edufeedai.edufeedaijavafx to javafx.fxml;
