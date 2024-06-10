@@ -1,22 +1,19 @@
 package com.github.amiguetes.edufeedai.edufeedaijavafx;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
+import java.util.List;
+
 import com.github.amiguetes.edufeedai.edufeedaijavafx.model.Digest;
 import com.github.amiguetes.edufeedai.edufeedaijavafx.model.openai.platform.Body;
 import com.github.amiguetes.edufeedai.edufeedaijavafx.model.openai.platform.JSONLine;
 import com.github.amiguetes.edufeedai.edufeedaijavafx.model.openai.platform.Message;
 import com.google.gson.Gson;
-
-import java.io.File;
-import java.io.FileFilter;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
 
 public class FileConcatenation {
 
@@ -25,8 +22,6 @@ public class FileConcatenation {
     private final String outputFileName;
 
     private final String sha1;
-
-    private FileFilter filter;
 
     public FileConcatenation(String inputDirectory, Digest digest){
         String sha11;

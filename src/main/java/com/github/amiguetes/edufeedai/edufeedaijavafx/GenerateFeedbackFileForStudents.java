@@ -1,12 +1,8 @@
 package com.github.amiguetes.edufeedai.edufeedaijavafx;
 
-import com.github.amiguetes.edufeedai.edufeedaijavafx.model.SubmissionIdMap;
-
 import java.io.File;
-import java.io.FileOutputStream;
-import java.nio.file.Path;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipOutputStream;
+
+import com.github.amiguetes.edufeedai.edufeedaijavafx.model.SubmissionIdMap;
 
 public class GenerateFeedbackFileForStudents {
 

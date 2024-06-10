@@ -2,10 +2,12 @@ package com.github.amiguetes.edufeedai.edufeedaijavafx;
 
 import com.github.amiguetes.edufeedai.edufeedaijavafx.model.Assessment;
 import com.github.amiguetes.edufeedai.edufeedaijavafx.model.CheckResults;
-import com.github.amiguetes.edufeedai.edufeedaijavafx.model.exceptions.AssessmentErrorException;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.TextArea;
 
 
 public class HelloController {

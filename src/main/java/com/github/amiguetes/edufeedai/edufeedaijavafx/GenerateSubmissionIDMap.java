@@ -1,16 +1,14 @@
 package com.github.amiguetes.edufeedai.edufeedaijavafx;
 
-import com.github.amiguetes.edufeedai.edufeedaijavafx.model.Digest;
-import com.github.amiguetes.edufeedai.edufeedaijavafx.model.SubmissionIdMap;
-import com.google.gson.Gson;
-
 import java.io.File;
 import java.security.NoSuchAlgorithmException;
-import java.util.Arrays;
+import static java.util.Arrays.stream;
 import java.util.Comparator;
 import java.util.List;
 
-import static java.util.Arrays.stream;
+import com.github.amiguetes.edufeedai.edufeedaijavafx.model.Digest;
+import com.github.amiguetes.edufeedai.edufeedaijavafx.model.SubmissionIdMap;
+import com.google.gson.Gson;
 
 public class GenerateSubmissionIDMap {
 
