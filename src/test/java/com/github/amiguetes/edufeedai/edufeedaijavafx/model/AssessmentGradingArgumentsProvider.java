@@ -1,19 +1,20 @@
-package com.github.amiguetes.edufeedai.edufeedaijavafx;
+package com.github.amiguetes.edufeedai.edufeedaijavafx.model;
 
-
-import com.github.amiguetes.edufeedai.edufeedaijavafx.model.AssessmentGradingConfig;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-import io.github.cdimascio.dotenv.Dotenv;
-import org.junit.jupiter.api.extension.ExtensionContext;
-import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.ArgumentsProvider;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.lang.reflect.Type;
 import java.util.stream.Stream;
+
+import org.junit.jupiter.api.extension.ExtensionContext;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.ArgumentsProvider;
+
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import io.github.cdimascio.dotenv.Dotenv;
 
 public class AssessmentGradingArgumentsProvider  implements ArgumentsProvider {
 

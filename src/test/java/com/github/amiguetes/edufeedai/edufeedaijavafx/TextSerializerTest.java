@@ -1,12 +1,13 @@
 package com.github.amiguetes.edufeedai.edufeedaijavafx;
 
-import com.github.amiguetes.edufeedai.edufeedaijavafx.model.AssessmentGradingConfig;
-import io.github.cdimascio.dotenv.Dotenv;
-import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.fail;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ArgumentsSource;
 
-import static org.junit.jupiter.api.Assertions.*;
+import com.github.amiguetes.edufeedai.edufeedaijavafx.model.AssessmentGradingArgumentsProvider;
+import com.github.amiguetes.edufeedai.edufeedaijavafx.model.AssessmentGradingConfig;
+
+import io.github.cdimascio.dotenv.Dotenv;
 
 class TextSerializerTest {
 

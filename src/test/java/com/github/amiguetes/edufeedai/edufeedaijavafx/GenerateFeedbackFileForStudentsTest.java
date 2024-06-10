@@ -1,13 +1,11 @@
 package com.github.amiguetes.edufeedai.edufeedaijavafx;
 
-import com.github.amiguetes.edufeedai.edufeedaijavafx.model.SubmissionIdMap;
-import io.github.cdimascio.dotenv.Dotenv;
+import static org.junit.jupiter.api.Assertions.fail;
 import org.junit.jupiter.api.Test;
 
-import java.nio.file.Files;
-import java.nio.file.Paths;
+import com.github.amiguetes.edufeedai.edufeedaijavafx.model.SubmissionIdMap;
 
-import static org.junit.jupiter.api.Assertions.*;
+import io.github.cdimascio.dotenv.Dotenv;
 
 class GenerateFeedbackFileForStudentsTest {
 
