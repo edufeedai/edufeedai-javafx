@@ -4,7 +4,7 @@ import java.io.File;
 
 import com.github.amiguetes.edufeedai.edufeedaijavafx.model.SubmissionIdMap;
 
-public class GenerateFeedbackFileForStudents {
+public class GenerateMoodleZipFeedbackAssessmentFile {
 
     private final String assessmentDirectory;
 
@@ -12,11 +12,11 @@ public class GenerateFeedbackFileForStudents {
 
     private final String assessmentExtension;
 
-    public GenerateFeedbackFileForStudents(String assessmentDirectory, String moodleAssessmentFeedbackDir){
+    public GenerateMoodleZipFeedbackAssessmentFile(String assessmentDirectory, String moodleAssessmentFeedbackDir){
         this(assessmentDirectory, moodleAssessmentFeedbackDir, "md");
     }
 
-    public GenerateFeedbackFileForStudents(String assessmentDirectory,String moodleAssessmentFeedbackDir, String assessmentExtension){
+    public GenerateMoodleZipFeedbackAssessmentFile(String assessmentDirectory, String moodleAssessmentFeedbackDir, String assessmentExtension){
         this.assessmentDirectory = assessmentDirectory;
         this.moodleAssessmentFeedbackDir = moodleAssessmentFeedbackDir;
         this.assessmentExtension = assessmentExtension;

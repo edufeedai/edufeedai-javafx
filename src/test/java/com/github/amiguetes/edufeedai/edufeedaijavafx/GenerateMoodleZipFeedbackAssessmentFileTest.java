@@ -1,13 +1,18 @@
 package com.github.amiguetes.edufeedai.edufeedaijavafx;
 
 import static org.junit.jupiter.api.Assertions.fail;
+
+import com.github.amiguetes.edufeedai.edufeedaijavafx.utils.ZipUtils;
 import org.junit.jupiter.api.Test;
 
 import com.github.amiguetes.edufeedai.edufeedaijavafx.model.SubmissionIdMap;
 
 import io.github.cdimascio.dotenv.Dotenv;
 
-class GenerateFeedbackFileForStudentsTest {
+import java.io.File;
+import java.io.IOException;
+
+class GenerateMoodleZipFeedbackAssessmentFileTest {
 
     String assessmentPath = Dotenv.load().get("ASSESSMENT_TEST_DIR");
     String assessmentMapFilePath = assessmentPath + java.io.File.separator + Dotenv.load().get("ASSESSMENT_ID_MAP_FILE");
@@ -17,7 +22,7 @@ class GenerateFeedbackFileForStudentsTest {
     @Test
     void generateFeedbackFile() {
 
-        GenerateFeedbackFileForStudents generateFeedbackFileForStudents = new GenerateFeedbackFileForStudents(assessmentPath,moodleAssessmentFeedbackDir);
+        GenerateMoodleZipFeedbackAssessmentFile generateFeedbackFileForStudents = new GenerateMoodleZipFeedbackAssessmentFile(assessmentPath,moodleAssessmentFeedbackDir);
 
         StringBuilder assessmentMap = new StringBuilder();
 
@@ -26,7 +31,7 @@ class GenerateFeedbackFileForStudentsTest {
                 assessmentMap.append(sc.nextLine());
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            fail(e);
         }
 
         com.google.gson.Gson gson = new com.google.gson.GsonBuilder().setPrettyPrinting().create();
@@ -36,8 +41,14 @@ class GenerateFeedbackFileForStudentsTest {
         try {
             generateFeedbackFileForStudents.generateFeedbackFile(submissionIdArray);
         } catch (Exception e) {
-            e.printStackTrace();
-            fail("Exception thrown");
+            fail(e);
         }
+
+        try {
+            ZipUtils.compressFileAndRemoveDirectories((new File(moodleAssessmentFeedbackDir).toPath()), "md");
+        } catch (IOException e) {
+            fail(e);
+        }
+
     }
 }
