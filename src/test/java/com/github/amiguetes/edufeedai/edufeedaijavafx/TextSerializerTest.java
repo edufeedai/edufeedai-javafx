@@ -18,6 +18,9 @@ class TextSerializerTest {
     void packageFiles(AssessmentGradingConfig config) {
 
         TextSerializer serializer = new TextSerializer(assessmentDirectory);
+
+        serializer.deleteAllStudentsJSONOpenAIJob();
+
         try {
             serializer.packageFiles(config.getInstruction());
         } catch (Exception e) {

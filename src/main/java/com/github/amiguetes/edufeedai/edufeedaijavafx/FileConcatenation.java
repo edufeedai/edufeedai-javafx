@@ -46,10 +46,12 @@ public class FileConcatenation {
         List<File> files = new ArrayList<>();
 
         for (File file : dir.listFiles()) {
-            if (file.isDirectory() && !file.isHidden()) {
-                files.addAll(listAllFiles(file)); // llamada recursiva para subdirectorios
-            } else if (file.isFile()) {
-                files.add(file);
+            if (!file.isHidden() && !file.getName().equals("git-book")){
+                if (file.isDirectory()) {
+                    files.addAll(listAllFiles(file)); // llamada recursiva para subdirectorios
+                } else if (file.isFile()) {
+                    files.add(file);
+                }
             }
         }
 

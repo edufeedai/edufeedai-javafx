@@ -24,6 +24,23 @@ public class TextSerializer {
         this.outputFilePath = inputDirectory + File.separator + path.getFileName().toString() + ".jsonl";
     }
 
+    public void deleteAllStudentsJSONOpenAIJob(){
+
+        File studentsSubmissions = new File(inputDirectory);
+
+        for (File studentSubmission : studentsSubmissions.listFiles()) {
+            if (studentSubmission.isDirectory() && !studentSubmission.isHidden()){
+                File[] submissions = studentSubmission.listFiles((dir, name) -> name.toLowerCase().endsWith(".json"));
+                for (File submission : submissions) {
+                    submission.delete();
+
+                }
+            }
+
+        }
+
+    }
+
     private List<File> listAllLevel1Dirs() throws IOException{
 
         File input = new File(inputDirectory);
