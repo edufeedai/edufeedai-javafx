@@ -82,7 +82,10 @@ public class ZipUtils {
 
                 deleteDirectory(directory);
             }
+            
         }
+
+        deleteDirectory(dir);
     }
 
     private static void zipDirectory(File folder, String parentFolder, ZipOutputStream zos) throws IOException {
