@@ -42,23 +42,24 @@ public class FileConcatenation {
         this.outputFileName = inputDirectory + File.separator + sha1 + ".json";
     }
 
-    private List<File> listAllFiles() throws IOException {
-        File input = new File(inputDirectory);
+    private List<File> listAllFiles(File dir) {
+        List<File> files = new ArrayList<>();
 
-        ArrayList<File> files = new ArrayList<>();
-
-        for (File file : input.listFiles((f)->f.isDirectory() && !f.isHidden())) {
-            for (File file1 : file.listFiles()) {
-
-                if (file1.isFile()) {
-                    files.add(file1);
-                }
-
+        for (File file : dir.listFiles()) {
+            if (file.isDirectory() && !file.isHidden()) {
+                files.addAll(listAllFiles(file)); // llamada recursiva para subdirectorios
+            } else if (file.isFile()) {
+                files.add(file);
             }
         }
 
-
         return files;
+    }
+
+    private List<File> listAllFiles() throws IOException {
+
+        File input = new File(inputDirectory);
+        return listAllFiles(input);
 
     }
 
