@@ -28,7 +28,7 @@ class TextSerializerTest {
         }
 
         try {
-            serializer.generateJSONL();
+            serializer.generateJSONL(5);
         } catch (Exception e) {
             fail(e);
         }

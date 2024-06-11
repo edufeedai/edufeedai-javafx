@@ -1,6 +1,7 @@
 package com.github.amiguetes.edufeedai.edufeedaijavafx;
 
 import java.io.File;
+import java.io.FilenameFilter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -15,7 +16,7 @@ import com.github.amiguetes.edufeedai.edufeedaijavafx.model.openai.platform.JSON
 import com.github.amiguetes.edufeedai.edufeedaijavafx.model.openai.platform.Message;
 import com.google.gson.Gson;
 
-public class FileConcatenation {
+public class FileConcatenation implements FilenameFilter {
 
     private final String inputDirectory;
 
@@ -45,20 +46,20 @@ public class FileConcatenation {
     private List<File> listAllFiles(File dir) {
         List<File> files = new ArrayList<>();
 
-        for (File file : dir.listFiles()) {
-            if (!file.isHidden() && !file.getName().equals("git-book")){
-                if (file.isDirectory()) {
-                    files.addAll(listAllFiles(file)); // llamada recursiva para subdirectorios
-                } else if (file.isFile()) {
-                    files.add(file);
-                }
+        for (File file : dir.listFiles(this)) {
+
+            if (file.isDirectory()) {
+                files.addAll(listAllFiles(file)); // llamada recursiva para subdirectorios
+            } else if (file.isFile()) {
+                files.add(file);
             }
+
         }
 
         return files;
     }
 
-    private List<File> listAllFiles() throws IOException {
+    private List<File> listAllFiles() {
 
         File input = new File(inputDirectory);
         return listAllFiles(input);
@@ -113,11 +114,86 @@ public class FileConcatenation {
 
         jsonLine.setBody(body);
 
-
         Gson gson = new Gson();
         String s = gson.toJson(jsonLine);
 
         Files.write(Paths.get(outputFileName ), s.getBytes());
+    }
+
+    @Override
+    public boolean accept(File dir, String name) {
+
+        File hijo = new File(dir,name);
+
+        if (hijo.isHidden()){
+            return false;
+        }
+
+        if (name.equals("git-book")){
+            return false;
+        }
+
+        String ext = name.substring(name.lastIndexOf(".")+1).toLowerCase();
+
+        switch (name){
+            case "package.json",
+                 "package-lock.json",
+                 "node_modules",
+                 "tsconfig.json",
+                 "app.js",
+                 "README.md",
+                 "LICENSE",
+                 "Dockerfile":
+
+            return false;
+        }
+
+        if (!ext.isEmpty()){
+
+            switch (ext){
+
+                case "jpg",
+                    "jpeg",
+                    "png",
+                    "gif",
+                    "bmp",
+                    "tiff",
+                    "svg",
+                    "webp",
+                    "ico",
+                     "mp4",
+                     "webm",
+                     "ogg",
+                     "mp3",
+                     "wav",
+                     "flac",
+                     "aac",
+                     "wma",
+                     "m4a",
+                     "opus",
+                     "pdf",
+                     "doc",
+                     "docx",
+                     "xls",
+                     "xlsx",
+                     "ppt",
+                     "pptx",
+                     "zip",
+                        "rar",
+                        "tar",
+                        "gz",
+                        "7z",
+                        "bz2",
+                        "xz":
+
+
+                    return false;
+
+            }
+
+        }
+
+        return true;
     }
 
 }

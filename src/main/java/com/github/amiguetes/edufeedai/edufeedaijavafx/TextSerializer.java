@@ -21,7 +21,7 @@ public class TextSerializer {
         this.inputDirectory = taskDirectory;
 
         Path path = Paths.get(taskDirectory);
-        this.outputFilePath = inputDirectory + File.separator + path.getFileName().toString() + ".jsonl";
+        this.outputFilePath = inputDirectory + File.separator + path.getFileName().toString().split(" ")[0] + ".jsonl";
     }
 
     public void deleteAllStudentsJSONOpenAIJob(){
@@ -86,8 +86,59 @@ public class TextSerializer {
 
     public void generateJSONL() throws IOException {
         List<File> files = findAllJsons();
-        String content = concatenateFiles(files);
-        writeJsonl(content, outputFilePath);
+        generateJSONL(files.size());
+    }
+
+    public void generateJSONL(int jsonsPerVolume) throws IOException{
+        List<File> files = findAllJsons();
+
+        for (int i = 0; i < files.size(); i+=jsonsPerVolume){
+
+            List<File> currentVolume = files.subList(i, Math.min(i + jsonsPerVolume,files.size()));
+            String currentContent = concatenateFiles(currentVolume);
+
+
+            File outputFilePathFile = new File(outputFilePath);
+            File outputParentFilePath = outputFilePathFile.getParentFile();
+
+            String file = removeExtension(outputFilePathFile.getName());
+            String ext = getExtension(outputFilePathFile.getName());
+
+            int totalFiles = files.size()/jsonsPerVolume + (files.size()%jsonsPerVolume == 0 ? 0 : 1);
+
+            writeJsonl(currentContent,new File(
+                    outputParentFilePath,
+                    String.format("%svol%dde%d.%s",file,(i+jsonsPerVolume)/jsonsPerVolume,totalFiles,ext).toString()
+            ).toString());
+
+        }
+
+    }
+
+    private static String removeExtension(String fileName) {
+        if (fileName == null || fileName.isEmpty()) {
+            return fileName;
+        }
+
+        int lastDotIndex = fileName.lastIndexOf('.');
+        if (lastDotIndex == -1) {
+            return fileName; // No extension found
+        }
+
+        return fileName.substring(0, lastDotIndex);
+    }
+
+    private static String getExtension(String fileName) {
+        if (fileName == null || fileName.isEmpty()) {
+            return fileName;
+        }
+
+        int lastDotIndex = fileName.lastIndexOf('.');
+        if (lastDotIndex == -1) {
+            return fileName; // No extension found
+        }
+
+        return fileName.substring(lastDotIndex + 1);
     }
 
     public void packageFiles(String instructions) throws IOException {
