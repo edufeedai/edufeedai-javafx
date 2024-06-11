@@ -39,6 +39,7 @@ public class ZipUtilsTest {
 
         String testDirPathString = "test-"  + getClass().getName() + "-" + System.currentTimeMillis();
         testDirectoryPath = tempDir.resolve(testDirPathString);
+        
         Files.createDirectory(testDirectoryPath);
 
         Path testPath = testDirectoryPath.resolve(testDirPath);
