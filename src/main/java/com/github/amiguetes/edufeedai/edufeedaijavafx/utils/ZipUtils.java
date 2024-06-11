@@ -13,6 +13,13 @@ import java.util.zip.ZipOutputStream;
 
 public class ZipUtils {
 
+    /**
+     * Decompress a directory and its content into a the current directory
+     * 
+     * @param directoryPath the path of the directory
+     * @throws IOException if an I/O error occurs
+     * 
+     */
     public static void unzipAndRemove(Path directoryPath) throws IOException {
         File dir = directoryPath.toFile();
         File[] files = dir.listFiles((d, name) -> name.endsWith(".zip"));
