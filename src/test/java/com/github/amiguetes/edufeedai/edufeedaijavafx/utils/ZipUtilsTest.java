@@ -21,6 +21,14 @@ public class ZipUtilsTest {
     private final String testDirPath = "testDir";
     private final String zipDirPath = "zipDir";
 
+    private final String testDirFile = testDirPath + ".zip";
+    private final String zipDirFile = zipDirPath + ".zip";
+
+    private final String testFile1 = "file1.txt";
+    private final String testFile2 = "file2.txt";
+    private final String testFile3 = "file3.txt";
+    private final String testFile4 = "file4.txt";
+
     @BeforeEach
     public void setUp() throws IOException {
         // Crear directorio de prueba
@@ -30,19 +38,19 @@ public class ZipUtilsTest {
         }
 
         // Crear algunos archivos en el directorio de prueba
-        Files.createFile(Paths.get(testDirPath, "file1.txt"));
-        Files.createFile(Paths.get(testDirPath, "file2.txt"));
+        Files.createFile(Paths.get(testDirPath, testFile1));
+        Files.createFile(Paths.get(testDirPath, testFile2));
 
         // Crear directorio zipDir y algunos archivos en él
         File zipDir = new File(zipDirPath);
         if (!zipDir.exists()) {
             zipDir.mkdir();
         }
-        Files.createFile(Paths.get(zipDirPath, "file3.txt"));
-        Files.createFile(Paths.get(zipDirPath, "file4.txt"));
+        Files.createFile(Paths.get(zipDirPath, testFile3));
+        Files.createFile(Paths.get(zipDirPath, testFile4));
 
         // Comprimir el directorio de prueba en un archivo ZIP
-        try (FileOutputStream fos = new FileOutputStream("testDir.zip");
+        try (FileOutputStream fos = new FileOutputStream(testDirFile);
              ZipOutputStream zos = new ZipOutputStream(fos)) {
 
             zipDirectory(testDir, testDir.getName(), zos);
@@ -54,8 +62,8 @@ public class ZipUtilsTest {
         // Eliminar directorios y archivos de prueba
         deleteDirectory(new File(testDirPath));
         deleteDirectory(new File(zipDirPath));
-        Files.deleteIfExists(Paths.get("testDir.zip"));
-        Files.deleteIfExists(Paths.get("zipDir.zip"));
+        Files.deleteIfExists(Paths.get(testDirFile));
+        Files.deleteIfExists(Paths.get(zipDirFile));
     }
 
     @Test
@@ -64,11 +72,11 @@ public class ZipUtilsTest {
         ZipUtils.unzipAndRemove(".");
 
         // Verificar que el archivo ZIP haya sido eliminado
-        assertFalse(new File("testDir.zip").exists());
+        assertFalse(new File(testDirFile).exists());
 
         // Verificar que el directorio haya sido descomprimido correctamente
-        assertTrue(new File("testDir/file1.txt").exists());
-        assertTrue(new File("testDir/file2.txt").exists());
+        assertTrue(new File(testDirPath + File.separator + testFile1).exists());
+        assertTrue(new File(testDirPath + File.separator + testFile2).exists());
     }
 
     @Test
@@ -80,7 +88,7 @@ public class ZipUtilsTest {
         assertFalse(new File(zipDirPath).exists());
 
         // Verificar que el archivo ZIP haya sido creado
-        assertTrue(new File("zipDir.zip").exists());
+        assertTrue(new File(zipDirFile).exists());
     }
 
     // Método auxiliar para comprimir un directorio
