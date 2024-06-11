@@ -65,39 +65,34 @@ public class ZipUtils {
         return destFile;
     }
 
-    public static void compressAndRemoveDirectories(String directoryPath) throws IOException {
-        File dir = new File(directoryPath);
-        File[] directories = dir.listFiles(File::isDirectory);
+    /**
+     * Compress all files with the given file extension in the given directory and remove the directories
+     * @param path the path of the directory
+     * @param fileExtension the file extension of the files to compress
+     * @throws IOException if an I/O error occurs
+     * 
+     */
+    public static void compressFileAndRemoveDirectories(Path path, String fileExtension) throws IOException {
 
-        if (directories != null) {
-            for (File directory : directories) {
-                String dirName = directory.getName();
-                String zipFileName = directory.toPath().resolveSibling(dirName + ".zip").toString();
+        File[] files = path.toFile().listFiles((d, name) -> name.toLowerCase().endsWith(fileExtension));
 
-                try (FileOutputStream fos = new FileOutputStream(zipFileName);
-                     ZipOutputStream zos = new ZipOutputStream(fos)) {
+        File outputZip = new File(path.toString() + ".zip");
 
-                    zipDirectory(directory, directory.getName(), zos);
+        if (files != null) {
+
+            try (FileOutputStream fos = new FileOutputStream(outputZip);
+                 ZipOutputStream zos = new ZipOutputStream(fos)) {
+
+                for (File file : files) {
+                    zos.putNextEntry(new ZipEntry(file.getName()));
+
+                    Files.copy(file.toPath(), zos);
+
+                    zos.closeEntry();
                 }
             }
-            
-        }
-    }
 
-    private static void zipDirectory(File folder, String parentFolder, ZipOutputStream zos) throws IOException {
-        File[] files = folder.listFiles();
-
-        for (File file : files) {
-            if (file.isDirectory()) {
-                zipDirectory(file, parentFolder + "/" + file.getName(), zos);
-                continue;
-            }
-
-            zos.putNextEntry(new ZipEntry(parentFolder + "/" + file.getName()));
-
-            Files.copy(file.toPath(), zos);
-
-            zos.closeEntry();
+            deleteDirectory(path.toFile());
         }
     }
 
@@ -105,6 +100,7 @@ public class ZipUtils {
         Files.walk(directory.toPath())
              .map(Path::toFile)
              .forEach(File::delete);
+        directory.delete();
     }
 
 

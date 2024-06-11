@@ -82,7 +82,7 @@ public class ZipUtilsTest {
     @Test
     public void testCompressAndRemoveDirectories() throws IOException {
 
-        ZipUtils.compressAndRemoveDirectories(testDirectoryPath.toString());
+        ZipUtils.compressFileAndRemoveDirectories(testDirectoryPath.resolve(testDirPath), ".txt");
 
         assertFalse(Files.exists(testDirectoryPath.resolve(testDirPath)));
         assertTrue(Files.exists(testDirectoryPath.resolve(testDirFile)));
