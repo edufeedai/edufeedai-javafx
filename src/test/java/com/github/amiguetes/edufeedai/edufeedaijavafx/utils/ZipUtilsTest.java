@@ -15,8 +15,14 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.io.TempDir;
 
 public class ZipUtilsTest {
+
+    @TempDir
+    Path tempDir;
+
+    Path testDirectoryPath;
 
     private final String testDirPath = "testDir";
     private final String zipDirPath = "zipDir";
@@ -31,6 +37,10 @@ public class ZipUtilsTest {
 
     @BeforeEach
     public void setUp() throws IOException {
+
+        String testDirPathString = "test-"  + getClass().getName() + "-" + System.currentTimeMillis();
+        testDirectoryPath = tempDir.resolve(testDirPathString);
+
         // Crear directorio de prueba
         File testDir = new File(testDirPath);
         if (!testDir.exists()) {
