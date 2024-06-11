@@ -13,14 +13,14 @@ import java.util.zip.ZipOutputStream;
 
 public class ZipUtils {
 
-    public static void unzipAndRemove(String directoryPath) throws IOException {
-        File dir = new File(directoryPath);
+    public static void unzipAndRemove(Path directoryPath) throws IOException {
+        File dir = directoryPath.toFile();
         File[] files = dir.listFiles((d, name) -> name.endsWith(".zip"));
 
         if (files != null) {
             for (File file : files) {
                 String fileName = file.getName();
-                String destDir = fileName.substring(0, fileName.lastIndexOf("."));
+                String destDir = directoryPath.resolve(fileName.substring(0, fileName.lastIndexOf("."))).toString();
 
                 File destDirFile = new File(destDir);
                 if (!destDirFile.exists()) {

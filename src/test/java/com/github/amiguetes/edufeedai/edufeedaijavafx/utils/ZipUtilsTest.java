@@ -69,7 +69,7 @@ public class ZipUtilsTest {
     @Test
     public void testUnzipAndRemove() throws IOException {
 
-        ZipUtils.unzipAndRemove(testDirectoryPath.toString());
+        ZipUtils.unzipAndRemove(testDirectoryPath);
 
         assertFalse(Files.exists(testDirectoryPath.resolve(testDirFile)));
 
