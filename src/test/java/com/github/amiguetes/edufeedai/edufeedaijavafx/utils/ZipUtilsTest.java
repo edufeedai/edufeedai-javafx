@@ -1,12 +1,10 @@
 package com.github.amiguetes.edufeedai.edufeedaijavafx.utils;
 
-
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
@@ -44,34 +42,31 @@ public class ZipUtilsTest {
 
         // Crear directorio de prueba
         Path testPath = testDirectoryPath.resolve(testDirPath);
-        Files.createDirectories( testPath );
+        Files.createDirectories(testPath);
 
         // Crear algunos archivos en el directorio de prueba
-        Files.createFile( testPath.resolve( testFile1 ));
-        Files.createFile(  testPath.resolve( testFile2 ) );
+        Files.createFile(testPath.resolve(testFile1));
+        Files.createFile(testPath.resolve(testFile2));
 
         // Crear directorio zipDir y algunos archivos en él
         Path zipPath = testDirectoryPath.resolve(zipDirPath);
-        Files.createDirectories( zipPath );
+        Files.createDirectories(zipPath);
 
-        Files.createFile( zipPath.resolve(testFile3) );
-        Files.createFile( zipPath.resolve(testFile4) );
+        Files.createFile(zipPath.resolve(testFile3));
+        Files.createFile(zipPath.resolve(testFile4));
 
         // Comprimir el directorio de prueba en un archivo ZIP
-        try (FileOutputStream fos = new FileOutputStream(testDirFile);
+        try (FileOutputStream fos = new FileOutputStream(testDirectoryPath.resolve(testDirFile).toFile());
              ZipOutputStream zos = new ZipOutputStream(fos)) {
 
-            zipDirectory(testPath.toFile(), testPath.toFile().getName(), zos);
+            zipDirectory(testPath, testPath.getFileName().toString(), zos);
         }
     }
 
     @AfterEach
     public void tearDown() throws IOException {
         // Eliminar directorios y archivos de prueba
-        deleteDirectory(new File(testDirPath));
-        deleteDirectory(new File(zipDirPath));
-        Files.deleteIfExists(Paths.get(testDirFile));
-        Files.deleteIfExists(Paths.get(zipDirFile));
+        deleteDirectory(testDirectoryPath);
     }
 
     @Test
@@ -80,15 +75,15 @@ public class ZipUtilsTest {
         ZipUtils.unzipAndRemove(testDirectoryPath.toString());
 
         // Verificar que el archivo ZIP haya sido eliminado
-        assertFalse(((testDirectoryPath.resolve(testDirFile)).toFile()).exists());
+        assertFalse(Files.exists(testDirectoryPath.resolve(testDirFile)));
 
         // Verificar que el directorio haya sido descomprimido correctamente
 
         String relFile1 = testDirPath + File.separator + testFile1;
         String relFile2 = testDirPath + File.separator + testFile2;
 
-        assertTrue(((testDirectoryPath.resolve(relFile1)).toFile()).exists());
-        assertTrue(((testDirectoryPath.resolve(relFile2)).toFile()).exists());
+        assertTrue(Files.exists(testDirectoryPath.resolve(relFile1)));
+        assertTrue(Files.exists(testDirectoryPath.resolve(relFile2)));
     }
 
     @Test
@@ -97,34 +92,39 @@ public class ZipUtilsTest {
         ZipUtils.compressAndRemoveDirectories(testDirectoryPath.toString());
 
         // Verificar que el directorio original haya sido eliminado
-        assertFalse(((testDirectoryPath.resolve(testDirPath)).toFile()).exists());
+        assertFalse(Files.exists(testDirectoryPath.resolve(testDirPath)));
 
         // Verificar que el archivo ZIP haya sido creado
-        assertTrue(((testDirectoryPath.resolve(testDirFile)).toFile()).exists());
+        assertTrue(Files.exists(testDirectoryPath.resolve(testDirFile)));
     }
 
     // Método auxiliar para comprimir un directorio
-    private void zipDirectory(File folder, String parentFolder, ZipOutputStream zos) throws IOException {
-        File[] files = folder.listFiles();
-
-        for (File file : files) {
-            if (file.isDirectory()) {
-                zipDirectory(file, parentFolder + "/" + file.getName(), zos);
-                continue;
+    private void zipDirectory(Path folder, String parentFolder, ZipOutputStream zos) throws IOException {
+        Files.walk(folder).forEach(path -> {
+            if (Files.isDirectory(path)) {
+                return; // Si es un directorio, continuar la iteración
             }
-
-            zos.putNextEntry(new ZipEntry(parentFolder + "/" + file.getName()));
-
-            Files.copy(file.toPath(), zos);
-
-            zos.closeEntry();
-        }
+            String zipEntryName = parentFolder + "/" + folder.relativize(path).toString().replace("\\", "/");
+            try {
+                zos.putNextEntry(new ZipEntry(zipEntryName));
+                Files.copy(path, zos);
+                zos.closeEntry();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
     }
 
     // Método auxiliar para eliminar un directorio y su contenido
-    private void deleteDirectory(File directory) throws IOException {
-        Files.walk(directory.toPath())
-             .map(Path::toFile)
-             .forEach(File::delete);
+    private void deleteDirectory(Path directory) throws IOException {
+        Files.walk(directory)
+             .sorted((a, b) -> b.compareTo(a)) // Eliminar primero los archivos y subdirectorios
+             .forEach(path -> {
+                 try {
+                     Files.delete(path);
+                 } catch (IOException e) {
+                     e.printStackTrace();
+                 }
+             });
     }
 }
