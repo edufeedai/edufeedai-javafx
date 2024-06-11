@@ -55,7 +55,7 @@ public class ZipUtilsTest {
         Files.createDirectories( zipPath );
 
         Files.createFile( zipPath.resolve(testFile3) );
-        Files.createFile( zipPath.resolve(testFile3) );
+        Files.createFile( zipPath.resolve(testFile4) );
 
         // Comprimir el directorio de prueba en un archivo ZIP
         try (FileOutputStream fos = new FileOutputStream(testDirFile);
@@ -77,26 +77,30 @@ public class ZipUtilsTest {
     @Test
     public void testUnzipAndRemove() throws IOException {
         // Ejecutar el método de descomprimir y eliminar
-        ZipUtils.unzipAndRemove(".");
+        ZipUtils.unzipAndRemove(testDirectoryPath.toString());
 
         // Verificar que el archivo ZIP haya sido eliminado
-        assertFalse(new File(testDirFile).exists());
+        assertFalse(((testDirectoryPath.resolve(testDirFile)).toFile()).exists());
 
         // Verificar que el directorio haya sido descomprimido correctamente
-        assertTrue(new File(testDirPath + File.separator + testFile1).exists());
-        assertTrue(new File(testDirPath + File.separator + testFile2).exists());
+
+        String relFile1 = testDirPath + File.separator + testFile1;
+        String relFile2 = testDirPath + File.separator + testFile2;
+
+        assertTrue(((testDirectoryPath.resolve(relFile1)).toFile()).exists());
+        assertTrue(((testDirectoryPath.resolve(relFile2)).toFile()).exists());
     }
 
     @Test
     public void testCompressAndRemoveDirectories() throws IOException {
         // Ejecutar el método de comprimir y eliminar
-        ZipUtils.compressAndRemoveDirectories(".");
+        ZipUtils.compressAndRemoveDirectories(testDirectoryPath.toString());
 
         // Verificar que el directorio original haya sido eliminado
-        assertFalse(new File(zipDirPath).exists());
+        assertFalse(((testDirectoryPath.resolve(testDirPath)).toFile()).exists());
 
         // Verificar que el archivo ZIP haya sido creado
-        assertTrue(new File(zipDirFile).exists());
+        assertTrue(((testDirectoryPath.resolve(testDirFile)).toFile()).exists());
     }
 
     // Método auxiliar para comprimir un directorio
