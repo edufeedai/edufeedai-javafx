@@ -8,8 +8,16 @@ import com.google.gson.GsonBuilder;
 import java.io.FileReader;
 import java.util.*;
 
-public class PutAssessmentInPlace {
+public class PutFeedbackIntoStudentsFolders {
 
+    /**
+     * This method reads the assessment map and the assessment responses from OpenAI in jsonl format and puts the
+     * feedback in the Student's folders
+     *
+     * @param assessmentPath the path where the assessment will be put
+     * @param assessmentMapFilePath the path to the assessment map file
+     * @param assessmentResponsesFilePath the path to the assessment responses file
+     */
     public static void putAssessmentInPlaceWorker(String assessmentPath, String assessmentMapFilePath, String assessmentResponsesFilePath){
 
         Gson gson = new GsonBuilder().setPrettyPrinting().create();

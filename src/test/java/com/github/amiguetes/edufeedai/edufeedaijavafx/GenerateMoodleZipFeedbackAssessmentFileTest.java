@@ -3,6 +3,7 @@ package com.github.amiguetes.edufeedai.edufeedaijavafx;
 import static org.junit.jupiter.api.Assertions.fail;
 
 import com.github.amiguetes.edufeedai.edufeedaijavafx.utils.ZipUtils;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import com.github.amiguetes.edufeedai.edufeedaijavafx.model.SubmissionIdMap;
@@ -12,6 +13,7 @@ import io.github.cdimascio.dotenv.Dotenv;
 import java.io.File;
 import java.io.IOException;
 
+@DisplayName("TESTS - GenerateMoodleZipFeedbackAssessmentFileTest")
 class GenerateMoodleZipFeedbackAssessmentFileTest {
 
     String assessmentPath = Dotenv.load().get("ASSESSMENT_TEST_DIR");
@@ -20,6 +22,7 @@ class GenerateMoodleZipFeedbackAssessmentFileTest {
     String moodleAssessmentFeedbackDir = Dotenv.load().get("MOODLE_ASSESSMENT_FEEDBACK_DIR");
 
     @Test
+    @DisplayName("Genera el archivo de feedback de la evaluación para Moodle")
     void generateFeedbackFile() {
 
         GenerateMoodleZipFeedbackAssessmentFile generateFeedbackFileForStudents = new GenerateMoodleZipFeedbackAssessmentFile(assessmentPath,moodleAssessmentFeedbackDir);
