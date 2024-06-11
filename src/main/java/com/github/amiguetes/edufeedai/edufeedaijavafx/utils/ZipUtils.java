@@ -79,13 +79,9 @@ public class ZipUtils {
 
                     zipDirectory(directory, directory.getName(), zos);
                 }
-
-                deleteDirectory(directory);
             }
             
         }
-
-        deleteDirectory(dir);
     }
 
     private static void zipDirectory(File folder, String parentFolder, ZipOutputStream zos) throws IOException {
