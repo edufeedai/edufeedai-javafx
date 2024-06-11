@@ -72,7 +72,7 @@ public class ZipUtils {
         if (directories != null) {
             for (File directory : directories) {
                 String dirName = directory.getName();
-                String zipFileName = dirName + ".zip";
+                String zipFileName = directory.toPath().resolveSibling(dirName + ".zip").toString();
 
                 try (FileOutputStream fos = new FileOutputStream(zipFileName);
                      ZipOutputStream zos = new ZipOutputStream(fos)) {
