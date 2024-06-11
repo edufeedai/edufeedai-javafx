@@ -40,30 +40,28 @@ public class ZipUtilsTest {
 
         String testDirPathString = "test-"  + getClass().getName() + "-" + System.currentTimeMillis();
         testDirectoryPath = tempDir.resolve(testDirPathString);
+        Files.createDirectory(testDirectoryPath);
 
         // Crear directorio de prueba
-        File testDir = new File(testDirPath);
-        if (!testDir.exists()) {
-            testDir.mkdir();
-        }
+        Path testPath = testDirectoryPath.resolve(testDirPath);
+        Files.createDirectories( testPath );
 
         // Crear algunos archivos en el directorio de prueba
-        Files.createFile(Paths.get(testDirPath, testFile1));
-        Files.createFile(Paths.get(testDirPath, testFile2));
+        Files.createFile( testPath.resolve( testFile1 ));
+        Files.createFile(  testPath.resolve( testFile2 ) );
 
         // Crear directorio zipDir y algunos archivos en él
-        File zipDir = new File(zipDirPath);
-        if (!zipDir.exists()) {
-            zipDir.mkdir();
-        }
-        Files.createFile(Paths.get(zipDirPath, testFile3));
-        Files.createFile(Paths.get(zipDirPath, testFile4));
+        Path zipPath = testDirectoryPath.resolve(zipDirPath);
+        Files.createDirectories( zipPath );
+
+        Files.createFile( zipPath.resolve(testFile3) );
+        Files.createFile( zipPath.resolve(testFile3) );
 
         // Comprimir el directorio de prueba en un archivo ZIP
         try (FileOutputStream fos = new FileOutputStream(testDirFile);
              ZipOutputStream zos = new ZipOutputStream(fos)) {
 
-            zipDirectory(testDir, testDir.getName(), zos);
+            zipDirectory(testPath.toFile(), testPath.toFile().getName(), zos);
         }
     }
 
