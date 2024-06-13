@@ -25,6 +25,9 @@ class GenerateMoodleZipFeedbackAssessmentFileTest {
     @DisplayName("Genera el archivo de feedback de la evaluación para Moodle")
     void generateFeedbackFile() {
 
+        File archivo = new File(moodleAssessmentFeedbackDir);
+        archivo.mkdirs();
+
         GenerateMoodleZipFeedbackAssessmentFile generateFeedbackFileForStudents = new GenerateMoodleZipFeedbackAssessmentFile(assessmentPath,moodleAssessmentFeedbackDir);
 
         StringBuilder assessmentMap = new StringBuilder();
