@@ -141,7 +141,6 @@ public class FileConcatenation implements FilenameFilter {
                  "node_modules",
                  "tsconfig.json",
                  "app.js",
-                 "README.md",
                  "LICENSE",
                  "Dockerfile":
 
@@ -185,6 +184,7 @@ public class FileConcatenation implements FilenameFilter {
                         "7z",
                         "bz2",
                         "xz":
+                case "xml":
 
 
                     return false;
