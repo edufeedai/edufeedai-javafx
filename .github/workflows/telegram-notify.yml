@@ -15,7 +15,7 @@ jobs:
           -d '{"chat_id": "${TELEGRAM_CHAT_ID}", "text": "Se ha realizado un push al repositorio.", "disable_notification": true}' \
           https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendMessage)
         
-        if [ $RESPONSE -ne 400 ]; then
+        if [ $RESPONSE -ne 200 ]; then
           echo "Error: Failed to send message. HTTP Status Code: $RESPONSE"
           cat response.txt
           exit 1
