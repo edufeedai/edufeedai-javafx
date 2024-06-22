@@ -9,7 +9,14 @@ jobs:
         TELEGRAM_TOKEN: ${{ secrets.TELEGRAM_TOKEN }}
         TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
       run: |
-        curl -X POST \
+        RESPONSE=$(curl -X POST \
+          -o response.txt \
           -H 'Content-Type: application/json' \
           -d '{"chat_id": "${TELEGRAM_CHAT_ID}", "text": "Se ha realizado un push al repositorio.", "disable_notification": true}' \
-          https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendMessage
+          https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendMessage)
+        
+        if [ $RESPONSE -ne 400 ]; then
+          echo "Error: Failed to send message. HTTP Status Code: $RESPONSE"
+          cat response.txt
+          exit 1
+        fi
