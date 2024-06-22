@@ -12,8 +12,7 @@ jobs:
         RESPONSE=$(curl -s -o response.txt -w "%{http_code}" -X POST \
           -H 'Content-Type: application/json' \
           -d '{"chat_id": "'"${TELEGRAM_CHAT_ID}"'", "text": "Se ha realizado un push al repositorio.", "disable_notification": true}' \
-          https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendMessage)
-
+          https://api.telegram.org/bot${TELEGRAM_TOKEN}/sendMessage);
         if [ "$RESPONSE" -ne 200 ]; then
           echo "Error: Failed to send message. HTTP Status Code: $RESPONSE"
           cat response.txt
