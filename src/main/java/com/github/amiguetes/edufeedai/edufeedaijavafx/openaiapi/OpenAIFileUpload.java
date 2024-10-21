@@ -17,21 +17,24 @@ public class OpenAIFileUpload {
 
     String apiKey;
     String uploadUrl;
-    File jsonlFile;
 
-    public OpenAIFileUpload(String apiKey,String jsonlFilePath){
-        this(apiKey,"https://api.openai.com/v1/files",jsonlFilePath);
+    public OpenAIFileUpload(String apiKey){
+        this(apiKey,"https://api.openai.com/v1/files");
     }
 
-    public OpenAIFileUpload(String apiKey,String uploadUrl,String jsonlFilePath){
+    public OpenAIFileUpload(String apiKey,String uploadUrl){
 
         this.apiKey = apiKey;
         this.uploadUrl = uploadUrl;
-        jsonlFile = new File(jsonlFilePath);
 
     }
 
-    public String uploadFile() throws OpenAIAPIException{
+    public String uploadFile(String filePath) throws OpenAIAPIException{
+        File jsonlFile = new File(filePath);
+        return uploadFile(jsonlFile);
+    }
+
+    public String uploadFile(File jsonlFile) throws OpenAIAPIException{
 
         try (CloseableHttpClient httpClient = HttpClients.createDefault()) {
             HttpPost uploadRequest = new HttpPost(uploadUrl);
@@ -39,8 +42,8 @@ public class OpenAIFileUpload {
 
             // Usamos MultipartEntityBuilder para construir la solicitud multipart
             MultipartEntityBuilder entityBuilder = MultipartEntityBuilder.create();
-            entityBuilder.addBinaryBody("file", jsonlFile, ContentType.APPLICATION_OCTET_STREAM, jsonlFile.getName());
-            entityBuilder.addTextBody("purpose", "fine-tune"); // O el propósito que estés usando
+            entityBuilder.addBinaryBody("file", jsonlFile);
+            entityBuilder.addTextBody("purpose", "batch");
 
             uploadRequest.setEntity(entityBuilder.build());
 
@@ -61,7 +64,6 @@ public class OpenAIFileUpload {
         } catch (Exception e) {
             throw new OpenAIAPIException();
         }
-
 
     }
 

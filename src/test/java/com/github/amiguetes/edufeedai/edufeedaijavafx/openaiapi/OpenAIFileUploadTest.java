@@ -9,16 +9,16 @@ import static org.junit.jupiter.api.Assertions.*;
 class OpenAIFileUploadTest {
 
     String OpenAI_KEY = Dotenv.load().get("OPENAI_API_KEY");
-    String AssessmentFile = Dotenv.load().get("ASSESSMENT_ID_FILE");
+    String AssessmentFile = Dotenv.load().get("ASSESSMENT_FILE");
 
     @Test
-    void uploadFile() {
+    void uploadFileString() {
 
-        OpenAIFileUpload oaif = new OpenAIFileUpload(OpenAI_KEY,AssessmentFile);
+        OpenAIFileUpload oaif = new OpenAIFileUpload(OpenAI_KEY);
 
         try {
 
-            String response = oaif.uploadFile();
+            String response = oaif.uploadFile(AssessmentFile);
             assertNotNull(response);
 
         } catch (OpenAIAPIException e) {
