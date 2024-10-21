@@ -7,6 +7,9 @@ module com.github.amiguetes.edufeedai.edufeedaijavafx {
     requires com.google.gson;
     requires java.logging;
     requires java.net.http;
+    requires org.apache.httpcomponents.client5.httpclient5;
+    requires org.apache.httpcomponents.core5.httpcore5;
+    requires org.json;
 
     opens com.github.amiguetes.edufeedai.edufeedaijavafx to javafx.fxml;
     exports com.github.amiguetes.edufeedai.edufeedaijavafx;
