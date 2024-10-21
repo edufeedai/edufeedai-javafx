@@ -10,4 +10,8 @@ public class OpenAIAPIException extends Exception{
         super(s);
     }
 
+    public OpenAIAPIException(Exception e){
+        super(e);
+    }
+
 }
