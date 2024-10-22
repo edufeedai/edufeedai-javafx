@@ -10,6 +10,7 @@ module com.github.amiguetes.edufeedai.edufeedaijavafx {
     requires org.apache.httpcomponents.client5.httpclient5;
     requires org.apache.httpcomponents.core5.httpcore5;
     requires org.json;
+    requires org.apache.pdfbox;
 
     opens com.github.edufeedai.javafx to javafx.fxml;
     exports com.github.edufeedai.javafx;
