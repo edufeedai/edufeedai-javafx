@@ -47,9 +47,10 @@ public class ExtractTextAndImages extends PDFStreamEngine {
         System.out.println("Texto extraído: \n" + text);
     }
 
-    public static void main(String[] args) {
+    public static void extractImagesAndTextFromPDFFile(String stringFile){
+
         try {
-            File file = new File("path/to/your/document.pdf");
+            File file = new File(stringFile);
             PDDocument document = Loader.loadPDF(file);
 
             // Extraer texto
@@ -65,5 +66,7 @@ public class ExtractTextAndImages extends PDFStreamEngine {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
     }
+
 }
