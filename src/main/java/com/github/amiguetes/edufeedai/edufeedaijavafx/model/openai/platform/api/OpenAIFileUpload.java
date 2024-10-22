@@ -1,14 +1,12 @@
-package com.github.amiguetes.edufeedai.edufeedaijavafx.openaiapi;
+package com.github.amiguetes.edufeedai.edufeedaijavafx.model.openai.platform.api;
 
-import com.github.amiguetes.edufeedai.edufeedaijavafx.openaiapi.exceptions.OpenAIAPIException;
+import com.github.amiguetes.edufeedai.edufeedaijavafx.model.openai.platform.api.exceptions.OpenAIAPIException;
 import org.apache.hc.client5.http.classic.methods.HttpPost;
 import org.apache.hc.client5.http.entity.mime.MultipartEntityBuilder;
 import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
 import org.apache.hc.client5.http.impl.classic.CloseableHttpResponse;
 import org.apache.hc.client5.http.impl.classic.HttpClients;
-import org.apache.hc.core5.http.ContentType;
 import org.apache.hc.core5.http.io.entity.EntityUtils;
-import org.apache.hc.core5.http.io.entity.FileEntity;
 import org.json.JSONObject;
 
 import java.io.File;

@@ -1,4 +1,4 @@
-package com.github.amiguetes.edufeedai.edufeedaijavafx.openaiapi.exceptions;
+package com.github.amiguetes.edufeedai.edufeedaijavafx.model.openai.platform.api.exceptions;
 
 public class OpenAIAPIException extends Exception{
 

@@ -1,4 +1,4 @@
-package com.github.amiguetes.edufeedai.edufeedaijavafx.openaiapi;
+package com.github.amiguetes.edufeedai.edufeedaijavafx.model.openai.platform.api;
 
 import com.github.amiguetes.edufeedai.edufeedaijavafx.model.openai.platform.api.batches.BatchJob;
 import io.github.cdimascio.dotenv.Dotenv;
