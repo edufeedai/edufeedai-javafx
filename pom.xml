@@ -16,6 +16,7 @@
         <dotenv.version>3.0.0</dotenv.version>
         <client5.version>5.4</client5.version>
         <json.version>20240303</json.version>
+        <pdfbox.version>3.0.3</pdfbox.version>
     </properties>
 
     <dependencies>
@@ -72,6 +73,11 @@
             <groupId>org.json</groupId>
             <artifactId>json</artifactId>
             <version>${json.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.pdfbox</groupId>
+            <artifactId>pdfbox</artifactId>
+            <version>${pdfbox.version}</version>
         </dependency>
 
     </dependencies>
