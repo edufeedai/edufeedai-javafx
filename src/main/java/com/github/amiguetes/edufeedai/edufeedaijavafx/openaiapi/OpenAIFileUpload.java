@@ -54,8 +54,8 @@ public class OpenAIFileUpload {
                 if (response.getCode() == 200) {
                     // Procesa la respuesta y obtiene el ID del archivo
                     JSONObject jsonResponse = new JSONObject(responseBody);
-                    String fileId = jsonResponse.getString("id");
-                    return fileId;
+                    return jsonResponse.getString("id");
+
                 } else {
                     throw new OpenAIAPIException("Respuesta del Servidor: " + response.toString());
                 }

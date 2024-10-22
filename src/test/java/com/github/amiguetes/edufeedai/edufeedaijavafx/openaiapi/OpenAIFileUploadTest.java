@@ -18,8 +18,8 @@ class OpenAIFileUploadTest {
 
         try {
 
-            String response = oaif.uploadFile(AssessmentFile);
-            assertNotNull(response);
+            String fileId = oaif.uploadFile(AssessmentFile);
+            assertNotNull(fileId);
 
         } catch (OpenAIAPIException e) {
             fail(e);

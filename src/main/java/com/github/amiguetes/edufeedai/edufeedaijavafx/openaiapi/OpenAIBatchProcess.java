@@ -1,5 +1,7 @@
 package com.github.amiguetes.edufeedai.edufeedaijavafx.openaiapi;
 
+import com.github.amiguetes.edufeedai.edufeedaijavafx.model.openai.platform.api.batches.BatchJob;
+import com.github.amiguetes.edufeedai.edufeedaijavafx.model.openai.platform.api.helpers.GsonResponseHandler;
 import com.github.amiguetes.edufeedai.edufeedaijavafx.openaiapi.exceptions.OpenAIAPIException;
 import org.apache.hc.client5.http.classic.methods.HttpPost;
 import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
@@ -14,6 +16,7 @@ public class OpenAIBatchProcess {
 
     String apiKey;
     String batchUrl;
+    HttpPost batchRequest;
 
     public OpenAIBatchProcess(String apiKey){
         this(apiKey,"https://api.openai.com/v1/batches");
@@ -24,15 +27,15 @@ public class OpenAIBatchProcess {
         this.apiKey = apiKey;
         this.batchUrl = batchUrl;
 
+        batchRequest = new HttpPost(batchUrl);
+        batchRequest.setHeader("Authorization", "Bearer " + apiKey);
+        batchRequest.setHeader("Content-Type", "application/json");
+
     }
 
-    public String launchBatchProcess(String fileId) throws OpenAIAPIException {
+    public BatchJob enqueueBatchProcess(String fileId) throws OpenAIAPIException {
 
         try (CloseableHttpClient httpClient = HttpClients.createDefault()) {
-
-            HttpPost batchRequest = new HttpPost(batchUrl);
-            batchRequest.setHeader("Authorization", "Bearer " + apiKey);
-            batchRequest.setHeader("Content-Type", "application/json");
 
             // Crea el JSON con los parámetros de batch processing
             JSONObject json = new JSONObject();
@@ -48,7 +51,9 @@ public class OpenAIBatchProcess {
                 String responseBody = EntityUtils.toString(response.getEntity());
 
                 if (statusCode == 200) {
-                    return responseBody;
+
+                    return GsonResponseHandler.convertJsonToObject(responseBody,BatchJob.class);
+
                 } else {
                     throw new OpenAIAPIException(responseBody);
                 }

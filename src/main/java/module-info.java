@@ -15,8 +15,10 @@ module com.github.amiguetes.edufeedai.edufeedaijavafx {
     exports com.github.amiguetes.edufeedai.edufeedaijavafx;
     exports com.github.amiguetes.edufeedai.edufeedaijavafx.model;
     exports com.github.amiguetes.edufeedai.edufeedaijavafx.model.openai.platform;
+    exports com.github.amiguetes.edufeedai.edufeedaijavafx.model.openai.platform.api.batches;
     opens com.github.amiguetes.edufeedai.edufeedaijavafx.model.openai.platform to com.google.gson;
     opens com.github.amiguetes.edufeedai.edufeedaijavafx.model.openai.platform.response to com.google.gson;
+    opens com.github.amiguetes.edufeedai.edufeedaijavafx.model.openai.platform.api.batches to com.google.gson;
     exports com.github.amiguetes.edufeedai.edufeedaijavafx.model.exceptions;
     opens com.github.amiguetes.edufeedai.edufeedaijavafx.model to javafx.fxml, com.google.gson;
 

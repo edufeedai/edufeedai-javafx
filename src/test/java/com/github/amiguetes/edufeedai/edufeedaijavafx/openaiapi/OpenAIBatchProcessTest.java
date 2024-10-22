@@ -1,5 +1,6 @@
 package com.github.amiguetes.edufeedai.edufeedaijavafx.openaiapi;
 
+import com.github.amiguetes.edufeedai.edufeedaijavafx.model.openai.platform.api.batches.BatchJob;
 import io.github.cdimascio.dotenv.Dotenv;
 import org.junit.jupiter.api.Test;
 
@@ -11,14 +12,15 @@ class OpenAIBatchProcessTest {
     String OpenAIBatchFileID = Dotenv.load().get("OPENAI_BATCH_FILE_ID");
 
     @Test
-    void launchBatchProcess() {
+    void enqueueBatchProcess() {
 
         OpenAIBatchProcess oabp = new OpenAIBatchProcess(OpenAI_KEY);
 
         try {
 
-            String response = oabp.launchBatchProcess(OpenAIBatchFileID);
-            assertNotNull(response);
+            BatchJob job = oabp.enqueueBatchProcess(OpenAIBatchFileID);
+            assertNotNull(job);
+            assertNotNull(job.getId());
 
         } catch (Exception e) {
             fail(e);
