@@ -11,6 +11,7 @@ module com.github.amiguetes.edufeedai.edufeedaijavafx {
     requires org.apache.httpcomponents.core5.httpcore5;
     requires org.json;
     requires org.apache.pdfbox;
+    requires tess4j;
 
     opens com.github.edufeedai.javafx to javafx.fxml;
     exports com.github.edufeedai.javafx;

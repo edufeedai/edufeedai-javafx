@@ -17,6 +17,7 @@
         <client5.version>5.4</client5.version>
         <json.version>20240303</json.version>
         <pdfbox.version>3.0.3</pdfbox.version>
+        <tess4j.version>5.13.0</tess4j.version>
     </properties>
 
     <dependencies>
@@ -79,7 +80,11 @@
             <artifactId>pdfbox</artifactId>
             <version>${pdfbox.version}</version>
         </dependency>
-
+        <dependency>
+            <groupId>net.sourceforge.tess4j</groupId>
+            <artifactId>tess4j</artifactId>
+            <version>${tess4j.version}</version>
+        </dependency>
 
     </dependencies>
 
