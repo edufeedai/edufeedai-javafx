@@ -1,5 +1,6 @@
 package com.github.edufeedai.javafx.model;
 
+import com.github.edufeedai.javafx.utils.ImageBinarization;
 import net.sourceforge.tess4j.ITesseract;
 import net.sourceforge.tess4j.Tesseract;
 import net.sourceforge.tess4j.TesseractException;
@@ -29,8 +30,10 @@ public class PDFExtractTextAndImagesOrdered extends PDFStreamEngine {
     public PDFExtractTextAndImagesOrdered() throws IOException {
         this.contentBlocks = new ArrayList<>(); // Inicializar la lista de bloques
         this.tesseract = new Tesseract();
-        tesseract.setDatapath("/usr/local/share/tessdata");
+        tesseract.setDatapath("/usr/share/tesseract-ocr/4.00/tessdata");
         tesseract.setLanguage("eng"); // Cambia según el idioma que desees usar
+        tesseract.setTessVariable("preserve_interword_spaces", "1");
+        tesseract.setPageSegMode(6);
     }
 
     @Override
@@ -45,6 +48,7 @@ public class PDFExtractTextAndImagesOrdered extends PDFStreamEngine {
                 // Extraer imagen
                 File tempImageFile = new File("image_" + System.currentTimeMillis() + ".png");
                 ImageIO.write(image.getImage(), "png", tempImageFile);
+                ImageBinarization.Binarize(tempImageFile.getAbsolutePath());
                 System.out.println("Imagen extraída: " + tempImageFile.getAbsolutePath());
 
                 // Realizar OCR en la imagen y añadirlo como un bloque de contenido

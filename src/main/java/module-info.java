@@ -12,6 +12,7 @@ module com.github.amiguetes.edufeedai.edufeedaijavafx {
     requires org.json;
     requires org.apache.pdfbox;
     requires tess4j;
+    requires opencv;
 
     opens com.github.edufeedai.javafx to javafx.fxml;
     exports com.github.edufeedai.javafx;

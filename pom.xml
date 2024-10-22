@@ -18,6 +18,7 @@
         <json.version>20240303</json.version>
         <pdfbox.version>3.0.3</pdfbox.version>
         <tess4j.version>5.13.0</tess4j.version>
+        <opencv.version>4.5.4-0</opencv.version>
     </properties>
 
     <dependencies>
@@ -85,6 +86,13 @@
             <artifactId>tess4j</artifactId>
             <version>${tess4j.version}</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/org.openpnp/opencv -->
+        <dependency>
+            <groupId>org.openpnp</groupId>
+            <artifactId>opencv</artifactId>
+            <version>${opencv.version}</version>
+        </dependency>
+
 
     </dependencies>
 
@@ -120,6 +128,14 @@
                         </configuration>
                     </execution>
                 </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>2.22.2</version>
+                <configuration>
+                    <argLine>-Djava.library.path=/usr/lib/jni</argLine> <!-- Ruta de la biblioteca nativa -->
+                </configuration>
             </plugin>
         </plugins>
     </build>

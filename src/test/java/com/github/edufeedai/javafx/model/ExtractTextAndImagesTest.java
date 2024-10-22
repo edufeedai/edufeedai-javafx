@@ -15,6 +15,7 @@ class ExtractTextAndImagesTest {
     void extractImagesAndTextFromPDFFile() {
 
         try {
+
             PDFExtractTextAndImagesOrdered extractTextAndImagesOrdered = new PDFExtractTextAndImagesOrdered();
             extractTextAndImagesOrdered.extractImagesAndTextFromPDFFile(assessmenetPDFFile);
 
