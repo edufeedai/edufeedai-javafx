@@ -97,7 +97,7 @@
                         <id>default-cli</id>
                         <configuration>
                             <mainClass>
-                                com.github.amiguetes.edufeedai.edufeedaijavafx/com.github.amiguetes.edufeedai.edufeedaijavafx.HelloApplication
+                                com.github.amiguetes.edufeedai.edufeedaijavafx/com.github.edufeedai.javafx.HelloApplication
                             </mainClass>
                             <launcher>app</launcher>
                             <jlinkZipName>app</jlinkZipName>
