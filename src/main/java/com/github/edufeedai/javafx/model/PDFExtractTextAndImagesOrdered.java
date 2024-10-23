@@ -1,5 +1,6 @@
 package com.github.edufeedai.javafx.model;
 
+import com.github.edufeedai.javafx.model.exceptions.PDFExtractTextAndImageException;
 import com.github.edufeedai.javafx.utils.ImageBinarization;
 import net.sourceforge.tess4j.ITesseract;
 import net.sourceforge.tess4j.Tesseract;
@@ -18,7 +19,9 @@ import org.apache.pdfbox.text.PDFTextStripperByArea;
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +31,7 @@ public class PDFExtractTextAndImagesOrdered extends PDFStreamEngine {
     private ITesseract tesseract;
     private List<ContentBlock> contentBlocks; // Lista para almacenar los bloques de contenido en orden
 
-    public PDFExtractTextAndImagesOrdered() throws IOException {
+    public PDFExtractTextAndImagesOrdered() throws PDFExtractTextAndImageException{
         this.contentBlocks = new ArrayList<>(); // Inicializar la lista de bloques
         this.tesseract = new Tesseract();
         tesseract.setDatapath("/usr/share/tesseract-ocr/4.00/tessdata");
@@ -52,16 +55,18 @@ public class PDFExtractTextAndImagesOrdered extends PDFStreamEngine {
                 File tempImageFile = new File("image_" + System.currentTimeMillis() + ".png");
                 ImageIO.write(image.getImage(), "png", tempImageFile);
                 ImageBinarization.Binarize(tempImageFile.getAbsolutePath());
-                System.out.println("Imagen extraída: " + tempImageFile.getAbsolutePath());
 
                 // Realizar OCR en la imagen y añadirlo como un bloque de contenido
                 try {
+
                     String ocrResult = tesseract.doOCR(tempImageFile);
                     contentBlocks.add(new ContentBlock("image", ocrResult)); // Añadimos el resultado OCR
-                    System.out.println("Texto extraído de la imagen con OCR: \n" + ocrResult);
                     Files.delete(tempImageFile.toPath()); // Eliminar el archivo temporal
+
                 } catch (TesseractException e) {
+
                     System.err.println("Error durante el procesamiento OCR: " + e.getMessage());
+
                 }
             }
         } else {
@@ -80,8 +85,8 @@ public class PDFExtractTextAndImagesOrdered extends PDFStreamEngine {
 
         textStripper.extractRegions(page);
         String pageText = textStripper.getTextForRegion("pageRegion");
-        contentBlocks.add(new ContentBlock("text", pageText)); // Añadir texto
-        System.out.println("Texto extraído: \n" + pageText);
+        contentBlocks.add(new ContentBlock("text", pageText));
+
     }
 
     public List<ContentBlock> getContentBlocks() {
@@ -89,9 +94,14 @@ public class PDFExtractTextAndImagesOrdered extends PDFStreamEngine {
     }
 
 
-    public void extractImagesAndTextFromPDFFile(String stringFile){
+    public void extractImagesAndTextFromPDFFile(String stringFile) throws PDFExtractTextAndImageException{
 
         File file = new File(stringFile);
+
+        String newFileName = file.getAbsolutePath().replaceFirst("[.][^.]+$", ".txt");
+        File newFile = new File(newFileName);
+
+
         try (PDDocument document = Loader.loadPDF(file)) {
 
 
@@ -101,19 +111,20 @@ public class PDFExtractTextAndImagesOrdered extends PDFStreamEngine {
                 processPage(page); // Procesar imágenes en la página
             }
 
-            // Imprimir los bloques de contenido en orden
-            List<ContentBlock> contentBlocks = getContentBlocks();
-            for (ContentBlock block : contentBlocks) {
-                if (block.getType().equals("text")) {
-                    System.out.println("Texto: " + block.getContent());
-                } else if (block.getType().equals("image")) {
-                    System.out.println("Texto de la imagen (OCR): " + block.getContent());
-                }
+            //Guardar en un fichero los bloques de contenido en orden
+
+            try (PrintWriter pw = new PrintWriter(new FileWriter(newFile),true)){
+
+                getContentBlocks().stream().forEach( pw::println );
+
+            } catch (IOException e) {
+                throw new PDFExtractTextAndImageException(e);
             }
 
         } catch (IOException e) {
-            System.out.println("Error al cargar o procesar el archivo PDF: " + e.getMessage());
-            e.printStackTrace();
+
+            throw new PDFExtractTextAndImageException(e);
+
         }
 
     }

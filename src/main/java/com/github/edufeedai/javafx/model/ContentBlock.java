@@ -10,6 +10,13 @@ class ContentBlock {
         this.content = content;
     }
 
+    @Override
+    public String toString() {
+        return getType().toUpperCase() + " START {" + System.lineSeparator() +
+                getContent() + System.lineSeparator() +
+                "} " + getType().toUpperCase() + " END" + System.lineSeparator();
+    }
+
     public String getType() {
         return type;
     }

@@ -1,5 +1,6 @@
 package com.github.edufeedai.javafx.model;
 
+import com.github.edufeedai.javafx.model.exceptions.PDFExtractTextAndImageException;
 import io.github.cdimascio.dotenv.Dotenv;
 import org.junit.jupiter.api.Test;
 
@@ -19,10 +20,9 @@ class ExtractTextAndImagesTest {
             PDFExtractTextAndImagesOrdered extractTextAndImagesOrdered = new PDFExtractTextAndImagesOrdered();
             extractTextAndImagesOrdered.extractImagesAndTextFromPDFFile(assessmenetPDFFile);
 
-        } catch (IOException e) {
+        } catch (PDFExtractTextAndImageException e) {
             fail(e);
         }
-
 
     }
 }
