@@ -19,6 +19,7 @@ import javax.imageio.ImageIO;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,6 +35,8 @@ public class PDFExtractTextAndImagesOrdered extends PDFStreamEngine {
         tesseract.setLanguage("eng"); // Cambia según el idioma que desees usar
         tesseract.setTessVariable("preserve_interword_spaces", "1");
         tesseract.setPageSegMode(6);
+        tesseract.setTessVariable("user_defined_dpi", "300"); //PDFBox no proporciona DPI, por lo que es necesario definirlo
+        //tesseract.setTessVariable("tessedit_char_whitelist", "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ.,:/-_@()[]{}#$%&*=+><|!?~");
     }
 
     @Override
@@ -56,6 +59,7 @@ public class PDFExtractTextAndImagesOrdered extends PDFStreamEngine {
                     String ocrResult = tesseract.doOCR(tempImageFile);
                     contentBlocks.add(new ContentBlock("image", ocrResult)); // Añadimos el resultado OCR
                     System.out.println("Texto extraído de la imagen con OCR: \n" + ocrResult);
+                    Files.delete(tempImageFile.toPath()); // Eliminar el archivo temporal
                 } catch (TesseractException e) {
                     System.err.println("Error durante el procesamiento OCR: " + e.getMessage());
                 }
