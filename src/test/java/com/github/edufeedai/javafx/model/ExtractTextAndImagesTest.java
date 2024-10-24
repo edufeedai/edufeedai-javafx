@@ -1,6 +1,8 @@
 package com.github.edufeedai.javafx.model;
 
 import com.github.edufeedai.javafx.model.exceptions.PDFExtractTextAndImageException;
+import com.github.edufeedai.javafx.model.ocrlib.OCRProcessor;
+import com.github.edufeedai.javafx.model.ocrlib.OCRTesseract;
 import io.github.cdimascio.dotenv.Dotenv;
 import org.junit.jupiter.api.Test;
 
@@ -17,7 +19,9 @@ class ExtractTextAndImagesTest {
 
         try {
 
-            PDFExtractTextAndImagesOrdered extractTextAndImagesOrdered = new PDFExtractTextAndImagesOrdered();
+            OCRProcessor ocrProcessor = new OCRTesseract();
+
+            PDFExtractTextAndImagesOrdered extractTextAndImagesOrdered = new PDFExtractTextAndImagesOrdered(ocrProcessor);
             extractTextAndImagesOrdered.extractImagesAndTextFromPDFFile(assessmenetPDFFile);
 
         } catch (PDFExtractTextAndImageException e) {

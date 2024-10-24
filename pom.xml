@@ -19,6 +19,7 @@
         <pdfbox.version>3.0.3</pdfbox.version>
         <tess4j.version>5.13.0</tess4j.version>
         <opencv.version>4.5.4-0</opencv.version>
+        <azure.ocr.version>1.0.0-beta.4</azure.ocr.version>
     </properties>
 
     <dependencies>
@@ -91,6 +92,12 @@
             <groupId>org.openpnp</groupId>
             <artifactId>opencv</artifactId>
             <version>${opencv.version}</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/com.azure/azure-ai-documentintelligence -->
+        <dependency>
+            <groupId>com.azure</groupId>
+            <artifactId>azure-ai-documentintelligence</artifactId>
+            <version>${azure.ocr.version}</version>
         </dependency>
 
 
