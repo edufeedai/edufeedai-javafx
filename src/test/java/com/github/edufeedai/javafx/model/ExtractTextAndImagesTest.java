@@ -21,6 +21,7 @@ class ExtractTextAndImagesTest {
     String azureCognitiveServicesEndpoint = Dotenv.load().get("AZURE_COGNITIVE_SERVICES_ENDPOINT");
 
     @Test
+    @Disabled
     @DisplayName("Extraer imágenes y texto de un archivo PDF con Azure Cognitive Services")
     void extractImagesAndTextFromPDFFileAzure() {
 

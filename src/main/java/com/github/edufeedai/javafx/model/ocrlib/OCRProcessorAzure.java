@@ -8,9 +8,12 @@ import com.azure.ai.documentintelligence.models.AnalyzeResult;
 import com.azure.ai.documentintelligence.models.AnalyzeResultOperation;
 import com.azure.ai.documentintelligence.models.Document;
 import com.azure.core.credential.AzureKeyCredential;
+import com.azure.core.util.BinaryData;
 import com.azure.core.util.polling.SyncPoller;
 
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.Base64;
 
 public class OCRProcessorAzure implements OCRProcessor {
@@ -48,7 +51,7 @@ public class OCRProcessorAzure implements OCRProcessor {
 
             byte[] imageBytes = new byte[(int) imageFile.length()];
             fis.read(imageBytes);
-            base64 = Base64.getEncoder().encodeToString(imageBytes);
+            base64 = Base64.getUrlEncoder().encodeToString(imageBytes);
 
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
@@ -60,11 +63,12 @@ public class OCRProcessorAzure implements OCRProcessor {
 
         try {
 
+            Path filePath = imageFile.toPath();
+            BinaryData layoutDocumentData = BinaryData.fromFile(filePath, (int) imageFile.length());
 
+            AnalyzeDocumentRequest request = new AnalyzeDocumentRequest().setBase64Source(layoutDocumentData.toBytes());
 
-            AnalyzeDocumentRequest request = new AnalyzeDocumentRequest().setBase64Source(base64.getBytes());
-
-            SyncPoller<AnalyzeResultOperation, AnalyzeResult > analyzePoller =
+            SyncPoller<AnalyzeResultOperation, AnalyzeResult> analyzeLayoutResultPoller =
                     client.beginAnalyzeDocument(
                             modelId,
                             null,
@@ -76,10 +80,10 @@ public class OCRProcessorAzure implements OCRProcessor {
                             null,
                             request);
 
-            AnalyzeResult analyzeResult = analyzePoller.getFinalResult();
+            AnalyzeResult analyzeLayoutResult = analyzeLayoutResultPoller.getFinalResult();
 
             // Solo obtener el texto
-            for (Document document : analyzeResult.getDocuments()) {
+            for (Document document : analyzeLayoutResult.getDocuments()) {
 
                 ocrResult.append(document.toJsonString());  // Muestra el contenido completo del documento (texto)
             }
