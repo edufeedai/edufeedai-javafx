@@ -99,7 +99,16 @@
             <artifactId>azure-ai-documentintelligence</artifactId>
             <version>${azure.ocr.version}</version>
         </dependency>
-
+        <dependency>
+            <groupId>com.azure</groupId>
+            <artifactId>azure-core</artifactId>
+            <version>1.51.0</version> <!-- Usa la misma versión que otras bibliotecas -->
+        </dependency>
+        <dependency>
+        <groupId>com.azure</groupId>
+        <artifactId>azure-core-http-netty</artifactId>
+        <version>1.11.4</version> <!-- Usa una versión compatible de Netty -->
+        </dependency>
 
     </dependencies>
 
