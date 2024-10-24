@@ -21,8 +21,8 @@ class ExtractTextAndImagesTest {
     String azureCognitiveServicesEndpoint = Dotenv.load().get("AZURE_COGNITIVE_SERVICES_ENDPOINT");
 
     @Test
-    @DisplayName("Extraer imágenes y texto de un archivo PDF con Tesseract")
-    void extractImagesAndTextFromPDFFileTesseract() {
+    @DisplayName("Extraer imágenes y texto de un archivo PDF con Azure Cognitive Services")
+    void extractImagesAndTextFromPDFFileAzure() {
 
         try {
 
@@ -38,8 +38,8 @@ class ExtractTextAndImagesTest {
     }
 
     @Test
-    @DisplayName("Extraer imágenes y texto de un archivo PDF con Azure Cognitive Services")
-    void extractImagesAndTextFromPDFFileAzure() {
+    @DisplayName("Extraer imágenes y texto de un archivo PDF con Tesseract")
+    void extractImagesAndTextFromPDFFileTesseract() {
 
         try {
 
