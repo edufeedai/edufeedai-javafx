@@ -1,10 +1,12 @@
 package com.github.edufeedai.javafx.model.ocrlib;
 
 
-import org.opencv.core.Core;
-import org.opencv.core.Mat;
+import org.opencv.core.*;
 import org.opencv.imgcodecs.Imgcodecs;
 import org.opencv.imgproc.Imgproc;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class OCROpenCVImagePreprocess {
 
@@ -14,24 +16,26 @@ public class OCROpenCVImagePreprocess {
 
     public static void Binarize(String imagePath){
 
-        Mat originalImage = Imgcodecs.imread(imagePath, Imgcodecs.IMREAD_GRAYSCALE);
+        Binarize(imagePath, imagePath);
+
+    }
+
+    public static void Binarize(String imagePathSource, String imagePathDestination){
+
+        Mat originalImage = Imgcodecs.imread(imagePathSource, Imgcodecs.IMREAD_GRAYSCALE);
         if (originalImage.empty()) {
             System.out.println("No se pudo cargar la imagen");
             return;
         }
 
-        // Aumentar el contraste y brillo
-        Mat contrastImage = new Mat();
-        double alpha = 1.5;  // Factor de contraste (1.0 = sin cambio, >1.0 para aumentar contraste)
-        double beta = 50;    // Factor de brillo (0 = sin cambio, >0 para aumentar brillo)
-        originalImage.convertTo(contrastImage, -1, alpha, beta);
-
-        // Aplicar la binarización (método de Otsu)
+        // Aplicar binarización adaptativa con un bloque más grande
         Mat binarizedImage = new Mat();
-        Imgproc.threshold(contrastImage, binarizedImage, 0, 255, Imgproc.THRESH_BINARY | Imgproc.THRESH_OTSU);
+        Imgproc.adaptiveThreshold(originalImage, binarizedImage, 255, Imgproc.ADAPTIVE_THRESH_GAUSSIAN_C, Imgproc.THRESH_BINARY, 15, 2);
 
-        // Guardar la imagen binarizada
-        Imgcodecs.imwrite(imagePath, binarizedImage);
+        // Guardar la imagen procesada
+        Imgcodecs.imwrite(imagePathDestination, binarizedImage);
+
+
 
     }
 
