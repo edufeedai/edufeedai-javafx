@@ -19,6 +19,7 @@
         <pdfbox.version>3.0.3</pdfbox.version>
         <tess4j.version>5.13.0</tess4j.version>
         <opencv.version>4.5.4-0</opencv.version>
+        <azure.ocr.version>1.0.0-beta.4</azure.ocr.version>
     </properties>
 
     <dependencies>
@@ -92,7 +93,22 @@
             <artifactId>opencv</artifactId>
             <version>${opencv.version}</version>
         </dependency>
-
+        <!-- https://mvnrepository.com/artifact/com.azure/azure-ai-documentintelligence -->
+        <dependency>
+            <groupId>com.azure</groupId>
+            <artifactId>azure-ai-documentintelligence</artifactId>
+            <version>${azure.ocr.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.azure</groupId>
+            <artifactId>azure-core</artifactId>
+            <version>1.51.0</version> <!-- Usa la misma versión que otras bibliotecas -->
+        </dependency>
+        <dependency>
+        <groupId>com.azure</groupId>
+        <artifactId>azure-core-http-netty</artifactId>
+        <version>1.11.4</version> <!-- Usa una versión compatible de Netty -->
+        </dependency>
 
     </dependencies>
 

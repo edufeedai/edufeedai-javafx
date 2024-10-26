@@ -1,10 +1,8 @@
 package com.github.edufeedai.javafx.model;
 
 import com.github.edufeedai.javafx.model.exceptions.PDFExtractTextAndImageException;
-import com.github.edufeedai.javafx.utils.ImageBinarization;
-import net.sourceforge.tess4j.ITesseract;
-import net.sourceforge.tess4j.Tesseract;
-import net.sourceforge.tess4j.TesseractException;
+import com.github.edufeedai.javafx.model.ocrlib.OCRProcessor;
+import com.github.edufeedai.javafx.model.ocrlib.OCRProcessorException;
 import org.apache.pdfbox.Loader;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
@@ -28,18 +26,14 @@ import java.util.List;
 
 public class PDFExtractTextAndImagesOrdered extends PDFStreamEngine {
 
-    private ITesseract tesseract;
+    private OCRProcessor ocrProcessor;
     private List<ContentBlock> contentBlocks; // Lista para almacenar los bloques de contenido en orden
 
-    public PDFExtractTextAndImagesOrdered() throws PDFExtractTextAndImageException{
+    public PDFExtractTextAndImagesOrdered(OCRProcessor processor) throws PDFExtractTextAndImageException{
+
+        ocrProcessor = processor;
         this.contentBlocks = new ArrayList<>(); // Inicializar la lista de bloques
-        this.tesseract = new Tesseract();
-        tesseract.setDatapath("/usr/share/tesseract-ocr/4.00/tessdata");
-        tesseract.setLanguage("eng"); // Cambia según el idioma que desees usar
-        tesseract.setTessVariable("preserve_interword_spaces", "1");
-        tesseract.setPageSegMode(6);
-        tesseract.setTessVariable("user_defined_dpi", "300"); //PDFBox no proporciona DPI, por lo que es necesario definirlo
-        //tesseract.setTessVariable("tessedit_char_whitelist", "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ.,:/-_@()[]{}#$%&*=+><|!?~");
+
     }
 
     @Override
@@ -54,20 +48,20 @@ public class PDFExtractTextAndImagesOrdered extends PDFStreamEngine {
                 // Extraer imagen
                 File tempImageFile = new File("image_" + System.currentTimeMillis() + ".png");
                 ImageIO.write(image.getImage(), "png", tempImageFile);
-                ImageBinarization.Binarize(tempImageFile.getAbsolutePath());
 
-                // Realizar OCR en la imagen y añadirlo como un bloque de contenido
                 try {
 
-                    String ocrResult = tesseract.doOCR(tempImageFile);
+                    String ocrResult = ocrProcessor.performOCR(tempImageFile); // Realizar OCR en la imagen
                     contentBlocks.add(new ContentBlock("image", ocrResult)); // Añadimos el resultado OCR
-                    Files.delete(tempImageFile.toPath()); // Eliminar el archivo temporal
 
-                } catch (TesseractException e) {
+                } catch (OCRProcessorException e) {
 
-                    System.err.println("Error durante el procesamiento OCR: " + e.getMessage());
+                        throw new IOException(e);
 
                 }
+
+                Files.delete(tempImageFile.toPath());
+
             }
         } else {
             super.processOperator(operator, operands);
