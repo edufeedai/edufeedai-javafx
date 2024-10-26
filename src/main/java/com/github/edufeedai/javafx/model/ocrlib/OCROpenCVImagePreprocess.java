@@ -1,4 +1,4 @@
-package com.github.edufeedai.javafx.utils;
+package com.github.edufeedai.javafx.model.ocrlib;
 
 
 import org.opencv.core.Core;
@@ -6,7 +6,7 @@ import org.opencv.core.Mat;
 import org.opencv.imgcodecs.Imgcodecs;
 import org.opencv.imgproc.Imgproc;
 
-public class ImageBinarization {
+public class OCROpenCVImagePreprocess {
 
     static {
         System.loadLibrary(Core.NATIVE_LIBRARY_NAME); // Cargar la librería de OpenCV

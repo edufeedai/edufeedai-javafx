@@ -1,16 +1,15 @@
 package com.github.edufeedai.javafx.model.ocrlib;
 
-import com.github.edufeedai.javafx.utils.ImageBinarization;
 import net.sourceforge.tess4j.ITesseract;
 import net.sourceforge.tess4j.Tesseract;
 
 import java.io.File;
 
-public class OCRTesseract implements OCRProcessor {
+public class OCRProcessorTesseract implements OCRProcessor {
 
     final private ITesseract tesseract;
 
-    public OCRTesseract() {
+    public OCRProcessorTesseract() {
 
         this.tesseract = new Tesseract();
         tesseract.setDatapath("/usr/share/tesseract-ocr/4.00/tessdata");
@@ -27,7 +26,7 @@ public class OCRTesseract implements OCRProcessor {
 
         try {
 
-            ImageBinarization.Binarize(imageFile.getAbsolutePath());
+            OCROpenCVImagePreprocess.Binarize(imageFile.getAbsolutePath());
             return tesseract.doOCR(imageFile);
 
         } catch (Exception e) {
