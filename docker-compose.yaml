@@ -1,0 +1,12 @@
+version: '3.8'
+services:
+  edufeedai-dev:
+    image: tu-usuario/mi-imagen-desarollo:latest
+    container_name: edufeedai-dev
+    ports:
+      - "5005:5005"  
+    volumes:
+      - .:/app       
+    environment:
+      - NODE_ENV=development
+    command: ["java", "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005", "-jar", "target/tu-aplicacion.jar"]
