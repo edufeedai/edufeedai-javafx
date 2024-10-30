@@ -12,12 +12,12 @@ public class OCRProcessorTesseract implements OCRProcessor {
     public OCRProcessorTesseract() {
 
         this.tesseract = new Tesseract();
-        tesseract.setDatapath("/usr/share/tesseract-ocr/4.00/tessdata");
+        tesseract.setDatapath("/usr/share/tesseract-ocr/5/tessdata");
         tesseract.setLanguage("eng"); // Cambia según el idioma que desees usar
-        tesseract.setTessVariable("preserve_interword_spaces", "1");
+        tesseract.setVariable("preserve_interword_spaces", "1");
         tesseract.setPageSegMode(6);
-        tesseract.setTessVariable("user_defined_dpi", "300"); //PDFBox no proporciona DPI, por lo que es necesario definirlo
-        //tesseract.setTessVariable("tessedit_char_whitelist", "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ.,:/-_@()[]{}#$%&*=+><|!?~");
+        tesseract.setVariable("user_defined_dpi", "300"); //PDFBox no proporciona DPI, por lo que es necesario definirlo
+        //tesseract.setVariable("tessedit_char_whitelist", "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ.,:/-_@()[]{}#$%&*=+><|!?~");
 
     }
 
