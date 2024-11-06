@@ -17,7 +17,7 @@ public class OCRProcessorTesseract implements OCRProcessor {
         tesseract.setVariable("preserve_interword_spaces", "1");
         tesseract.setPageSegMode(6);
         tesseract.setVariable("user_defined_dpi", "300"); //PDFBox no proporciona DPI, por lo que es necesario definirlo
-        //tesseract.setVariable("tessedit_char_whitelist", "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ.,:/-_@()[]{}#$%&*=+><|!?~");
+        //tesseract.setVariable("tessedit_char_whitelist", "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ.,:/-_@()[]{}#$%&*=+><|!?~ \n");
 
     }
 

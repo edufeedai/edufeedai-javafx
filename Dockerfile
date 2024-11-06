@@ -13,7 +13,8 @@ RUN apt-get update && \
                        build-essential \
                        pkg-config \
                        libopencv-dev \
-                       maven && \
+                       maven \
+                       git && \
     apt-get clean
 
 # Establece JAVA_HOME y el PATH
