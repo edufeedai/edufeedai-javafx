@@ -3,6 +3,7 @@ FROM ubuntu:24.04
 
 # Actualiza los paquetes e instala dependencias
 RUN apt-get update && \
+    apt-get dist-upgrade -yf &&\
     apt-get install -y openjdk-17-jdk \
                        tesseract-ocr \
                        tesseract-ocr-eng \
