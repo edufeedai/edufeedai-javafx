@@ -13,7 +13,6 @@ public class CheckResults {
     private static final String API_URL = "http://localhost:3000/grade";
 
     private static CheckResults _instance;
-    private static int AssesmentId = 0;
 
     public static synchronized CheckResults getInstance(){
         if (null == _instance){

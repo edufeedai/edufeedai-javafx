@@ -1,8 +1,5 @@
 module com.github.amiguetes.edufeedai.edufeedaijavafx {
-    requires javafx.controls;
-    requires javafx.fxml;
-
-    requires org.kordamp.ikonli.javafx;
+    
     requires java.desktop;
     requires com.google.gson;
     requires java.logging;
@@ -13,7 +10,6 @@ module com.github.amiguetes.edufeedai.edufeedaijavafx {
     requires org.apache.pdfbox;
     requires tess4j;
     requires opencv;
-    requires com.azure.ai.documentintelligence;
 
     opens com.github.edufeedai.javafx to javafx.fxml;
     exports com.github.edufeedai.javafx;
