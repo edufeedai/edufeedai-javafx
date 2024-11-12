@@ -17,12 +17,14 @@ import com.github.edufeedai.javafx.model.openai.platform.api.interfaces.exceptio
 
 public class OpenAICorrectionPromptBuilder implements CorrectionPromptBuilder {
 
+    private String messageRoleSystem;
     private String context;
     private String activityStatement;
     private String rubric;
     private String apiKey;
 
-    public OpenAICorrectionPromptBuilder(String context, String activityStatement, String rubric, String apiKey) {
+    public OpenAICorrectionPromptBuilder(String messageRoleSystem,String context, String activityStatement, String rubric, String apiKey) {
+        this.messageRoleSystem = messageRoleSystem;
         this.context = context;
         this.activityStatement = activityStatement;
         this.rubric = rubric;
@@ -55,10 +57,8 @@ public class OpenAICorrectionPromptBuilder implements CorrectionPromptBuilder {
             // Mensajes del chat
             JSONObject systemMessage = new JSONObject();
             systemMessage.put("role", "system");
-            systemMessage.put("content", "You are a helpful tutor assisting a student with their homework.");
+            systemMessage.put("content", messageRoleSystem);
 
-
-            
             JSONObject userMessage = new JSONObject();
             userMessage.put("role", "user");
             userMessage.put("content", prompt);
@@ -73,7 +73,7 @@ public class OpenAICorrectionPromptBuilder implements CorrectionPromptBuilder {
             return httpClient.execute(httpPost, responseHandler);
 
         } catch (RuntimeException e) {
-            // Verificamos si la causa es una OpenAIAPIException y la lanzamos
+        
             if (e.getCause() instanceof OpenAIAPIException) {
                 throw (OpenAIAPIException) e.getCause();
             }
@@ -85,19 +85,21 @@ public class OpenAICorrectionPromptBuilder implements CorrectionPromptBuilder {
 
     private String handleResponse(ClassicHttpResponse response) {
         try {
+
+            var entity = response.getEntity();
+            String result = EntityUtils.toString(entity);
+
             if (response.getCode() != 200) {
-                var entity = response.getEntity();
-                String result = EntityUtils.toString(entity);
+
                 throw new OpenAIAPIException("Error en la petición a la API de OpenAI: código de respuesta "
                         + response.getCode() + ", mensaje: " + result);
             }
 
-            var entity = response.getEntity();
-            String result = EntityUtils.toString(entity);
             JSONObject jsonResponse = new JSONObject(result);
 
-            
-            return jsonResponse.getJSONArray("choices").getJSONObject(0).getJSONObject("message").getString("content");
+            JSONObject choices = jsonResponse.getJSONArray("choices").getJSONObject(0);
+            JSONObject message = choices.getJSONObject("message");
+            return message.getString("content").trim();
 
         } catch (Exception e) {
             
