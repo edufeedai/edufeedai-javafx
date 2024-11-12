@@ -11,7 +11,6 @@ module com.github.amiguetes.edufeedai.edufeedaijavafx {
     requires tess4j;
     requires opencv;
 
-    opens com.github.edufeedai.javafx to javafx.fxml;
     exports com.github.edufeedai.javafx;
     exports com.github.edufeedai.javafx.model;
     exports com.github.edufeedai.javafx.model.openai.platform;
@@ -20,6 +19,6 @@ module com.github.amiguetes.edufeedai.edufeedaijavafx {
     opens com.github.edufeedai.javafx.model.openai.platform.response to com.google.gson;
     opens com.github.edufeedai.javafx.model.openai.platform.api.batches to com.google.gson;
     exports com.github.edufeedai.javafx.model.exceptions;
-    opens com.github.edufeedai.javafx.model to javafx.fxml, com.google.gson;
+    opens com.github.edufeedai.javafx.model to com.google.gson;
 
 }

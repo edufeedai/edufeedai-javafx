@@ -1,6 +1,8 @@
 package com.github.edufeedai.javafx.model.openai.platform.api.exceptions;
 
-public class OpenAIAPIException extends Exception{
+import com.github.edufeedai.javafx.model.openai.platform.api.interfaces.exceptions.APIException;
+
+public class OpenAIAPIException extends APIException{
 
     public OpenAIAPIException(){
         super();
@@ -12,6 +14,10 @@ public class OpenAIAPIException extends Exception{
 
     public OpenAIAPIException(Exception e){
         super(e);
+    }
+
+    public OpenAIAPIException(String s, Exception e){
+        super(s, e);
     }
 
 }
