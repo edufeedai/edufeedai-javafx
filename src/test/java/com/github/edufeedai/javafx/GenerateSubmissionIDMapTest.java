@@ -5,6 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestClassOrder;
 
 import com.github.edufeedai.javafx.annotations.FileIOTest;
 import com.github.edufeedai.javafx.annotations.IntegrationTest;
