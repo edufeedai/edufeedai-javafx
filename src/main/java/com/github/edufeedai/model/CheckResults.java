@@ -1,11 +1,11 @@
-package com.github.edufeedai.javafx.model;
+package com.github.edufeedai.model;
 
 import java.net.URL;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
-import com.github.edufeedai.javafx.model.exceptions.AssessmentErrorException;
+import com.github.edufeedai.model.exceptions.AssessmentErrorException;
 import com.google.gson.Gson;
 
 public class CheckResults {

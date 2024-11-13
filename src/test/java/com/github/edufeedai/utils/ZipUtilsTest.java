@@ -1,4 +1,4 @@
-package com.github.edufeedai.javafx.utils;
+package com.github.edufeedai.utils;
 
 import java.io.File;
 import java.io.FileOutputStream;

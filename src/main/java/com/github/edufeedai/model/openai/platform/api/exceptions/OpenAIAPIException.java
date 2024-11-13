@@ -1,6 +1,6 @@
-package com.github.edufeedai.javafx.model.openai.platform.api.exceptions;
+package com.github.edufeedai.model.openai.platform.api.exceptions;
 
-import com.github.edufeedai.javafx.model.openai.platform.api.interfaces.exceptions.APIException;
+import com.github.edufeedai.model.openai.platform.api.interfaces.exceptions.APIException;
 
 public class OpenAIAPIException extends APIException{
 

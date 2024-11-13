@@ -1,4 +1,4 @@
-package com.github.edufeedai.javafx.model.ocrlib;
+package com.github.edufeedai.model.ocrlib;
 
 public class OCRProcessorException extends Exception {
 

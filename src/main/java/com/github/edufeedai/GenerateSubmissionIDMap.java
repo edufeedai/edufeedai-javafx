@@ -1,4 +1,4 @@
-package com.github.edufeedai.javafx;
+package com.github.edufeedai;
 
 import java.io.File;
 import java.security.NoSuchAlgorithmException;
@@ -6,8 +6,8 @@ import static java.util.Arrays.stream;
 import java.util.Comparator;
 import java.util.List;
 
-import com.github.edufeedai.javafx.model.Digest;
-import com.github.edufeedai.javafx.model.SubmissionIdMap;
+import com.github.edufeedai.model.Digest;
+import com.github.edufeedai.model.SubmissionIdMap;
 import com.google.gson.Gson;
 
 public class GenerateSubmissionIDMap {

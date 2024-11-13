@@ -1,4 +1,4 @@
-package com.github.edufeedai.javafx;
+package com.github.edufeedai;
 
 import java.io.File;
 import java.io.FilenameFilter;
@@ -10,10 +10,10 @@ import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.github.edufeedai.javafx.model.Digest;
-import com.github.edufeedai.javafx.model.openai.platform.Body;
-import com.github.edufeedai.javafx.model.openai.platform.JSONLine;
-import com.github.edufeedai.javafx.model.openai.platform.Message;
+import com.github.edufeedai.model.Digest;
+import com.github.edufeedai.model.openai.platform.Body;
+import com.github.edufeedai.model.openai.platform.JSONLine;
+import com.github.edufeedai.model.openai.platform.Message;
 import com.google.gson.Gson;
 
 public class FileConcatenation implements FilenameFilter {

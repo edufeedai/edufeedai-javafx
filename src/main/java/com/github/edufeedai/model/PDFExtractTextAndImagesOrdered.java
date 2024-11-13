@@ -1,8 +1,8 @@
-package com.github.edufeedai.javafx.model;
+package com.github.edufeedai.model;
 
-import com.github.edufeedai.javafx.model.exceptions.PDFExtractTextAndImageException;
-import com.github.edufeedai.javafx.model.ocrlib.OCRProcessor;
-import com.github.edufeedai.javafx.model.ocrlib.OCRProcessorException;
+import com.github.edufeedai.model.exceptions.PDFExtractTextAndImageException;
+import com.github.edufeedai.model.ocrlib.OCRProcessor;
+import com.github.edufeedai.model.ocrlib.OCRProcessorException;
 import org.apache.pdfbox.Loader;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;

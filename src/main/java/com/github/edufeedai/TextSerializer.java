@@ -1,4 +1,4 @@
-package com.github.edufeedai.javafx;
+package com.github.edufeedai;
 
 import java.io.File;
 import java.io.IOException;
@@ -9,7 +9,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import com.github.edufeedai.javafx.model.DigestImplementation;
+import com.github.edufeedai.model.DigestImplementation;
 
 public class TextSerializer {
 

@@ -1,6 +1,6 @@
-package com.github.edufeedai.javafx.model.openai.platform.api;
+package com.github.edufeedai.model.openai.platform.api;
 
-import com.github.edufeedai.javafx.model.openai.platform.api.exceptions.OpenAIAPIException;
+import com.github.edufeedai.model.openai.platform.api.exceptions.OpenAIAPIException;
 import io.github.cdimascio.dotenv.Dotenv;
 import org.junit.jupiter.api.Test;
 

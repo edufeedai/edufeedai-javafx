@@ -1,4 +1,4 @@
-module com.github.amiguetes.edufeedai.edufeedaijavafx {
+module com.github.edufeedai{
     
     requires java.desktop;
     requires com.google.gson;
@@ -10,16 +10,15 @@ module com.github.amiguetes.edufeedai.edufeedaijavafx {
     requires org.apache.pdfbox;
     requires tess4j;
     requires opencv;
-    requires org.junit.jupiter.api;
 
-    exports com.github.edufeedai.javafx;
-    exports com.github.edufeedai.javafx.model;
-    exports com.github.edufeedai.javafx.model.openai.platform;
-    exports com.github.edufeedai.javafx.model.openai.platform.api.batches;
-    opens com.github.edufeedai.javafx.model.openai.platform to com.google.gson;
-    opens com.github.edufeedai.javafx.model.openai.platform.response to com.google.gson;
-    opens com.github.edufeedai.javafx.model.openai.platform.api.batches to com.google.gson;
-    exports com.github.edufeedai.javafx.model.exceptions;
-    opens com.github.edufeedai.javafx.model to com.google.gson;
+    exports com.github.edufeedai;
+    exports com.github.edufeedai.model;
+    exports com.github.edufeedai.model.openai.platform;
+    exports com.github.edufeedai.model.openai.platform.api.batches;
+    opens com.github.edufeedai.model.openai.platform to com.google.gson;
+    opens com.github.edufeedai.model.openai.platform.response to com.google.gson;
+    opens com.github.edufeedai.model.openai.platform.api.batches to com.google.gson;
+    exports com.github.edufeedai.model.exceptions;
+    opens com.github.edufeedai.model to com.google.gson;
 
 }

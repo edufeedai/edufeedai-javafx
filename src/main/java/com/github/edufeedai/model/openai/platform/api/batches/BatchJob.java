@@ -1,4 +1,4 @@
-package com.github.edufeedai.javafx.model.openai.platform.api.batches;
+package com.github.edufeedai.model.openai.platform.api.batches;
 
 import com.google.gson.annotations.SerializedName;
 

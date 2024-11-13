@@ -1,6 +1,6 @@
-package com.github.edufeedai.javafx.model.openai.platform.api;
+package com.github.edufeedai.model.openai.platform.api;
 
-import com.github.edufeedai.javafx.model.openai.platform.api.exceptions.OpenAIAPIException;
+import com.github.edufeedai.model.openai.platform.api.exceptions.OpenAIAPIException;
 import org.apache.hc.client5.http.classic.methods.HttpPost;
 import org.apache.hc.client5.http.entity.mime.MultipartEntityBuilder;
 import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;

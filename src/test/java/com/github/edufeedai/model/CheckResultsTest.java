@@ -1,4 +1,4 @@
-package com.github.edufeedai.javafx.model;
+package com.github.edufeedai.model;
 
 import org.junit.jupiter.api.Test;
 

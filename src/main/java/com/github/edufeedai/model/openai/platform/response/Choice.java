@@ -1,4 +1,4 @@
-package com.github.edufeedai.javafx.model.openai.platform.response;
+package com.github.edufeedai.model.openai.platform.response;
 
 public class Choice {
 

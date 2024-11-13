@@ -1,4 +1,4 @@
-package com.github.edufeedai.javafx.annotations;
+package com.github.edufeedai.annotations;
 
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;

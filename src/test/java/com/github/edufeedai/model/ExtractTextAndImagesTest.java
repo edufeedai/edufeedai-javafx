@@ -1,8 +1,8 @@
-package com.github.edufeedai.javafx.model;
+package com.github.edufeedai.model;
 
-import com.github.edufeedai.javafx.model.exceptions.PDFExtractTextAndImageException;
-import com.github.edufeedai.javafx.model.ocrlib.OCRProcessor;
-import com.github.edufeedai.javafx.model.ocrlib.OCRProcessorTesseract;
+import com.github.edufeedai.model.exceptions.PDFExtractTextAndImageException;
+import com.github.edufeedai.model.ocrlib.OCRProcessor;
+import com.github.edufeedai.model.ocrlib.OCRProcessorTesseract;
 import io.github.cdimascio.dotenv.Dotenv;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

@@ -1,7 +1,7 @@
-package com.github.edufeedai.javafx;
+package com.github.edufeedai;
 
-import com.github.edufeedai.javafx.model.SubmissionIdMap;
-import com.github.edufeedai.javafx.model.openai.platform.response.BatchRequest;
+import com.github.edufeedai.model.SubmissionIdMap;
+import com.github.edufeedai.model.openai.platform.response.BatchRequest;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 

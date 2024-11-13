@@ -1,12 +1,12 @@
-package com.github.edufeedai.javafx;
+package com.github.edufeedai;
 
 import static org.junit.jupiter.api.Assertions.fail;
 
-import com.github.edufeedai.javafx.utils.ZipUtils;
+import com.github.edufeedai.utils.ZipUtils;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import com.github.edufeedai.javafx.model.SubmissionIdMap;
+import com.github.edufeedai.model.SubmissionIdMap;
 
 import io.github.cdimascio.dotenv.Dotenv;
 

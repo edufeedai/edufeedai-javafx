@@ -1,4 +1,4 @@
-package com.github.edufeedai.javafx.model.exceptions;
+package com.github.edufeedai.model.exceptions;
 
 public class PDFExtractTextAndImageException extends Exception{
 

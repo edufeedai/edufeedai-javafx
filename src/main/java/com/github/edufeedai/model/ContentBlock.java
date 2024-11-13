@@ -1,4 +1,4 @@
-package com.github.edufeedai.javafx.model;// Clase para representar un bloque de contenido (texto o imagen)
+package com.github.edufeedai.model;// Clase para representar un bloque de contenido (texto o imagen)
 
 class ContentBlock {
 

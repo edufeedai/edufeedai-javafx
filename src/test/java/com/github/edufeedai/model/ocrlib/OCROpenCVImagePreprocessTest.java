@@ -1,4 +1,4 @@
-package com.github.edufeedai.javafx.model.ocrlib;
+package com.github.edufeedai.model.ocrlib;
 
 import io.github.cdimascio.dotenv.Dotenv;
 import org.junit.jupiter.api.Test;

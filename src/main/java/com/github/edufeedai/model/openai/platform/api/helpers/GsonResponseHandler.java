@@ -1,4 +1,4 @@
-package com.github.edufeedai.javafx.model.openai.platform.api.helpers;
+package com.github.edufeedai.model.openai.platform.api.helpers;
 
 import com.google.gson.Gson;
 public class GsonResponseHandler {

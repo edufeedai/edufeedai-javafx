@@ -1,8 +1,8 @@
-package com.github.edufeedai.javafx;
+package com.github.edufeedai;
 
 import java.io.File;
 
-import com.github.edufeedai.javafx.model.SubmissionIdMap;
+import com.github.edufeedai.model.SubmissionIdMap;
 
 public class GenerateMoodleZipFeedbackAssessmentFile {
 

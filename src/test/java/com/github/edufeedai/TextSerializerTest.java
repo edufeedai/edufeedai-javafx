@@ -1,11 +1,11 @@
-package com.github.edufeedai.javafx;
+package com.github.edufeedai;
 
 import static org.junit.jupiter.api.Assertions.fail;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ArgumentsSource;
 
-import com.github.edufeedai.javafx.model.AssessmentGradingArgumentsProvider;
-import com.github.edufeedai.javafx.model.AssessmentGradingConfig;
+import com.github.edufeedai.model.AssessmentGradingArgumentsProvider;
+import com.github.edufeedai.model.AssessmentGradingConfig;
 
 import io.github.cdimascio.dotenv.Dotenv;
 

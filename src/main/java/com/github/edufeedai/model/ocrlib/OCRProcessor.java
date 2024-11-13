@@ -1,4 +1,4 @@
-package com.github.edufeedai.javafx.model.ocrlib;
+package com.github.edufeedai.model.ocrlib;
 
 import java.io.File;
 

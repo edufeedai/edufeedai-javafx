@@ -1,6 +1,6 @@
-package com.github.edufeedai.javafx.model.openai.platform.api.interfaces;
+package com.github.edufeedai.model.openai.platform.api.interfaces;
 
-import com.github.edufeedai.javafx.model.openai.platform.api.interfaces.exceptions.APIException;
+import com.github.edufeedai.model.openai.platform.api.interfaces.exceptions.APIException;
 
 public interface CorrectionPromptBuilder {
 

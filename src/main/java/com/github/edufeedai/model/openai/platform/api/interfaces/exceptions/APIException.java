@@ -1,4 +1,4 @@
-package com.github.edufeedai.javafx.model.openai.platform.api.interfaces.exceptions;
+package com.github.edufeedai.model.openai.platform.api.interfaces.exceptions;
 
 public class APIException extends Exception {
     

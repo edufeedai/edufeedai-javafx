@@ -1,4 +1,4 @@
-package com.github.edufeedai.javafx.model.openai.platform.api;
+package com.github.edufeedai.model.openai.platform.api;
 
 import org.junit.jupiter.api.Test;
 

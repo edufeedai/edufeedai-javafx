@@ -1,4 +1,4 @@
-package com.github.edufeedai.javafx.annotations;
+package com.github.edufeedai.annotations;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

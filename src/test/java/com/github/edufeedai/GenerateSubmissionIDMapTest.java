@@ -1,4 +1,4 @@
-package com.github.edufeedai.javafx;
+package com.github.edufeedai;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -7,12 +7,12 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestClassOrder;
 
-import com.github.edufeedai.javafx.annotations.FileIOTest;
-import com.github.edufeedai.javafx.annotations.IntegrationTest;
-import com.github.edufeedai.javafx.annotations.PrivacyTest;
-import com.github.edufeedai.javafx.annotations.UtilityTest;
-import com.github.edufeedai.javafx.model.DigestImplementation;
-import com.github.edufeedai.javafx.model.SubmissionIdMap;
+import com.github.edufeedai.annotations.FileIOTest;
+import com.github.edufeedai.annotations.IntegrationTest;
+import com.github.edufeedai.annotations.PrivacyTest;
+import com.github.edufeedai.annotations.UtilityTest;
+import com.github.edufeedai.model.DigestImplementation;
+import com.github.edufeedai.model.SubmissionIdMap;
 
 import io.github.cdimascio.dotenv.Dotenv;
 
