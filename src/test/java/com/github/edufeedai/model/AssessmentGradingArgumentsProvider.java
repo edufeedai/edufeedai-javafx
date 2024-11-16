@@ -26,6 +26,7 @@ public class AssessmentGradingArgumentsProvider  implements ArgumentsProvider {
                 .map(this::loadJson)
                 .map(Arguments::of);
     }
+    
     private AssessmentGradingConfig loadJson(String filename){
             try (InputStream input = getClass().getClassLoader().getResourceAsStream(filename);
                  InputStreamReader reader = new InputStreamReader(input)) {
