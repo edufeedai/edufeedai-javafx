@@ -1,6 +1,6 @@
 package com.github.edufeedai.model;// Clase para representar un bloque de contenido (texto o imagen)
 
-class ContentBlock {
+public class ContentBlock {
 
     private String type; // Puede ser "text" o "image"
     private String content;

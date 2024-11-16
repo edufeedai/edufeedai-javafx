@@ -7,7 +7,7 @@ module com.github.edufeedai{
     requires org.apache.httpcomponents.client5.httpclient5;
     requires org.apache.httpcomponents.core5.httpcore5;
     requires org.json;
-    requires org.apache.pdfbox;
+    requires transitive org.apache.pdfbox;
     requires tess4j;
     requires opencv;
 
@@ -20,5 +20,6 @@ module com.github.edufeedai{
     opens com.github.edufeedai.model.openai.platform.api.batches to com.google.gson;
     exports com.github.edufeedai.model.exceptions;
     opens com.github.edufeedai.model to com.google.gson;
-
+    exports com.github.edufeedai.model.ocrlib; 
+    
 }

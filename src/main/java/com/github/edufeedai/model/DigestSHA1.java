@@ -3,7 +3,7 @@ package com.github.edufeedai.model;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-public class DigestImplementation implements Digest{
+public class DigestSHA1 implements Digest{
 
 
     @Override

@@ -9,7 +9,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import com.github.edufeedai.model.DigestImplementation;
+import com.github.edufeedai.model.DigestSHA1;
 
 public class TextSerializer {
 
@@ -145,7 +145,7 @@ public class TextSerializer {
         List<File> files = listAllLevel1Dirs();
 
         for (File file : files) {
-            FileConcatenation fileConcatenation = new FileConcatenation(file.getAbsolutePath(), new DigestImplementation());
+            FileConcatenation fileConcatenation = new FileConcatenation(file.getAbsolutePath(), new DigestSHA1());
             fileConcatenation.serialize(instructions);
         }
 

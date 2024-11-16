@@ -11,7 +11,7 @@ import com.github.edufeedai.annotations.FileIOTest;
 import com.github.edufeedai.annotations.IntegrationTest;
 import com.github.edufeedai.annotations.PrivacyTest;
 import com.github.edufeedai.annotations.UtilityTest;
-import com.github.edufeedai.model.DigestImplementation;
+import com.github.edufeedai.model.DigestSHA1;
 import com.github.edufeedai.model.SubmissionIdMap;
 
 import io.github.cdimascio.dotenv.Dotenv;
@@ -30,7 +30,7 @@ class GenerateSubmissionIDMapTest {
     @DisplayName("Genera y guarda el mapa de IDs de envío")
     void saveSubmissionIDMaps() {
         
-        GenerateSubmissionIDMap generateSubmissionIDMap = new GenerateSubmissionIDMap(assessmentFolder,new DigestImplementation());
+        GenerateSubmissionIDMap generateSubmissionIDMap = new GenerateSubmissionIDMap(assessmentFolder,new DigestSHA1());
         SubmissionIdMap[] submissionIdMaps = generateSubmissionIDMap.generateSubmissionIDMaps();
 
         assertNotNull(submissionIdMaps, "El array de SubmissionIdMap no debe ser nulo");
