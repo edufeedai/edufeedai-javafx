@@ -1,6 +1,7 @@
 package com.github.edufeedai;
 
 import java.io.File;
+import java.security.DigestException;
 import java.security.NoSuchAlgorithmException;
 import static java.util.Arrays.stream;
 import java.util.Comparator;
@@ -33,7 +34,7 @@ public class GenerateSubmissionIDMap {
 
             try {
                 submissionIdMap.setSubmission_id(digest.digest(files[i].getName()));
-            } catch (NoSuchAlgorithmException e) {
+            } catch (DigestException e) {
                 submissionIdMap.setSubmission_id("errorgeneratingname");
             }
 

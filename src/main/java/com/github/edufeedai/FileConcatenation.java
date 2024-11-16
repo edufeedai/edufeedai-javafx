@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.security.DigestException;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
@@ -34,7 +35,7 @@ public class FileConcatenation implements FilenameFilter {
 
         try {
             sha11 = digest.digest(path.getFileName().toString());
-        } catch (NoSuchAlgorithmException e) {
+        } catch (DigestException e) {
             sha11 = "errorgerneratingname";
         }
 
