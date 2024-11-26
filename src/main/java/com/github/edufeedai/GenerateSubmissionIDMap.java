@@ -2,7 +2,6 @@ package com.github.edufeedai;
 
 import java.io.File;
 import java.security.DigestException;
-import java.security.NoSuchAlgorithmException;
 import static java.util.Arrays.stream;
 import java.util.Comparator;
 import java.util.List;
