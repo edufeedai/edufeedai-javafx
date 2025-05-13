@@ -14,7 +14,7 @@
         <junit.version>5.10.0</junit.version>
         <gson.version>2.10.1</gson.version>
         <dotenv.version>3.0.0</dotenv.version>
-        <client5.version>5.4</client5.version>
+        <client5.version>5.4.3</client5.version>
         <json.version>20240303</json.version>
         <pdfbox.version>3.0.3</pdfbox.version>
         <tess4j.version>5.13.0</tess4j.version>
