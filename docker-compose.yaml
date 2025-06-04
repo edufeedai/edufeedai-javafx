@@ -17,5 +17,5 @@ services:
       - "50001:80"
       - "40022:22"
     volumes:
-      - .:/mnt/edufeedai-javafx
+      - .:/mnt/edufeedai
       - ../agent-zero-data:/a0
