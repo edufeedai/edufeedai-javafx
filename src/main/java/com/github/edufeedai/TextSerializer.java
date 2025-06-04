@@ -193,16 +193,16 @@ public class TextSerializer {
     }
 
     /**
-     * Packages all first-level directories by serializing their contents using FileConcatenation.
+     * Packages all first-level directories by serializing their contents using FileConcatenator.
      *
-     * @param instructions instructions to pass to the FileConcatenation serializer
+     * @param instructions instructions to pass to the FileConcatenator serializer
      * @throws IOException if an I/O error occurs
      */
     public void packageFiles(String instructions) throws IOException {
         List<File> directories = listFirstLevelDirectories();
         for (File dir : directories) {
-            FileConcatenation fileConcatenation = new FileConcatenation(dir.getAbsolutePath(), new DigestSHA1());
-            fileConcatenation.serialize(instructions);
+            FileConcatenator fileConcatenation = new FileConcatenator(dir.getAbsolutePath(), new DigestSHA1());
+            fileConcatenation.serializeToJson(instructions);
         }
     }
 }
