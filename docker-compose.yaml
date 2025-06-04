@@ -10,3 +10,12 @@ services:
     environment:
       - NODE_ENV=development
       
+  agent-zero:
+    image: frdel/agent-zero-run
+    container_name: agent-zero
+    ports:
+      - "50001:80"
+      - "40022:22"
+    volumes:
+      - .:/mnt/edufeedai-javafx
+      - ../agent-zero-data:/a0
