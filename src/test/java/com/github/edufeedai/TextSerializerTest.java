@@ -19,7 +19,7 @@ class TextSerializerTest {
 
         TextSerializer serializer = new TextSerializer(assessmentDirectory);
 
-        serializer.deleteAllStudentsJSONOpenAIJob();
+        serializer.deleteAllStudentJsonFiles();
 
         try {
             serializer.packageFiles(config.getInstruction());
@@ -28,7 +28,7 @@ class TextSerializerTest {
         }
 
         try {
-            serializer.generateJSONL(6);
+            serializer.generateJsonl(6);
         } catch (Exception e) {
             fail(e);
         }

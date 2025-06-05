@@ -13,8 +13,8 @@ import io.github.cdimascio.dotenv.Dotenv;
 import java.io.File;
 import java.io.IOException;
 
-@DisplayName("TESTS - GenerateMoodleZipFeedbackAssessmentFileTest")
-class GenerateMoodleZipFeedbackAssessmentFileTest {
+@DisplayName("TESTS - MoodleFeedbackFileGeneratorTest")
+class MoodleFeedbackFileGeneratorTest {
 
     String assessmentPath = Dotenv.load().get("ASSESSMENT_TEST_DIR");
     String assessmentMapFilePath = assessmentPath + java.io.File.separator + Dotenv.load().get("ASSESSMENT_ID_MAP_FILE");
@@ -23,12 +23,12 @@ class GenerateMoodleZipFeedbackAssessmentFileTest {
 
     @Test
     @DisplayName("Genera el archivo de feedback de la evaluación para Moodle")
-    void generateFeedbackFile() {
+    void generateFeedbackFiles() {
 
         File archivo = new File(moodleAssessmentFeedbackDir);
         archivo.mkdirs();
 
-        GenerateMoodleZipFeedbackAssessmentFile generateFeedbackFileForStudents = new GenerateMoodleZipFeedbackAssessmentFile(assessmentPath,moodleAssessmentFeedbackDir);
+        MoodleFeedbackFileGenerator generateFeedbackFileForStudents = new MoodleFeedbackFileGenerator(assessmentPath,moodleAssessmentFeedbackDir);
 
         StringBuilder assessmentMap = new StringBuilder();
 
@@ -45,7 +45,7 @@ class GenerateMoodleZipFeedbackAssessmentFileTest {
         SubmissionIdMap[] submissionIdArray = gson.fromJson(assessmentMap.toString(), SubmissionIdMap[].class);
 
         try {
-            generateFeedbackFileForStudents.generateFeedbackFile(submissionIdArray);
+            generateFeedbackFileForStudents.generateFeedbackFiles(submissionIdArray);
         } catch (Exception e) {
             fail(e);
         }

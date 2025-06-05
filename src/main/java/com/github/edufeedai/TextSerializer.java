@@ -132,7 +132,7 @@ public class TextSerializer {
      */
     public void generateJsonl() throws IOException {
         List<File> jsonFiles = findAllJsonFiles();
-        generateJsonl(jsonFiles.size());
+        generateJsonlVolumes(jsonFiles, jsonFiles.size());
     }
 
     /**
@@ -143,6 +143,17 @@ public class TextSerializer {
      */
     public void generateJsonl(int jsonsPerVolume) throws IOException {
         List<File> jsonFiles = findAllJsonFiles();
+        generateJsonlVolumes(jsonFiles, jsonsPerVolume);
+    }
+
+    /**
+     * Helper method to generate JSONL volumes from a list of files.
+     *
+     * @param jsonFiles list of JSON files
+     * @param jsonsPerVolume max number of files per volume
+     * @throws IOException if an I/O error occurs
+     */
+    private void generateJsonlVolumes(List<File> jsonFiles, int jsonsPerVolume) throws IOException {
         int totalFiles = jsonFiles.size();
         int totalVolumes = totalFiles / jsonsPerVolume + (totalFiles % jsonsPerVolume == 0 ? 0 : 1);
         File outputFile = new File(outputFilePath);

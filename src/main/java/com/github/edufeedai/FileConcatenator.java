@@ -116,7 +116,18 @@ public class FileConcatenator implements FilenameFilter {
     protected void serializeToJson(String instructions) throws IOException {
         List<File> files = listAllAcceptedFiles();
         String content = concatenateFileContents(files);
+        JSONLine jsonLine = buildJSONLine(content, instructions);
+        writeJsonLineToFile(jsonLine);
+    }
 
+    /**
+     * Builds a JSONLine object for OpenAI platform.
+     *
+     * @param content concatenated file content
+     * @param instructions system instructions
+     * @return JSONLine object ready for serialization
+     */
+    private JSONLine buildJSONLine(String content, String instructions) {
         JSONLine jsonLine = new JSONLine();
         jsonLine.setCustom_id(sha1Digest);
         jsonLine.setMethod("POST");
@@ -137,7 +148,16 @@ public class FileConcatenator implements FilenameFilter {
 
         body.setMessages(messages);
         jsonLine.setBody(body);
+        return jsonLine;
+    }
 
+    /**
+     * Writes the JSONLine object to the output file as JSON.
+     *
+     * @param jsonLine the JSONLine object to write
+     * @throws IOException if file writing fails
+     */
+    private void writeJsonLineToFile(JSONLine jsonLine) throws IOException {
         Gson gson = new Gson();
         String json = gson.toJson(jsonLine);
         Files.write(Paths.get(outputFilePath), json.getBytes());

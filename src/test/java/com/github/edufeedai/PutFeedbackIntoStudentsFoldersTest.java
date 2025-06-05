@@ -8,19 +8,19 @@ import org.junit.jupiter.api.Test;
 
 import io.github.cdimascio.dotenv.Dotenv;
 
-class PutFeedbackIntoStudentsFoldersTest {
+class FeedbackDistributorTest {
 
     String assessmentPath = Dotenv.load().get("ASSESSMENT_TEST_DIR");
     String assessmentMapFilePath = assessmentPath + File.separator + Dotenv.load().get("ASSESSMENT_ID_MAP_FILE");
     String assessmentResponsesFilePath = assessmentPath + File.separator + Dotenv.load().get("ASSESSMENT_RESPONSES_FILE");
 
-    private static final Logger LOGGER = Logger.getLogger(PutFeedbackIntoStudentsFoldersTest.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(FeedbackDistributorTest.class.getName());
 
     @Test
-    void putAssessmentInPlaceWorker() {
+    void distributeFeedback() {
 
         try {
-            PutFeedbackIntoStudentsFolders.putAssessmentInPlaceWorker(assessmentPath,assessmentMapFilePath, assessmentResponsesFilePath);
+            FeedbackDistributor.distributeFeedback(assessmentPath,assessmentMapFilePath, assessmentResponsesFilePath);
         } catch (Exception e) {
             LOGGER.severe(e.getMessage());
             fail(e);
