@@ -4,6 +4,8 @@ import com.github.edufeedai.model.SubmissionIdMap;
 import com.github.edufeedai.model.openai.platform.response.BatchRequest;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.FileReader;
 import java.util.*;
@@ -31,6 +33,8 @@ import java.io.File;
  */
 public class FeedbackDistributor {
 
+    private static final Logger logger = LoggerFactory.getLogger(FeedbackDistributor.class);
+
     /**
      * Reads the assessment map and assessment responses, then writes feedback into each student's folder.
      *
@@ -40,6 +44,8 @@ public class FeedbackDistributor {
      */
     public static void distributeFeedback(String assessmentsRootPath, String assessmentMapFilePath, String assessmentResponsesFilePath) {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
+
+        logger.info("Starting feedback distribution. Root: {}, Map: {}, Responses: {}", assessmentsRootPath, assessmentMapFilePath, assessmentResponsesFilePath);
 
         // Read the assessment map file into a string
         StringBuilder assessmentMapContent = new StringBuilder();
@@ -51,12 +57,17 @@ public class FeedbackDistributor {
                 assessmentMapContent.append(scanner.nextLine());
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error("Error reading assessment map file: {}", assessmentMapFilePath, e);
             return;
         }
 
         // Parse the assessment map JSON
-        submissionIdMappings = gson.fromJson(assessmentMapContent.toString(), SubmissionIdMap[].class);
+        try {
+            submissionIdMappings = gson.fromJson(assessmentMapContent.toString(), SubmissionIdMap[].class);
+        } catch (Exception e) {
+            logger.error("Error parsing assessment map JSON.", e);
+            return;
+        }
 
         // Read and parse the assessment responses (JSONL)
         try (Scanner scanner = new Scanner(new FileReader(assessmentResponsesFilePath))) {
@@ -65,7 +76,7 @@ public class FeedbackDistributor {
                 assessmentResponses.add(batchRequest);
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.error("Error reading assessment responses file: {}", assessmentResponsesFilePath, e);
             return;
         }
 
@@ -74,13 +85,14 @@ public class FeedbackDistributor {
         for (SubmissionIdMap mapping : submissionIdMappings) {
             customIdToFolderMap.put(mapping.getCustom_id(), mapping.getSubmission_id());
         }
+        logger.debug("Built customIdToFolderMap with {} entries.", customIdToFolderMap.size());
 
         // Write feedback to each student's folder
         for (BatchRequest response : assessmentResponses) {
             String customId = response.getCustom_id();
             String studentFolder = customIdToFolderMap.get(customId);
             if (studentFolder == null) {
-                System.err.println("No folder found for custom_id: " + customId);
+                logger.warn("No folder found for custom_id: {}", customId);
                 continue;
             }
             String fileName = studentFolder + ".md";
@@ -88,9 +100,11 @@ public class FeedbackDistributor {
             String outputPath = assessmentsRootPath + File.separator + studentFolder + File.separator + fileName;
             try {
                 Files.writeString(Paths.get(outputPath), feedbackContent);
+                logger.info("Feedback written to {}", outputPath);
             } catch (Exception e) {
-                e.printStackTrace();
+                logger.error("Error writing feedback to {}", outputPath, e);
             }
         }
+        logger.info("Feedback distribution completed.");
     }
 }

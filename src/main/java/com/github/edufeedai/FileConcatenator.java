@@ -15,6 +15,8 @@ import com.github.edufeedai.model.openai.platform.Body;
 import com.github.edufeedai.model.openai.platform.JSONLine;
 import com.github.edufeedai.model.openai.platform.Message;
 import com.google.gson.Gson;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Utility class for recursively concatenating the contents of files in a directory,
@@ -24,6 +26,8 @@ import com.google.gson.Gson;
  * It generates a unique output file name based on a digest of the input directory name.</p>
  */
 public class FileConcatenator implements FilenameFilter {
+
+    private static final Logger logger = LoggerFactory.getLogger(FileConcatenator.class);
 
     /** Directory to scan for input files. */
     private final String inputDirectory;
@@ -45,10 +49,12 @@ public class FileConcatenator implements FilenameFilter {
         try {
             sha1 = digest.digest(path.getFileName().toString());
         } catch (DigestException e) {
+            logger.error("Error generating digest for directory name: {}", inputDirectory, e);
             sha1 = "errorgeneratingname";
         }
         this.sha1Digest = sha1;
         this.outputFilePath = inputDirectory + File.separator + sha1Digest + ".json";
+        logger.info("FileConcatenator initialized for directory: {}. Output file: {}", inputDirectory, outputFilePath);
     }
 
     /**
@@ -79,6 +85,7 @@ public class FileConcatenator implements FilenameFilter {
      */
     private List<File> listAllAcceptedFiles() {
         File inputDir = new File(inputDirectory);
+        logger.debug("Listing all accepted files in directory: {}", inputDirectory);
         return listAllAcceptedFiles(inputDir);
     }
 
@@ -93,6 +100,7 @@ public class FileConcatenator implements FilenameFilter {
         StringBuilder sb = new StringBuilder();
         String lineSeparator = System.lineSeparator();
         for (File file : files) {
+            logger.debug("Concatenating file: {}", file.getAbsolutePath());
             sb.append(">>>{")
               .append(file.getName())
               .append("} ")
@@ -114,10 +122,12 @@ public class FileConcatenator implements FilenameFilter {
      * @throws IOException if file writing fails
      */
     protected void serializeToJson(String instructions) throws IOException {
+        logger.info("Starting serialization to JSON for directory: {}", inputDirectory);
         List<File> files = listAllAcceptedFiles();
         String content = concatenateFileContents(files);
         JSONLine jsonLine = buildJSONLine(content, instructions);
         writeJsonLineToFile(jsonLine);
+        logger.info("Serialization complete. Output written to: {}", outputFilePath);
     }
 
     /**
@@ -161,6 +171,7 @@ public class FileConcatenator implements FilenameFilter {
         Gson gson = new Gson();
         String json = gson.toJson(jsonLine);
         Files.write(Paths.get(outputFilePath), json.getBytes());
+        logger.debug("JSON written to file: {}", outputFilePath);
     }
 
     /**
@@ -176,9 +187,11 @@ public class FileConcatenator implements FilenameFilter {
     public boolean accept(File dir, String name) {
         File candidate = new File(dir, name);
         if (candidate.isHidden()) {
+            logger.trace("File {} is hidden, skipping.", name);
             return false;
         }
         if (name.equals("git-book")) {
+            logger.trace("File {} is git-book, skipping.", name);
             return false;
         }
         // Exclude specific file names
@@ -190,6 +203,7 @@ public class FileConcatenator implements FilenameFilter {
             case "app.js":
             case "LICENSE":
             case "Dockerfile":
+                logger.trace("File {} is excluded by name.", name);
                 return false;
             default:
                 break;
@@ -233,6 +247,7 @@ public class FileConcatenator implements FilenameFilter {
                 case "bz2":
                 case "xz":
                 case "xml":
+                    logger.trace("File {} is excluded by extension .{}.", name, ext);
                     return false;
                 default:
                     break;

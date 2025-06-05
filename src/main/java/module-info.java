@@ -1,4 +1,5 @@
 module com.github.edufeedai{
+    requires org.slf4j;
     
     requires java.desktop;
     requires com.google.gson;

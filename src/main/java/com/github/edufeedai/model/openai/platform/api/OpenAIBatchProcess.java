@@ -11,6 +11,8 @@ import org.apache.hc.core5.http.ContentType;
 import org.apache.hc.core5.http.io.entity.EntityUtils;
 import org.apache.hc.core5.http.io.entity.StringEntity;
 import org.json.JSONObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * Clase para gestionar el procesamiento por lotes (batch) de archivos en la API de OpenAI.
@@ -18,6 +20,7 @@ import org.json.JSONObject;
  */
 public class OpenAIBatchProcess {
 
+    private static final Logger logger = LoggerFactory.getLogger(OpenAIBatchProcess.class);
     /** Clave de API de OpenAI */
     String apiKey;
     /** URL del endpoint batch de OpenAI */
@@ -44,6 +47,7 @@ public class OpenAIBatchProcess {
         batchRequest = new HttpPost(batchUrl);
         batchRequest.setHeader("Authorization", "Bearer " + apiKey);
         batchRequest.setHeader("Content-Type", "application/json");
+        logger.info("OpenAIBatchProcess inicializado. Endpoint: {}", batchUrl);
     }
 
     /**
@@ -54,6 +58,7 @@ public class OpenAIBatchProcess {
      * @throws OpenAIAPIException Si ocurre un error en la petición o respuesta de la API
      */
     public BatchJob enqueueBatchProcess(String fileId) throws OpenAIAPIException {
+        logger.info("Encolando archivo {} para procesamiento batch.", fileId);
         try (CloseableHttpClient httpClient = HttpClients.createDefault()) {
             // Crea el JSON con los parámetros de batch processing
             JSONObject json = new JSONObject();
@@ -65,13 +70,17 @@ public class OpenAIBatchProcess {
             try (CloseableHttpResponse response = httpClient.execute(batchRequest)) {
                 int statusCode = response.getCode();
                 String responseBody = EntityUtils.toString(response.getEntity());
+                logger.debug("Respuesta recibida del endpoint batch. Status: {}", statusCode);
                 if (statusCode == 200) {
+                    logger.info("Procesamiento batch encolado correctamente para archivo {}.", fileId);
                     return GsonResponseHandler.convertJsonToObject(responseBody,BatchJob.class);
                 } else {
+                    logger.error("Error en respuesta batch: {}", responseBody);
                     throw new OpenAIAPIException(responseBody);
                 }
             }
         } catch (Exception e) {
+            logger.error("Excepción al encolar procesamiento batch para archivo {}", fileId, e);
             throw new OpenAIAPIException(e);
         }
     }
