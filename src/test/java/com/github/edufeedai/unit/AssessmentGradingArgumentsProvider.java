@@ -1,5 +1,4 @@
-package com.github.edufeedai.model;
-
+package com.github.edufeedai.unit;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -11,6 +10,7 @@ import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.ArgumentsProvider;
 
+import com.github.edufeedai.model.AssessmentGradingConfig;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 

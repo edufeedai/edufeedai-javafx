@@ -1,6 +1,13 @@
-package com.github.edufeedai.model;
+package com.github.edufeedai.unit;
 
 import org.junit.jupiter.api.Test;
+
+import com.github.edufeedai.model.Digest;
+import com.github.edufeedai.model.DigestMD5;
+import com.github.edufeedai.model.DigestSHA1;
+import com.github.edufeedai.model.DigestSHA256;
+import com.github.edufeedai.model.DigestSHA512;
+
 import java.security.DigestException;
 import static org.junit.jupiter.api.Assertions.*;
 

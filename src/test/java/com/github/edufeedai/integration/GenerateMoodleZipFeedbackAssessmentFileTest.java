@@ -1,4 +1,4 @@
-package com.github.edufeedai;
+package com.github.edufeedai.integration;
 
 import static org.junit.jupiter.api.Assertions.fail;
 
@@ -6,6 +6,7 @@ import com.github.edufeedai.utils.ZipUtils;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import com.github.edufeedai.MoodleFeedbackFileGenerator;
 import com.github.edufeedai.model.SubmissionIdMap;
 
 import io.github.cdimascio.dotenv.Dotenv;

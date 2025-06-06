@@ -4,8 +4,8 @@ import static org.junit.jupiter.api.Assertions.fail;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ArgumentsSource;
 
-import com.github.edufeedai.model.AssessmentGradingArgumentsProvider;
 import com.github.edufeedai.model.AssessmentGradingConfig;
+import com.github.edufeedai.unit.AssessmentGradingArgumentsProvider;
 
 import io.github.cdimascio.dotenv.Dotenv;
 

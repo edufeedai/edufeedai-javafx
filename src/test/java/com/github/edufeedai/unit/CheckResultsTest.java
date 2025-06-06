@@ -1,6 +1,9 @@
-package com.github.edufeedai.model;
+package com.github.edufeedai.unit;
 
 import org.junit.jupiter.api.Test;
+
+import com.github.edufeedai.model.Assessment;
+import com.github.edufeedai.model.CheckResults;
 
 import static org.junit.jupiter.api.Assertions.*;
 

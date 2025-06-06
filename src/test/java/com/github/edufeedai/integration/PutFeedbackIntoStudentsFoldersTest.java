@@ -1,10 +1,12 @@
-package com.github.edufeedai;
+package com.github.edufeedai.integration;
 
 import java.io.File;
 import java.util.logging.Logger;
 
 import static org.junit.jupiter.api.Assertions.fail;
 import org.junit.jupiter.api.Test;
+
+import com.github.edufeedai.FeedbackDistributor;
 
 import io.github.cdimascio.dotenv.Dotenv;
 

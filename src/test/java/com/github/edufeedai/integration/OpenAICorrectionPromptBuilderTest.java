@@ -1,6 +1,8 @@
-package com.github.edufeedai.model.openai.platform.api;
+package com.github.edufeedai.integration;
 
 import org.junit.jupiter.api.Test;
+
+import com.github.edufeedai.model.openai.platform.api.OpenAICorrectionPromptBuilder;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.fail;
