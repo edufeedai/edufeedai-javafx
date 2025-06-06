@@ -35,9 +35,13 @@ public class GenerateSubmissionIDMap {
      * @return Arreglo de SubmissionIdMap ordenado por custom_id
      */
     public SubmissionIdMap[] generateSubmissionIDMaps() {
+        
         File folder = new File(assessmentFolder);
         File[] files = folder.listFiles((f) -> f.isDirectory() && !f.isHidden());
-        if (files == null) return new SubmissionIdMap[0];
+        
+        if (files == null) {
+            return new SubmissionIdMap[0];
+        }
         SubmissionIdMap[] submissionIdMaps = new SubmissionIdMap[files.length];
         for (int i = 0; i < files.length; i++) {
             SubmissionIdMap submissionIdMap = new SubmissionIdMap();
