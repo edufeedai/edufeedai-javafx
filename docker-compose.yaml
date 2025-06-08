@@ -6,7 +6,8 @@ services:
     ports:
       - "5005:5005"  
     volumes:
-      - .:/app       
+      - .:/app
+      - ../testlab:/testlab       
     environment:
       - NODE_ENV=development
       
