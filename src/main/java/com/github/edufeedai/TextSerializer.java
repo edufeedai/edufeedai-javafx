@@ -20,7 +20,10 @@ import com.github.edufeedai.model.DigestSHA1;
  *
  * @author EduFeedAI
  */
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 public class TextSerializer {
+    private static final Logger logger = LoggerFactory.getLogger(TextSerializer.class);
 
     /**
      * Path to the input directory containing student submissions.
@@ -49,6 +52,7 @@ public class TextSerializer {
      * Only affects files ending with ".json".
      */
     public void deleteAllStudentJsonFiles() {
+        logger.info("Eliminando archivos JSON de todas las entregas de estudiantes en {}", inputDirectory);
         File submissionsRoot = new File(inputDirectory);
         File[] studentDirs = submissionsRoot.listFiles();
         if (studentDirs == null) return;
@@ -131,6 +135,7 @@ public class TextSerializer {
      * @throws IOException if an I/O error occurs
      */
     public void generateJsonl() throws IOException {
+        logger.info("Generando archivo JSONL único para {}", inputDirectory);
         List<File> jsonFiles = findAllJsonFiles();
         generateJsonlVolumes(jsonFiles, jsonFiles.size());
     }
@@ -142,6 +147,7 @@ public class TextSerializer {
      * @throws IOException if an I/O error occurs
      */
     public void generateJsonl(int jsonsPerVolume) throws IOException {
+        logger.info("Generando archivos JSONL por volumen en {}", inputDirectory);
         List<File> jsonFiles = findAllJsonFiles();
         generateJsonlVolumes(jsonFiles, jsonsPerVolume);
     }
@@ -210,6 +216,7 @@ public class TextSerializer {
      * @throws IOException if an I/O error occurs
      */
     public void packageFiles(String instructions) throws IOException {
+        logger.info("Empaquetando archivos de directorios de primer nivel en {}", inputDirectory);
         List<File> directories = listFirstLevelDirectories();
         for (File dir : directories) {
             FileConcatenator fileConcatenation = new FileConcatenator(dir.getAbsolutePath(), new DigestSHA1());
