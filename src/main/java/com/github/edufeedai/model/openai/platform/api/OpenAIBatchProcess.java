@@ -3,6 +3,8 @@ package com.github.edufeedai.model.openai.platform.api;
 import com.github.edufeedai.model.openai.platform.api.batches.BatchJob;
 import com.github.edufeedai.model.openai.platform.api.helpers.GsonResponseHandler;
 import com.github.edufeedai.model.openai.platform.api.exceptions.OpenAIAPIException;
+
+import org.apache.hc.client5.http.classic.methods.HttpGet;
 import org.apache.hc.client5.http.classic.methods.HttpPost;
 import org.apache.hc.client5.http.impl.classic.CloseableHttpClient;
 import org.apache.hc.client5.http.impl.classic.CloseableHttpResponse;
@@ -81,6 +83,29 @@ public class OpenAIBatchProcess {
             }
         } catch (Exception e) {
             logger.error("Excepción al encolar procesamiento batch para archivo {}", fileId, e);
+            throw new OpenAIAPIException(e);
+        }
+    }
+
+    public BatchJob getBatchJob(String jobId) throws OpenAIAPIException {
+        logger.info("Obteniendo información del job batch con ID: {}", jobId);
+        try (CloseableHttpClient httpClient = HttpClients.createDefault()) {
+            HttpGet request = new HttpGet(batchUrl + "/" + jobId);
+            request.setHeader("Authorization", "Bearer " + apiKey);
+            request.setHeader("Content-Type", "application/json");
+            try (CloseableHttpResponse response = httpClient.execute(request)) {
+                int statusCode = response.getCode();
+                String responseBody = EntityUtils.toString(response.getEntity());
+                logger.debug("Respuesta recibida al obtener job batch. Status: {}", statusCode);
+                if (statusCode == 200) {
+                    return GsonResponseHandler.convertJsonToObject(responseBody, BatchJob.class);
+                } else {
+                    logger.error("Error al obtener job batch: {}", responseBody);
+                    throw new OpenAIAPIException(responseBody);
+                }
+            }
+        } catch (Exception e) {
+            logger.error("Excepción al obtener job batch con ID {}", jobId, e);
             throw new OpenAIAPIException(e);
         }
     }

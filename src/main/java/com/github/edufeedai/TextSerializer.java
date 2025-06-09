@@ -20,7 +20,10 @@ import com.github.edufeedai.model.DigestSHA1;
  *
  * @author EduFeedAI
  */
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 public class TextSerializer {
+    private static final Logger logger = LoggerFactory.getLogger(TextSerializer.class);
 
     /**
      * Path to the input directory containing student submissions.
@@ -49,6 +52,7 @@ public class TextSerializer {
      * Only affects files ending with ".json".
      */
     public void deleteAllStudentJsonFiles() {
+        logger.info("Eliminando archivos JSON de todas las entregas de estudiantes en {}", inputDirectory);
         File submissionsRoot = new File(inputDirectory);
         File[] studentDirs = submissionsRoot.listFiles();
         if (studentDirs == null) return;
@@ -84,7 +88,7 @@ public class TextSerializer {
      * @return a list of JSON File objects
      * @throws IOException if an I/O error occurs
      */
-    private List<File> findAllJsonFiles() throws IOException {
+    private List<File> findAllJsonFilesExceptIDMapJSON() throws IOException {
         return Files.walk(Paths.get(inputDirectory), 2)
                 .filter(Files::isRegularFile)
                 .filter(path -> {
@@ -92,7 +96,7 @@ public class TextSerializer {
                     int lastDot = fileName.lastIndexOf('.');
                     if (lastDot == -1) return false;
                     String ext = fileName.substring(lastDot + 1);
-                    return "json".equals(ext);
+                    return "json".equals(ext) && !fileName.equals("id_map.json");
                 })
                 .map(Path::toFile)
                 .collect(Collectors.toList());
@@ -131,7 +135,8 @@ public class TextSerializer {
      * @throws IOException if an I/O error occurs
      */
     public void generateJsonl() throws IOException {
-        List<File> jsonFiles = findAllJsonFiles();
+        logger.info("Generando archivo JSONL único para {}", inputDirectory);
+        List<File> jsonFiles = findAllJsonFilesExceptIDMapJSON();
         generateJsonlVolumes(jsonFiles, jsonFiles.size());
     }
 
@@ -142,7 +147,8 @@ public class TextSerializer {
      * @throws IOException if an I/O error occurs
      */
     public void generateJsonl(int jsonsPerVolume) throws IOException {
-        List<File> jsonFiles = findAllJsonFiles();
+        logger.info("Generando archivos JSONL por volumen en {}", inputDirectory);
+        List<File> jsonFiles = findAllJsonFilesExceptIDMapJSON();
         generateJsonlVolumes(jsonFiles, jsonsPerVolume);
     }
 
@@ -210,6 +216,7 @@ public class TextSerializer {
      * @throws IOException if an I/O error occurs
      */
     public void packageFiles(String instructions) throws IOException {
+        logger.info("Empaquetando archivos de directorios de primer nivel en {}", inputDirectory);
         List<File> directories = listFirstLevelDirectories();
         for (File dir : directories) {
             FileConcatenator fileConcatenation = new FileConcatenator(dir.getAbsolutePath(), new DigestSHA1());

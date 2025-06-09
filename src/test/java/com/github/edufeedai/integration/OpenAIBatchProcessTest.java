@@ -1,5 +1,6 @@
-package com.github.edufeedai.model.openai.platform.api;
+package com.github.edufeedai.integration;
 
+import com.github.edufeedai.model.openai.platform.api.OpenAIBatchProcess;
 import com.github.edufeedai.model.openai.platform.api.batches.BatchJob;
 import io.github.cdimascio.dotenv.Dotenv;
 import org.junit.jupiter.api.Test;

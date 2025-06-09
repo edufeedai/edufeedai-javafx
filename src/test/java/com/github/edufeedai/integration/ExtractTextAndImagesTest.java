@@ -1,5 +1,6 @@
-package com.github.edufeedai.model;
+package com.github.edufeedai.integration;
 
+import com.github.edufeedai.model.PDFExtractTextAndImagesOrdered;
 import com.github.edufeedai.model.exceptions.PDFExtractTextAndImageException;
 import com.github.edufeedai.model.ocrlib.OCRProcessor;
 import com.github.edufeedai.model.ocrlib.OCRProcessorTesseract;

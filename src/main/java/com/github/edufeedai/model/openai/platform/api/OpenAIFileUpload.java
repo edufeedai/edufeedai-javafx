@@ -10,11 +10,14 @@ import org.apache.hc.core5.http.io.entity.EntityUtils;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.util.logging.Logger;
 
 public class OpenAIFileUpload {
 
     String apiKey;
     String uploadUrl;
+
+    private static final Logger LOGGER = Logger.getLogger(OpenAIFileUpload.class.getName());
 
     public OpenAIFileUpload(String apiKey){
         this(apiKey,"https://api.openai.com/v1/files");
@@ -52,7 +55,9 @@ public class OpenAIFileUpload {
                 if (response.getCode() == 200) {
                     // Procesa la respuesta y obtiene el ID del archivo
                     JSONObject jsonResponse = new JSONObject(responseBody);
-                    return jsonResponse.getString("id");
+                    String id = jsonResponse.getString("id");
+                    LOGGER.info("Archivo subido exitosamente a OpenAI. ID del archivo: " + id);
+                    return id;
 
                 } else {
                     throw new OpenAIAPIException("Respuesta del Servidor: " + response.toString());
