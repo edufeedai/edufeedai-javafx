@@ -4,11 +4,12 @@ import static org.junit.jupiter.api.Assertions.fail;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ArgumentsSource;
 
+import com.github.edufeedai.annotations.IntegrationTest;
 import com.github.edufeedai.model.AssessmentGradingConfig;
-import com.github.edufeedai.unit.AssessmentGradingArgumentsProvider;
 
 import io.github.cdimascio.dotenv.Dotenv;
 
+@IntegrationTest
 class TextSerializerTest {
 
     String assessmentDirectory = Dotenv.load().get("ASSESSMENT_TEST_DIR");
@@ -28,7 +29,7 @@ class TextSerializerTest {
         }
 
         try {
-            serializer.generateJsonl(6);
+            serializer.generateJsonl();
         } catch (Exception e) {
             fail(e);
         }

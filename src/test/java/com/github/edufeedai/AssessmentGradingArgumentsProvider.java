@@ -1,4 +1,4 @@
-package com.github.edufeedai.unit;
+package com.github.edufeedai;
 
 import java.io.IOException;
 import java.io.InputStream;
