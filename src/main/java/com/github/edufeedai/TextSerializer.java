@@ -88,7 +88,7 @@ public class TextSerializer {
      * @return a list of JSON File objects
      * @throws IOException if an I/O error occurs
      */
-    private List<File> findAllJsonFiles() throws IOException {
+    private List<File> findAllJsonFilesExceptIDMapJSON() throws IOException {
         return Files.walk(Paths.get(inputDirectory), 2)
                 .filter(Files::isRegularFile)
                 .filter(path -> {
@@ -96,7 +96,7 @@ public class TextSerializer {
                     int lastDot = fileName.lastIndexOf('.');
                     if (lastDot == -1) return false;
                     String ext = fileName.substring(lastDot + 1);
-                    return "json".equals(ext);
+                    return "json".equals(ext) && !fileName.equals("id_map.json");
                 })
                 .map(Path::toFile)
                 .collect(Collectors.toList());
@@ -136,7 +136,7 @@ public class TextSerializer {
      */
     public void generateJsonl() throws IOException {
         logger.info("Generando archivo JSONL único para {}", inputDirectory);
-        List<File> jsonFiles = findAllJsonFiles();
+        List<File> jsonFiles = findAllJsonFilesExceptIDMapJSON();
         generateJsonlVolumes(jsonFiles, jsonFiles.size());
     }
 
@@ -148,7 +148,7 @@ public class TextSerializer {
      */
     public void generateJsonl(int jsonsPerVolume) throws IOException {
         logger.info("Generando archivos JSONL por volumen en {}", inputDirectory);
-        List<File> jsonFiles = findAllJsonFiles();
+        List<File> jsonFiles = findAllJsonFilesExceptIDMapJSON();
         generateJsonlVolumes(jsonFiles, jsonsPerVolume);
     }
 
