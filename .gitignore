@@ -45,3 +45,6 @@ build/
 .env.development
 .env.production
 .idea/dictionaries/*
+/*.log
+/logs
+

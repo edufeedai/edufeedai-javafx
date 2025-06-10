@@ -79,3 +79,33 @@ Si deseas contribuir, por favor sigue los siguientes pasos:
 ## 📧 Contacto
 
 Para cualquier duda o sugerencia, puedes contactarme abrir una issue i me pondré en contacto contigo.
+
+## Esquema Plantuml
+
+```plantuml
+@startuml
+actor Usuario
+Usuario -> Entregas : Sube entregas
+Entregas -> Map : Mapeo de identificadores
+Map -> Extraccion : Procesa PDFs y OCR
+Extraccion -> Modelos : Genera modelos de datos
+Modelos -> OpenAI : Envía a OpenAI
+OpenAI -> Serializacion : Recibe feedback
+Serializacion -> Distribucion : Serializa y organiza feedback
+Distribucion -> Moodle : Empaqueta para Moodle
+Moodle -> Zip : Genera ZIP final
+Config -[hidden]-> Map
+Config -[hidden]-> Moodle
+Tests -[hidden]-> Map
+Tests -[hidden]-> Moodle
+
+rectangle Configuracion {
+  "pom.xml"
+  "Dockerfile"
+  "docker-compose.yaml"
+}
+rectangle Tests {
+  "src/test/java"
+}
+@enduml
+```
