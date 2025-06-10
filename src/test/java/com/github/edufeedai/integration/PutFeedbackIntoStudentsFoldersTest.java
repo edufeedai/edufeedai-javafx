@@ -10,16 +10,16 @@ import com.github.edufeedai.FeedbackDistributor;
 
 import io.github.cdimascio.dotenv.Dotenv;
 
-class FeedbackDistributorTest {
+class PutFeedbackIntoStudentsFoldersTest {
 
     String assessmentPath = Dotenv.load().get("ASSESSMENT_TEST_DIR");
     String assessmentMapFilePath = assessmentPath + File.separator + Dotenv.load().get("ASSESSMENT_ID_MAP_FILE");
     String assessmentResponsesFilePath = assessmentPath + File.separator + Dotenv.load().get("ASSESSMENT_RESPONSES_FILE");
 
-    private static final Logger LOGGER = Logger.getLogger(FeedbackDistributorTest.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(PutFeedbackIntoStudentsFoldersTest.class.getName());
 
     @Test
-    void distributeFeedback() {
+    public void distributeFeedback() {
 
         try {
             FeedbackDistributor.distributeFeedback(assessmentPath,assessmentMapFilePath, assessmentResponsesFilePath);

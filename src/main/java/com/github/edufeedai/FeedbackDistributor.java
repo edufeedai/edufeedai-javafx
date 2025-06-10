@@ -83,7 +83,7 @@ public class FeedbackDistributor {
         // Build a map from custom_id to student folder name
         Map<String, String> customIdToFolderMap = new HashMap<>();
         for (SubmissionIdMap mapping : submissionIdMappings) {
-            customIdToFolderMap.put(mapping.getCustom_id(), mapping.getSubmission_id());
+            customIdToFolderMap.put( mapping.getSubmission_id() , mapping.getCustom_id());
         }
         logger.debug("Built customIdToFolderMap with {} entries.", customIdToFolderMap.size());
 
