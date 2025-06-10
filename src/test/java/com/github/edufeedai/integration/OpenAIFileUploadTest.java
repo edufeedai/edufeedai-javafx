@@ -1,6 +1,6 @@
 package com.github.edufeedai.integration;
 
-import com.github.edufeedai.model.openai.platform.api.OpenAIFileUpload;
+import com.github.edufeedai.model.openai.platform.api.OpenAIFileManagement;
 import com.github.edufeedai.model.openai.platform.api.exceptions.OpenAIAPIException;
 import io.github.cdimascio.dotenv.Dotenv;
 import org.junit.jupiter.api.Test;
@@ -15,11 +15,11 @@ class OpenAIFileUploadTest {
     @Test
     void uploadFileString() {
 
-        OpenAIFileUpload oaif = new OpenAIFileUpload(OpenAI_KEY);
+        OpenAIFileManagement oaifm = new OpenAIFileManagement(OpenAI_KEY);
 
         try {
 
-            String fileId = oaif.uploadFile(AssessmentFile);
+            String fileId = oaifm.uploadFile(AssessmentFile);
             assertNotNull(fileId);
 
         } catch (OpenAIAPIException e) {

@@ -12,18 +12,18 @@ import org.json.JSONObject;
 import java.io.File;
 import java.util.logging.Logger;
 
-public class OpenAIFileUpload {
+public class OpenAIFileManagement {
 
     String apiKey;
     String uploadUrl;
 
-    private static final Logger LOGGER = Logger.getLogger(OpenAIFileUpload.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(OpenAIFileManagement.class.getName());
 
-    public OpenAIFileUpload(String apiKey){
+    public OpenAIFileManagement(String apiKey){
         this(apiKey,"https://api.openai.com/v1/files");
     }
 
-    public OpenAIFileUpload(String apiKey,String uploadUrl){
+    public OpenAIFileManagement(String apiKey,String uploadUrl){
 
         this.apiKey = apiKey;
         this.uploadUrl = uploadUrl;

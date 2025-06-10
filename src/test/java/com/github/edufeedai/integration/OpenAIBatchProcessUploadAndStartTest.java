@@ -1,7 +1,7 @@
 package com.github.edufeedai.integration;
 
 import com.github.edufeedai.model.openai.platform.api.OpenAIBatchProcess;
-import com.github.edufeedai.model.openai.platform.api.OpenAIFileUpload;
+import com.github.edufeedai.model.openai.platform.api.OpenAIFileManagement;
 import com.github.edufeedai.model.openai.platform.api.exceptions.OpenAIAPIException;
 import io.github.cdimascio.dotenv.Dotenv;
 import org.junit.jupiter.api.Test;
@@ -16,7 +16,7 @@ class OpenAIBatchProcessUploadAndStartTest {
     
     private String uploadFileString() throws OpenAIAPIException {
 
-        OpenAIFileUpload oaif = new OpenAIFileUpload(OpenAI_KEY);
+        OpenAIFileManagement oaif = new OpenAIFileManagement(OpenAI_KEY);
 
         try {
 
