@@ -21,16 +21,20 @@ class OpenAIBatchJobDownloadFinishedRightFileTest {
     public void downloadFileJobFinished() throws OpenAIAPIException {
 
         OpenAIFileManagement oaif = new OpenAIFileManagement(OpenAI_KEY);
-        OpenAIBatchProcess oabp = new OpenAIBatchProcess(OpenAI_KEY);
-
-
-
+        
         String fileId = getCompletedFileJobFinishedName(OpenAIBatchJobID);
         String outFile = getOutputFileCompletePath(AssessmentJSONLFile);
         System.out.println("Downloading file: " + outFile);
 
-        
-    
+        try {
+            oaif.downloadFile(fileId, outFile);
+            File downloadedFile = new File(outFile);
+            assertTrue(downloadedFile.exists(), "Downloaded file does not exist");
+            assertTrue(downloadedFile.length() > 0, "Downloaded file is empty");
+        } catch (OpenAIAPIException e) {
+            fail("Failed to download file: " + e.getMessage());
+        }
+
     }
 
     private String getCompletedFileJobFinishedName(String openAIBatchJobID){
