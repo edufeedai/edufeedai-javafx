@@ -23,33 +23,52 @@ class OpenAIBatchJobDownloadFinishedRightFileTest {
         OpenAIFileManagement oaif = new OpenAIFileManagement(OpenAI_KEY);
         OpenAIBatchProcess oabp = new OpenAIBatchProcess(OpenAI_KEY);
 
-        try {
 
-            String status = oabp.getBatchJob(OpenAIBatchJobID).getStatus();
+
+        String fileId = getCompletedFileJobFinishedName(OpenAIBatchJobID);
+        String outFile = getOutputFileCompletePath(AssessmentJSONLFile);
+        System.out.println("Downloading file: " + outFile);
+
+        
+    
+    }
+
+    private String getCompletedFileJobFinishedName(String openAIBatchJobID){
+
+        OpenAIBatchProcess oabp = new OpenAIBatchProcess(OpenAI_KEY);
+
+        try {
+            String fileId = oabp.getBatchJob(openAIBatchJobID).getOutputFileId();
+            String status = oabp.getBatchJob(openAIBatchJobID).getStatus();
             assertEquals("completed", status, "Batch job is not finished");
 
-            String fileId = oabp.getBatchJob(OpenAIBatchJobID).getOutputFileId();
-
-            File AssessmentFile = new File(AssessmentJSONLFile);
-
-            Path filePath = AssessmentFile.toPath();
-            String fileName = filePath.getFileName().toString();
-            String extension = fileName.substring(fileName.lastIndexOf(".") + 1);
-
-            String dirPath = filePath.getParent().toString();
-
-            String outputFileName = fileName.substring(0, fileName.lastIndexOf(".")) + "_output." + extension;
-
-            File outFile = new File(filePath.getParent().toString(), outputFileName);
-            
-            System.out.println("Downloading file: " + outFile.getAbsolutePath());
-
-
+            assertNotNull(fileId, "File ID is null");
+            return fileId;
         } catch (OpenAIAPIException e) {
             fail(e.getMessage());
         }
-        
+
+        return null;
+
     }
+
+    private String getOutputFileCompletePath(String assessmentJSONLFile)  {
+        
+        Path filePath = (new File(assessmentJSONLFile)).toPath();
+        String fileName = filePath.getFileName().toString();
+        String extension = fileName.substring(fileName.lastIndexOf(".") + 1);
+
+        String dirPath = filePath.getParent().toString();
+
+        String outputFileName = fileName.substring(0, fileName.lastIndexOf(".")) + "_output." + extension;
+
+        File outFile = new File(dirPath, outputFileName);
+
+        return outFile.toString();
+
+
+    }
+
 
    
 }
