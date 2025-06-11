@@ -51,7 +51,7 @@ public class FileConcatenator implements FilenameFilter {
         } catch (DigestException e) {
             logger.error("Error generating digest for directory name: {}", inputDirectory, e);
             sha1 = "errorgeneratingname";
-        }
+        } 
         this.sha1Digest = sha1;
         this.outputFilePath = inputDirectory + File.separator + sha1Digest + ".json";
         logger.info("FileConcatenator initialized for directory: {}. Output file: {}", inputDirectory, outputFilePath);

@@ -5,9 +5,11 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import com.github.edufeedai.model.DigestSHA1;
 
@@ -74,13 +76,17 @@ public class TextSerializer {
      * @throws IOException if an I/O error occurs
      */
     private List<File> listFirstLevelDirectories() throws IOException {
-        File inputDir = new File(inputDirectory);
-        File[] files = inputDir.listFiles();
-        if (files == null) return List.of();
-        return Arrays.stream(files)
-                .filter(File::isDirectory)
-                .collect(Collectors.toList());
-    }
+        
+        try (Stream<Path> paths = Files.list(Paths.get(inputDirectory))) {
+        return paths.filter(Files::isDirectory)
+                    .filter(p -> !p.getFileName().toString().startsWith("."))
+                    .map(Path::toFile)
+                    .collect(Collectors.toList());
+        } catch (IOException e) {
+            logger.error("Error al listar los directorios de primer nivel en {}", inputDirectory, e);
+            throw e; // Re-throw the exception to be handled by the caller
+        }
+    }   
 
     /**
      * Finds all JSON files within the input directory and its subdirectories (up to depth 2).
