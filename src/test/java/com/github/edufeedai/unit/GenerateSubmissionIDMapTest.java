@@ -3,10 +3,10 @@ package com.github.edufeedai.unit;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import com.github.edufeedai.GenerateSubmissionIDMap;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import com.github.edufeedai.GenerateSubmissionIDMap;
 import com.github.edufeedai.annotations.FileIOTest;
 import com.github.edufeedai.annotations.IntegrationTest;
 import com.github.edufeedai.annotations.PrivacyTest;
