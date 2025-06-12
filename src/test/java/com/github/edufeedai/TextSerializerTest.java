@@ -1,22 +1,19 @@
 package com.github.edufeedai;
-import org.junit.jupiter.api.Assertions;
-import com.google.gson.JsonSyntaxException;
-import com.google.gson.JsonParser;
-import com.google.gson.JsonElement;
-import com.google.gson.Gson;
-
-import static org.junit.jupiter.api.Assertions.fail;
-
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.util.Scanner;
 
+import org.junit.jupiter.api.Assertions;
+import static org.junit.jupiter.api.Assertions.fail;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ArgumentsSource;
 
 import com.github.edufeedai.annotations.IntegrationTest;
 import com.github.edufeedai.model.AssessmentGradingConfig;
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
+import com.google.gson.JsonSyntaxException;
 
 import io.github.cdimascio.dotenv.Dotenv;
 
@@ -29,6 +26,7 @@ class TextSerializerTest {
     @ArgumentsSource(AssessmentGradingArgumentsProvider.class)
     void packageFiles(AssessmentGradingConfig config) {
 
+        
         TextSerializer serializer = new TextSerializer(assessmentDirectory);
 
         serializer.deleteAllStudentJsonFiles();

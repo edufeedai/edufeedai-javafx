@@ -5,9 +5,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.security.DigestException;
-import static java.util.Arrays.stream;
-
 import java.util.ArrayList;
+import static java.util.Arrays.stream;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -16,6 +15,7 @@ import java.util.stream.Stream;
 import com.github.edufeedai.model.Digest;
 import com.github.edufeedai.model.SubmissionIdMap;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 /**
  * Clase responsable de generar y guardar mapas de IDs de entregas de estudiantes
@@ -83,7 +83,9 @@ public class GenerateSubmissionIDMap {
      * @return Nombre del archivo guardado, o null si hubo error
      */
     public String saveSubmissionIDMaps(SubmissionIdMap[] submissionIdMaps, String assessmentIdMapFile) {
-        Gson gson = new Gson();
+        Gson gson = new GsonBuilder()
+            .setPrettyPrinting()
+            .create();
         String json = gson.toJson(submissionIdMaps);
         File file = new File(assessmentFolder + File.separator + assessmentIdMapFile);
         try {

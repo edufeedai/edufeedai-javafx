@@ -1,8 +1,7 @@
 package com.github.edufeedai;
 
+import java.io.FileReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.lang.reflect.Type;
 import java.util.stream.Stream;
 
@@ -28,17 +27,11 @@ public class AssessmentGradingArgumentsProvider  implements ArgumentsProvider {
     }
     
     private AssessmentGradingConfig loadJson(String filename){
-            try (InputStream input = getClass().getClassLoader().getResourceAsStream(filename);
-                 InputStreamReader reader = new InputStreamReader(input)) {
-
-                if (input == null){
-                    throw new IllegalArgumentException("File not found: " + filename);
-                }
+            try (FileReader reader = new FileReader(filename)) {
                 Type type = new TypeToken<AssessmentGradingConfig>(){}.getType();
-                return gson.fromJson(reader,type);
-
-            } catch (IOException e){
-                throw new RuntimeException("Unable to Load JSON File: " + filename,e);
+                return gson.fromJson(reader, type);
+            } catch (IOException e) {
+                throw new RuntimeException("Unable to load JSON file: " + filename, e);
             }
     }
 }

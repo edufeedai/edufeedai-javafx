@@ -5,25 +5,14 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import com.github.edufeedai.model.DigestSHA1;
-
-/**
- * Utility class for serializing student submissions and packaging files into JSONL format.
- * <p>
- * This class provides methods to delete JSON files, list directories, find JSON files,
- * concatenate file contents, write JSONL files, and package files for further processing.
- * </p>
- *
- * @author EduFeedAI
- */
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.github.edufeedai.model.DigestSHA1;
 public class TextSerializer {
     private static final Logger logger = LoggerFactory.getLogger(TextSerializer.class);
 
@@ -95,17 +84,25 @@ public class TextSerializer {
      * @throws IOException if an I/O error occurs
      */
     private List<File> findAllJsonFilesExceptIDMapJSON() throws IOException {
-        return Files.walk(Paths.get(inputDirectory), 2)
-                .filter(Files::isRegularFile)
-                .filter(path -> {
-                    String fileName = path.getFileName().toString().toLowerCase();
-                    int lastDot = fileName.lastIndexOf('.');
-                    if (lastDot == -1) return false;
-                    String ext = fileName.substring(lastDot + 1);
-                    return "json".equals(ext) && !fileName.equals("id_map.json");
+        
+        
+        List<Path> fitxersJson = Files.list(Path.of(inputDirectory))
+                .filter(Files::isDirectory)
+                .flatMap(directoriFill -> {
+                    try {
+                        return Files.list(directoriFill)
+                                .filter(p -> p.toString().endsWith(".json"))
+                                .limit(1); // opcional: si només en vols un per carpeta
+                    } catch (IOException e) {
+                        return Stream.empty(); // ignora errors de lectura
+                    }
                 })
-                .map(Path::toFile)
                 .collect(Collectors.toList());
+        
+        return fitxersJson.stream()
+               .map(Path::toFile)
+               .collect(Collectors.toList());
+
     }
 
     /**
