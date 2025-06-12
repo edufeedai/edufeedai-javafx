@@ -1,14 +1,21 @@
 package com.github.edufeedai;
 
 import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.security.DigestException;
+import java.util.ArrayList;
 import static java.util.Arrays.stream;
 import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import com.github.edufeedai.model.Digest;
 import com.github.edufeedai.model.SubmissionIdMap;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 /**
  * Clase responsable de generar y guardar mapas de IDs de entregas de estudiantes
@@ -36,18 +43,28 @@ public class GenerateSubmissionIDMap {
      */
     public SubmissionIdMap[] generateSubmissionIDMaps() {
         
-        File folder = new File(assessmentFolder);
-        File[] files = folder.listFiles((f) -> f.isDirectory() && !f.isHidden());
+        List<File> files = new ArrayList<>();
+
+        try (Stream<Path> paths = Files.list(Paths.get(assessmentFolder))) {
+        files = paths.filter(Files::isDirectory)
+                    .filter(p -> !p.getFileName().toString().startsWith("."))
+                    .map(Path::toFile)
+                    .collect(Collectors.toList());
+        } catch (Exception e) {
+
+            e.printStackTrace();
+            return new SubmissionIdMap[0];
+        }
         
         if (files == null) {
             return new SubmissionIdMap[0];
         }
-        SubmissionIdMap[] submissionIdMaps = new SubmissionIdMap[files.length];
-        for (int i = 0; i < files.length; i++) {
+        SubmissionIdMap[] submissionIdMaps = new SubmissionIdMap[files.size()];
+        for (int i = 0; i < files.size(); i++) {
             SubmissionIdMap submissionIdMap = new SubmissionIdMap();
-            submissionIdMap.setCustom_id(files[i].getName());
+            submissionIdMap.setCustom_id(files.get(i).getName());
             try {
-                submissionIdMap.setSubmission_id(digest.digest(files[i].getName()));
+                submissionIdMap.setSubmission_id(digest.digest(files.get(i).getName()));
             } catch (DigestException e) {
                 submissionIdMap.setSubmission_id("errorgeneratingname");
             }
@@ -66,7 +83,9 @@ public class GenerateSubmissionIDMap {
      * @return Nombre del archivo guardado, o null si hubo error
      */
     public String saveSubmissionIDMaps(SubmissionIdMap[] submissionIdMaps, String assessmentIdMapFile) {
-        Gson gson = new Gson();
+        Gson gson = new GsonBuilder()
+            .setPrettyPrinting()
+            .create();
         String json = gson.toJson(submissionIdMaps);
         File file = new File(assessmentFolder + File.separator + assessmentIdMapFile);
         try {

@@ -2,15 +2,15 @@ package com.github.edufeedai.model;
 
 public class AssessmentGradingConfig {
 
-    private String activiy;
+    private String activity;
     private String instruction;
 
-    public String getActiviy() {
-        return activiy;
+    public String getActivity() {
+        return activity;
     }
 
-    public void setActiviy(String activiy) {
-        this.activiy = activiy;
+    public void setActivity(String activity) {
+        this.activity = activity;
     }
 
     public String getInstruction() {

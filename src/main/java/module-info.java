@@ -11,6 +11,7 @@ module com.github.edufeedai{
     requires transitive org.apache.pdfbox;
     requires tess4j;
     requires opencv;
+    
 
     exports com.github.edufeedai;
     exports com.github.edufeedai.model;
