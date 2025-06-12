@@ -1,21 +1,20 @@
 package com.github.edufeedai.integration;
 
-import static org.junit.jupiter.api.Assertions.fail;
+import java.io.File;
+import java.io.IOException;
 
-import com.github.edufeedai.utils.ZipUtils;
+import static org.junit.jupiter.api.Assertions.fail;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import com.github.edufeedai.MoodleFeedbackFileGenerator;
 import com.github.edufeedai.model.SubmissionIdMap;
+import com.github.edufeedai.utils.ZipUtils;
 
 import io.github.cdimascio.dotenv.Dotenv;
 
-import java.io.File;
-import java.io.IOException;
-
 @DisplayName("TESTS - MoodleFeedbackFileGeneratorTest")
-class MoodleFeedbackFileGeneratorTest {
+class GenerateMoodleZipFeedbackAssessmentFileTest {
 
     String assessmentPath = Dotenv.load().get("ASSESSMENT_TEST_DIR");
     String assessmentMapFilePath = assessmentPath + java.io.File.separator + Dotenv.load().get("ASSESSMENT_ID_MAP_FILE");
