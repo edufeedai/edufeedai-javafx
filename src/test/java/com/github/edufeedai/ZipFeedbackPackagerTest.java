@@ -10,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class ZipFeedbackPackagerTest {
 
     String assessmentDirectory = Dotenv.load().get("ASSESSMENT_TEST_DIR");
-    String assessmentIdMapFile = Dotenv.load().get("ASSESSMENT_ID_MAP_FILE");
+    String assessmentIdMapFile = Dotenv.load().get("ASSESSMENT_ID_MAP_FILE_NAME");
     String assessmentResponsesFile = Dotenv.load().get("ASSESSMENT_RESPONSES_FILE");
 
     @Test
