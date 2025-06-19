@@ -24,7 +24,6 @@ public class AssessmentGradingArgumentsProvider  implements ArgumentsProvider {
 
     private final String assessmentGradingConfigFilePath = assessmentDirectory + "/" + assessmentGradingConfigFileName;
 
-
     @Override
     public Stream<? extends Arguments> provideArguments(ExtensionContext extensionContext) throws Exception {
         return Stream.of(assessmentGradingConfigFilePath)
