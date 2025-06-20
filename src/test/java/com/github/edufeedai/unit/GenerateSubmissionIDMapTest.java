@@ -20,7 +20,7 @@ import io.github.cdimascio.dotenv.Dotenv;
 class GenerateSubmissionIDMapTest {
 
     String assessmentFolder = Dotenv.load().get("ASSESSMENT_TEST_DIR");
-    String assessmmentIDMapFile = Dotenv.load().get("ASSESSMENT_ID_MAP_FILE");
+    String assessmmentIDMapFile = Dotenv.load().get("ASSESSMENT_ID_MAP_FILE_NAME");
 
     @Test
     @IntegrationTest

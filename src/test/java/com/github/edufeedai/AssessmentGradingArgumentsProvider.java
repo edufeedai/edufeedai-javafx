@@ -19,9 +19,14 @@ public class AssessmentGradingArgumentsProvider  implements ArgumentsProvider {
 
     private static final Gson gson = new Gson();
 
+    private final String assessmentDirectory = Dotenv.load().get("ASSESSMENT_TEST_DIR");
+    private final String assessmentGradingConfigFileName = Dotenv.load().get("ASSESSMENT_GRADING_CONFIG_FILE_NAME");
+
+    private final String assessmentGradingConfigFilePath = assessmentDirectory + "/" + assessmentGradingConfigFileName;
+
     @Override
     public Stream<? extends Arguments> provideArguments(ExtensionContext extensionContext) throws Exception {
-        return Stream.of(Dotenv.load().get("ASSESSMENT_GRADING_CONFIG_FILE"))
+        return Stream.of(assessmentGradingConfigFilePath)
                 .map(this::loadJson)
                 .map(Arguments::of);
     }
