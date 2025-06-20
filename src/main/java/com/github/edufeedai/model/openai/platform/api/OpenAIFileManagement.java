@@ -34,11 +34,25 @@ public class OpenAIFileManagement {
 
     }
 
+    /**
+     * Uploads a file to OpenAI for batch processing.
+     *
+     * @param filePath the path to the file to be uploaded
+     * @return the ID of the uploaded file
+     * @throws OpenAIAPIException if an error occurs during the upload
+     */
     public String uploadFile(String filePath) throws OpenAIAPIException{
         File jsonlFile = new File(filePath);
         return uploadFile(jsonlFile);
     }
 
+    /**
+     * Uploads a file to OpenAI for batch processing.
+     *
+     * @param jsonlFile the file to be uploaded
+     * @return the ID of the uploaded file
+     * @throws OpenAIAPIException if an error occurs during the upload
+     */
     public String uploadFile(File jsonlFile) throws OpenAIAPIException{
 
         try (CloseableHttpClient httpClient = HttpClients.createDefault()) {

@@ -65,7 +65,7 @@ class OpenAIBatchJobDownloadFinishedRightFileTest {
 
         String dirPath = filePath.getParent().toString();
 
-        String outputFileName = fileName.substring(0, fileName.lastIndexOf(".")) + "_output." + extension;
+        String outputFileName = fileName.substring(0, fileName.lastIndexOf(".")) + "_graded." + extension;
 
         File outFile = new File(dirPath, outputFileName);
 
