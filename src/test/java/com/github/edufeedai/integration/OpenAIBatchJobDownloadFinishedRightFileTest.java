@@ -14,7 +14,8 @@ import java.nio.file.Path;
 class OpenAIBatchJobDownloadFinishedRightFileTest {
 
     String OpenAI_KEY = Dotenv.load().get("OPENAI_API_KEY");
-    String AssessmentJSONLFile = Dotenv.load().get("ASSESSMENT_JSONL_FILE");
+    String AssessmentTestDir = Dotenv.load().get("ASSESSMENT_TEST_DIR");
+    String AssessmentJSONLFileName = Dotenv.load().get("ASSESSMENT_JSONL_FILE_NAME");
     String OpenAIBatchJobID = Dotenv.load().get("OPENAI_BATCH_JOB_ID");
 
     @Test
@@ -23,7 +24,7 @@ class OpenAIBatchJobDownloadFinishedRightFileTest {
         OpenAIFileManagement oaif = new OpenAIFileManagement(OpenAI_KEY);
         
         String fileId = getCompletedFileJobFinishedName(OpenAIBatchJobID);
-        String outFile = getOutputFileCompletePath(AssessmentJSONLFile);
+        String outFile = getOutputFileCompletePath(AssessmentTestDir + File.separator +AssessmentJSONLFileName);
         System.out.println("Downloading file: " + outFile);
 
         try {
@@ -64,7 +65,7 @@ class OpenAIBatchJobDownloadFinishedRightFileTest {
 
         String dirPath = filePath.getParent().toString();
 
-        String outputFileName = fileName.substring(0, fileName.lastIndexOf(".")) + "_output." + extension;
+        String outputFileName = fileName.substring(0, fileName.lastIndexOf(".")) + "_graded." + extension;
 
         File outFile = new File(dirPath, outputFileName);
 

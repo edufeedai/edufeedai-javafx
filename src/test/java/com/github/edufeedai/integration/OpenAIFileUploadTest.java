@@ -5,12 +5,15 @@ import com.github.edufeedai.model.openai.platform.api.exceptions.OpenAIAPIExcept
 import io.github.cdimascio.dotenv.Dotenv;
 import org.junit.jupiter.api.Test;
 
+import java.io.File;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class OpenAIFileUploadTest {
 
     String OpenAI_KEY = Dotenv.load().get("OPENAI_API_KEY");
-    String AssessmentFile = Dotenv.load().get("ASSESSMENT_JSONL_FILE");
+    String AssessmentTestDir = Dotenv.load().get("ASSESSMENT_TEST_DIR");
+    String AssessmentFileName = Dotenv.load().get("ASSESSMENT_JSONL_FILE_NAME");
 
     @Test
     void uploadFileString() {
@@ -19,7 +22,7 @@ class OpenAIFileUploadTest {
 
         try {
 
-            String fileId = oaifm.uploadFile(AssessmentFile);
+            String fileId = oaifm.uploadFile(AssessmentTestDir + File.separator + AssessmentFileName);
             assertNotNull(fileId);
 
         } catch (OpenAIAPIException e) {
