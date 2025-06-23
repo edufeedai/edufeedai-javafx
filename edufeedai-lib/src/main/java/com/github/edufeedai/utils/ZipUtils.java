@@ -103,6 +103,32 @@ public class ZipUtils {
         }
     }
 
+    public static void Unzip(String ZipFile, String destDir) throws IOException {
+        Unzip(new File(ZipFile), destDir);
+    }
+
+    public static void Unzip(File ZipFile, String destDir) throws IOException {
+
+        try (ZipInputStream zis = new ZipInputStream(new FileInputStream(ZipFile))) {
+            ZipEntry zipEntry;
+            while ((zipEntry = zis.getNextEntry()) != null) {
+                File newFile = new File(destDir, zipEntry.getName());
+                if (zipEntry.isDirectory()) {
+                    if (!newFile.isDirectory() && !newFile.mkdirs()) {
+                        throw new IOException("Failed to create directory " + newFile);
+                    }
+                } else {
+                    File parent = newFile.getParentFile();
+                    if (!parent.isDirectory() && !parent.mkdirs()) {
+                        throw new IOException("Failed to create directory " + parent);
+                    }
+                    Files.copy(zis, newFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+                }
+                zis.closeEntry();
+            }
+        }
+    }
+
     private static void deleteDirectory(File directory) throws IOException {
         Files.walk(directory.toPath())
              .map(Path::toFile)
