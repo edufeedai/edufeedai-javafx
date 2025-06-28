@@ -7,6 +7,8 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 import java.util.zip.ZipOutputStream;
@@ -107,13 +109,43 @@ public class ZipUtils {
         Unzip(new File(ZipFile), destDir);
     }
 
-    public static void Unzip(File ZipFile, String destDir) throws IOException {
+    public static void Unzip(File zipFile, String destDir) throws IOException {
+        // Primer pas: detectar l’arrel
+        Set<String> topLevelEntries = new HashSet<>();
 
-        try (ZipInputStream zis = new ZipInputStream(new FileInputStream(ZipFile))) {
-            ZipEntry zipEntry;
-            while ((zipEntry = zis.getNextEntry()) != null) {
-                File newFile = new File(destDir, zipEntry.getName());
-                if (zipEntry.isDirectory()) {
+        try (ZipInputStream zis = new ZipInputStream(new FileInputStream(zipFile))) {
+            ZipEntry entry;
+            while ((entry = zis.getNextEntry()) != null) {
+                String name = entry.getName();
+                String topLevel = name.contains("/") ? name.substring(0, name.indexOf('/')) : name;
+                topLevelEntries.add(topLevel);
+                zis.closeEntry();
+            }
+        }
+
+        String commonRoot = null;
+        if (topLevelEntries.size() == 1) {
+            commonRoot = topLevelEntries.iterator().next();
+        }
+
+        // Segon pas: descomprimir
+        try (ZipInputStream zis = new ZipInputStream(new FileInputStream(zipFile))) {
+            ZipEntry entry;
+            while ((entry = zis.getNextEntry()) != null) {
+                String name = entry.getName();
+
+                // Si només hi havia un arrel comú, llevem-lo
+                if (commonRoot != null && name.startsWith(commonRoot + "/")) {
+                    name = name.substring(commonRoot.length() + 1); // +1 per la barra
+                }
+
+                if (name.isEmpty()) {
+                    zis.closeEntry();
+                    continue; // el directori arrel mateix, no cal crear-lo
+                }
+
+                File newFile = new File(destDir, name);
+                if (entry.isDirectory()) {
                     if (!newFile.isDirectory() && !newFile.mkdirs()) {
                         throw new IOException("Failed to create directory " + newFile);
                     }
@@ -128,6 +160,7 @@ public class ZipUtils {
             }
         }
     }
+
 
     private static void deleteDirectory(File directory) throws IOException {
         Files.walk(directory.toPath())

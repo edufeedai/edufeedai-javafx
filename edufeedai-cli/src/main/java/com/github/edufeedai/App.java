@@ -36,7 +36,7 @@ public class App {
             } catch (Exception e) {
                 System.out.println("Error al extraer el ZIP: " + e.getMessage());
             }
-            System.exit(ERROR_ZIP_EXTRACTION_FAILED);
+            System.exit(0);
         }
         // Modo interactivo: sin argumentos
         File currentDir = new File(System.getProperty("user.dir"));
