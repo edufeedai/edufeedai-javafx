@@ -2,6 +2,7 @@ package com.github.edufeedai;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
 import java.util.Scanner;
 import com.github.edufeedai.utils.ZipUtils;
 
@@ -13,6 +14,9 @@ public class App {
     private static final int ERROR_ZIP_EXTRACTION_FAILED = 3;
 
     public static void main(String[] args) {
+
+        Path currentPath = Path.of(System.getProperty("user.dir"));
+
         if (args.length == 1 && args[0].endsWith(".zip")) {
             // Modo comando: ZIP como argumento
             String zipPath = args[0];
@@ -78,5 +82,18 @@ public class App {
         System.out.println("\n--- Ayuda EduFeedAI CLI ---");
         System.out.println("- Ejecuta: java -jar edufeedai-cli.jar <archivo.zip> para inicializar un entorno de trabajo.");
         System.out.println("- Luego, ejecuta la aplicación dentro del directorio extraído para gestionar y procesar las entregas.");
+    }
+
+    private static String generateBatchJsonlFile(Path path) {
+
+
+
+        // Aquí se implementará la lógica para generar el archivo batch.jsonl
+        // según las especificaciones del proyecto.
+        System.out.println("Generando archivo batch.jsonl en: " + path);
+        // Implementación pendiente...
+
+
+        throw new UnsupportedOperationException();
     }
 }
